@@ -1,69 +1,81 @@
-# [Start Bootstrap - Stylish Portfolio](https://startbootstrap.com/theme/stylish-portfolio/)
+# Ficha de juego
 
-[Stylish Portfolio](https://startbootstrap.com/theme/stylish-portfolio/) is a responsive, one page portfolio theme for [Bootstrap](https://getbootstrap.com/) created by [Start Bootstrap](https://startbootstrap.com/). The theme features multiple content sections with an off canvas navigation menu.
 
-## Preview
+#### Título  
+Polo Hunt 
+#### Género 
+Es un juego multijugador en 3D con ....
+#### Audiencia
+Es un juego pensado para todos los públicos
+#### Plataformas
+En ordenador y disporsitivos móviles
+#### Modos de Juego
+El juego consta de un
+#### Temática
+Los paisajes del juego están inspirados en el ártico, al igual que sus paisajes y los distintos animales que salen. 
 
-[![Stylish Portfolio Preview](https://assets.startbootstrap.com/img/screenshots/themes/stylish-portfolio.png)](https://startbootstrap.github.io/startbootstrap-stylish-portfolio/)
+## Descripción del juego
+Es un juego pensado para hacer una ligera crítica al cambio climático. En el hay diversos modos de juegos para participar, aunque la esencia de este y de varios de sus modos es el clásico escondite/pilla pilla.
+Los personajes principales serán pingüninos y osos polares. Los osos serán los encargados de dar caza a todos los pingüinos. Los pingüinos tendrán que salvarse escondiendose por el mapa y usando las distintas habilidades que poseen.
 
-**[View Live Preview](https://startbootstrap.github.io/startbootstrap-stylish-portfolio/)**
 
-## Status
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/StartBootstrap/startbootstrap-stylish-portfolio/master/LICENSE)
-[![npm version](https://img.shields.io/npm/v/startbootstrap-stylish-portfolio.svg)](https://www.npmjs.com/package/startbootstrap-stylish-portfolio)
-[![Build Status](https://travis-ci.org/StartBootstrap/startbootstrap-stylish-portfolio.svg?branch=master)](https://travis-ci.org/StartBootstrap/startbootstrap-stylish-portfolio)
-[![dependencies Status](https://david-dm.org/StartBootstrap/startbootstrap-stylish-portfolio/status.svg)](https://david-dm.org/StartBootstrap/startbootstrap-stylish-portfolio)
-[![devDependencies Status](https://david-dm.org/StartBootstrap/startbootstrap-stylish-portfolio/dev-status.svg)](https://david-dm.org/StartBootstrap/startbootstrap-stylish-portfolio?type=dev)
+## Personajes
+Como personajes protagonistas del juego hemos optado por los pingüinos, ya que estos eran la esencia del tipo de movimiento y físicas que queríamos transmitir a los jugadores. Gracia y toperza, estos son los dos grandes adjetivos que son capaces de sintetizar la esencia de nuestro juego.
+Gracias al movimiento de estos animales y observando las graciosas caidas que tienen en el hielo, hemos determinado que son el animal ideal para representar el tipo de jugabilidad que queríamos ofrecer. 
 
-## Download and Installation
+Aquí se muestra la hoja del pingüino base que hay en el juego.
 
-To begin using this template, choose one of the following options to get started:
+![Pingas](https://user-images.githubusercontent.com/55508821/101229277-b76ce880-369f-11eb-8cf7-dd9dc3491c90.jpeg)
 
-* [Download the latest release on Start Bootstrap](https://startbootstrap.com/theme/stylish-portfolio/)
-* Install via npm: `npm i startbootstrap-stylish-portfolio`
-* Clone the repo: `git clone https://github.com/StartBootstrap/startbootstrap-stylish-portfolio.git`
-* [Fork, Clone, or Download on GitHub](https://github.com/StartBootstrap/startbootstrap-stylish-portfolio)
+El oso polar era una de las grandes opciones que barajábamos como posibles enemigos. 
 
-## Usage
+![ositos](https://user-images.githubusercontent.com/55508821/101229282-c05dba00-369f-11eb-99f0-5ebefa601b05.jpeg)
 
-### Basic Usage
 
-After downloading, simply edit the HTML and CSS files included with the template in your favorite text editor to make changes. These are the only files you need to worry about, you can ignore everything else! To preview the changes you make to the code, you can open the `index.html` file in your web browser.
+## Modos de juego
+La esencia de nuestro juego y su modo principal es cacería, el clásico pilla pilla. Aquí los osos perseguirán a los pingüinos hasta que se acabe el tiempo o estos hayan dado caza a todos.
+En función a este modo pricipal, hemos desarrollado varios de este estilo:
+- Supervivencia: En esto modo solo habrá uno o dos pingüinos, estos dispondrán de un aumento de velocidad para compensar su inferioridad numérica.
+- "Zombie": Aquí una vez seas atrapado, te convertirás en un pingüino "zombie" que va a ir dando caza al resto de su especie [Debatir esto]
+- 
+-
 
-### Advanced Usage
 
-After installation, run `npm install` and then run `npm start` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
+Para aumentar la experiencia y el tiempo de juego, hemos implementado varios modos de juego extra:
+- Carrera: Los pingüinos harán una carrera por un escenario completamente nuevo diseñado para este modo de juego. La regla es simple, el primero que llega gana. 
+- "Sumo":
+-
 
-#### Gulp Tasks
 
-* `gulp` the default task that builds everything
-* `gulp watch` browserSync opens the project in your default browser and live reloads when changes are made
-* `gulp css` compiles SCSS files into CSS and minifies the compiled CSS
-* `gulp js` minifies the themes JS file
-* `gulp vendor` copies dependencies from node_modules to the vendor directory
 
-You must have npm installed globally in order to use this build environment.
 
-## Bugs and Issues
+## Mecánicas de juego
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/StartBootstrap/startbootstrap-stylish-portfolio/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](https://startbootstrap.com/theme/stylish-portfolio/).
+## Escenarios 
 
-## About
 
-Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
 
-* <https://startbootstrap.com>
-* <https://twitter.com/SBootstrap>
 
-Start Bootstrap was created by and is maintained by **[David Miller](https://davidmiller.io/)**.
 
-* <https://davidmiller.io>
-* <https://twitter.com/davidmillerhere>
-* <https://github.com/davidtmiller>
+## Interfaz y menús
 
-Start Bootstrap is based on the [Bootstrap](https://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
 
-## Copyright and License
 
-Copyright 2013-2020 Start Bootstrap LLC. Code released under the [MIT](https://github.com/StartBootstrap/startbootstrap-stylish-portfolio/blob/gh-pages/LICENSE) license.
+## Flujo de juego
+
+
+
+## Estilo artístico y música
+
+
+## Experiencia de usuario
+
+
+
+## Modelo de negocio
+
+
+## Controles y tutorial
+
+
