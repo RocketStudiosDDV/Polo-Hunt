@@ -6,18 +6,14 @@ using UnityEngine.InputSystem;
 public class DeviceActions : MonoBehaviour
 {
 
-    /*[SerializeField] private InputAction movement; //Movimiento simple
-    [SerializeField] private InputAction moveCamera; //Movimiento de la camara
-    [SerializeField] private InputAction attack; //Ataque (bofetada/puño)
-    [SerializeField] private InputAction run; //Correr/deslizarse
-    [SerializeField] private InputAction powerUp; //Utilizar el power UP*/
-
     [SerializeField] float jumpForce = 10;
-    [SerializeField] float speed = 2;
+    [SerializeField] float speed = 3;
+    [SerializeField] float maxSpeed = 10;
 
     private PlayerControls _controls;
     private Rigidbody _playerRB; //Rigid body del pingu
     private Vector2 _horizontaldirection;
+    public GameObject reference; //ref de la camara
 
     private void Awake()
     {
@@ -40,6 +36,12 @@ public class DeviceActions : MonoBehaviour
     {
          _playerRB.velocity = new Vector3(_horizontaldirection.x * speed, _playerRB.velocity.y, _horizontaldirection.y * speed);
        // _playerRB.AddForce(Vector3.right * speed * _horizontaldirection);
+
+        //Para que no supere una velocidad:
+        if(_playerRB.velocity.magnitude > maxSpeed)
+        {
+            _playerRB.velocity = _playerRB.velocity.normalized * maxSpeed;
+        }
     }
 
     //Asignamos las acciones mediante handlers
@@ -75,61 +77,6 @@ public class DeviceActions : MonoBehaviour
         _horizontaldirection = context.ReadValue<Vector2>();
     }
 
-  
 
-    #region VIDEO 1
-    /* //Habilita todos los handlers y eso
-     private void OnEnable()
-     {
-         movement.type.
-         //Añadimos el handler
-         movement.performed += Move;
-         //Lo habilitamos
-         movement.Enable();
-
-         //Añadimos el handler de atacar en función si se usa o no
-         attack.performed += Attack;
-         attack.canceled += DisableAttack;
-         //Lo habilitamos
-         attack.Enable();
-     }
-
-     //Desabilita todos los handlers y eso
-     private void OnDisable()
-     {
-         //Elminamos el handler
-         movement.performed -= Move;
-         //Lo deshabilitamos
-         movement.Disable();
-
-         //Elminamos el handler de atacar en función si se usa o no
-         attack.performed -= Attack;
-         attack.canceled -= DisableAttack;
-         //Lo habilitamos
-         attack.Disable();
-     }
-
-     //Handler del movmiento
-     private void Move(InputAction.CallbackContext context)
-     {
-         //Objetener valor de los ejes
-         Vector2 direction = context.ReadValue<Vector2>();
-         Debug.Log(direction);
-         Vector3 vectorDirection = new Vector3(direction.x, 0, direction.y);
-
-         transform.Translate(vectorDirection * Time.deltaTime);
-     }
-
-     //Handlers ataque
-     private void Attack(InputAction.CallbackContext context)
-     {
-         transform.Translate(Vector3.up);
-     }
-
-     private void DisableAttack(InputAction.CallbackContext context)
-     {
-         transform.Translate(Vector3.down);
-     }*/
-    #endregion
 
 }
