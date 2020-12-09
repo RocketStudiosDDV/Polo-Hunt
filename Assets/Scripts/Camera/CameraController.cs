@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,38 +20,9 @@ public class CameraController : MonoBehaviour
     //Se asegura de que el jugador se movio
     private void LateUpdate()
     {
-        
         transform.position = player.transform.position + distance;
         transform.LookAt(player.transform.position);
-
-        //Esta es la referencia paera que los controles no cambien, que esten bien colocardos
-        Vector3 copyRotation = new Vector3(0, transform.eulerAngles.y, 0);
-        reference.transform.eulerAngles = copyRotation;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnEnable()
-    {
-        _controls.Player.Camera.performed += MoveCamera;
-        _controls.Player.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _controls.Player.Camera.performed -= MoveCamera;
-        _controls.Player.Disable();
-    }
-
-    public void MoveCamera(InputAction.CallbackContext context)
-    {
-        Vector2 num = context.ReadValue<Vector2>();
-        //Calcula lo que se tiene que mover la camara con respecto al personaje y la mueve
-        distance = Quaternion.AngleAxis(num.x * 2, Vector3.up) * distance;
-        
-    }
+   
 }
