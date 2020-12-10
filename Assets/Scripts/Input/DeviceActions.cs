@@ -59,9 +59,6 @@ public class DeviceActions : MonoBehaviour
             _playerRB.velocity = _playerRB.velocity.normalized * maxSpeed;
         }*/
 
-        
-        
-
         playerDirection = playerInput.x * camRight + playerInput.z * camFordward; //Almacena la direccion hacia la que se esta moviendo el player
 
         _playerRB.transform.LookAt(_playerRB.transform.position + playerDirection);
@@ -69,6 +66,8 @@ public class DeviceActions : MonoBehaviour
         CameraDirection();
         ThirdCamera();
         //transform.LookAt(target);
+
+        target.transform.LookAt(pivot);
 
         //Aplicamos la velocidad de movimiento WASD
         _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
@@ -143,8 +142,8 @@ public class DeviceActions : MonoBehaviour
 
     public void ThirdCamera()
     {
-        //Seguir al target
-        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, target.position /*+ offset-*/, Time.deltaTime * 100);
+        //Seguir al target == camara
+        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, target.position /*+ offset*/, Time.deltaTime * 100);
         //Rotar la cámara
         mainCamera.transform.rotation = target.rotation;
 
@@ -156,13 +155,12 @@ public class DeviceActions : MonoBehaviour
         moveY = Mathf.Clamp(moveY, -50.0f, 70.0f);
 
         //pivot sigue a player
-        Vector3 follow = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        pivot.position = Vector3.Lerp(pivot.position, follow + offset, Time.deltaTime * 100);
+        Vector3 follow = new Vector3(this.transform.position.x, this.transform.position.y /*- 1.0f*/, this.transform.position.z);
+        pivot.position = Vector3.Lerp(pivot.position, follow /*+ offset*/, Time.deltaTime * 100);
         
-        ///offset = Quaternion.AngleAxis(moveX * m_LookSense, Vector3.up) * offset;
         //Rotar pivot
         pivot.rotation = Quaternion.Euler(-moveY, moveX, 0.0f);
-
+        //target.rotation = Quaternion.Euler(0,0, 0.0f);
 
     }
 
