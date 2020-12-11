@@ -32,6 +32,14 @@ public class BearInput : MonoBehaviour
     private float moveY;
     private float m_LookSense = 1.0f;
 
+    private double timeDamage;
+    private bool damaged = false;
+    //private double Stamina = 10.4;
+
+    private double _timeRunning;
+    private bool isRunning = false;
+
+
     #endregion
 
     #region UNITY CALLBACKS
@@ -78,7 +86,12 @@ public class BearInput : MonoBehaviour
         _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
         //_playerRB.AddForce(Vector3.right * speed * _horizontaldirection);
 
+        if(damaged == true)
+        {
+            BearDamaged(Time.fixedTime);
+        }
 
+        ToRun(Time.fixedTime);
 
         Debug.Log(_playerRB.velocity.magnitude);
     }
@@ -88,6 +101,26 @@ public class BearInput : MonoBehaviour
         //transform.LookAt(_playerRB.transform.position);
         //pivot.LookAt(target.position);
         //pivot.LookAt(target);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.name == "Stocks") //Si choca con un cepo
+        {
+            // Destroy(gameObject, 0.05f); //Se destruye dos segs después de la colisión
+            //Hacer daño o lo q sea
+            timeDamage = Time.fixedTime + 10;
+            Debug.Log("DAÑO");
+            speed = 0;
+            _controls.Player.Movement.Disable();
+            _controls.Player.CameraControl.Disable();
+            damaged = true;
+
+           
+        }
+        
+
     }
 
     #endregion
@@ -136,6 +169,10 @@ public class BearInput : MonoBehaviour
     {
         //CAMBIAR ANIMACIÓN
         //AÑADIR VELOCIDAD
+
+        isRunning = true;
+        speed = 10;
+        _timeRunning = Time.fixedTime + 10;
 
     }
     public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
@@ -197,6 +234,41 @@ public class BearInput : MonoBehaviour
     }
 
     #endregion
+
+    public void BearDamaged(double deltaTime)
+    {
+        if (deltaTime > timeDamage)
+        {
+            speed = 3;
+            _controls.Player.Movement.Enable();
+            _controls.Player.CameraControl.Enable();
+            damaged = false;
+            Debug.Log("Ya estoy bien :)");
+        }
+    }
+
+    //Controla el tiempo que esta activo correr y la stamina
+    public void ToRun(double deltaTime)
+    {
+        if (isRunning == true)
+        {
+            Debug.Log("a correr");
+            Debug.Log("delta time " + deltaTime);
+            Debug.Log("tiempo pasado " + _timeRunning);
+
+            //Stamina -= Time.deltaTime;
+            //Debug.Log("STAMINA" + Stamina);
+
+            if (deltaTime > _timeRunning)
+            {
+                speed = 3;
+                Debug.Log("delta time " + Time.deltaTime);
+                Debug.Log("tiempo pasado " + _timeRunning);
+                isRunning = false;
+            }
+
+        }
+    }
 
 }
 

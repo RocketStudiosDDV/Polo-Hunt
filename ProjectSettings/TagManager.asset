@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Bullet
   - Pinga
+  - Platform
+  - Bear
+  - Stocks
   layers:
   - Default
   - TransparentFX

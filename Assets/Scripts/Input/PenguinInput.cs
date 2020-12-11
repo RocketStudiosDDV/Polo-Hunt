@@ -35,6 +35,9 @@ public class PenguinInput : MonoBehaviour
     private double _timeRunning;
     private bool isRunning = false;
 
+
+    public GameObject cepo;
+
     #endregion
 
     #region UNITY CALLBACKS
@@ -71,7 +74,11 @@ public class PenguinInput : MonoBehaviour
 
         _playerRB.transform.LookAt(_playerRB.transform.position + playerDirection);
 
-        CameraDirection();
+        if (isRunning == false)
+        {
+            CameraDirection();
+        }
+        
         ThirdCamera();
         //transform.LookAt(target);
 
@@ -85,9 +92,8 @@ public class PenguinInput : MonoBehaviour
 
         ToRun(Time.fixedTime);
 
-        
 
-        Debug.Log( "velocidad " + speed);
+            Debug.Log( "velocidad " + speed);
         //Debug.Log(_timeRunning);
 
         //Debug.Log(_playerRB.velocity.magnitude);
@@ -164,6 +170,8 @@ public class PenguinInput : MonoBehaviour
     {
         //SOLTAR CEPO
         Debug.Log("CEPO");
+
+        Instantiate(cepo, _playerRB.transform.position, Quaternion.identity);
     }
 
     public void GetCameraMove(InputAction.CallbackContext context)
@@ -181,13 +189,14 @@ public class PenguinInput : MonoBehaviour
             Debug.Log("a correr");
             Debug.Log("delta time " + deltaTime);
             Debug.Log("tiempo pasado " + _timeRunning);
-
+            _controls.Player.Movement.Disable();
 
             if (deltaTime > _timeRunning)
             {
                 speed = 3;
                 Debug.Log("delta time " + Time.deltaTime);
                 Debug.Log("tiempo pasado " + _timeRunning);
+                _controls.Player.Movement.Enable();
                 isRunning = false;
             }
 
@@ -210,11 +219,12 @@ public class PenguinInput : MonoBehaviour
         camRight = camRight.normalized;
     }
 
+
     //Controla la cámara que sigue al personaje
     public void ThirdCamera()
     {
         //Seguir al target == camara
-        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, target.position /*+ offset*/, Time.deltaTime * 100);
+        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, target.position, Time.deltaTime * 100);
         //Rotar la cámara
         mainCamera.transform.rotation = target.rotation;
 
