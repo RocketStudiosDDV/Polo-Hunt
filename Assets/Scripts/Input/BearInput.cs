@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DeviceActions : MonoBehaviour
+public class BearInput : MonoBehaviour
 {
+    #region VARIABLES
 
+    //CONTROL DEL PLAYER
     [SerializeField] float jumpForce = 10;
     [SerializeField] float speed = 3;
     [SerializeField] float maxSpeed = 10;
@@ -17,8 +19,7 @@ public class DeviceActions : MonoBehaviour
     private Vector3 playerInput; //guarda la info del input
     private Vector3 playerDirection; //Hacia donde se mueve el jugador
 
-    //public GameObject reference; //ref de la camara
-
+    //CONTROL DE LA CÁMARA
     public Camera mainCamera; //Guarda cuál es nuestra cámara
     private Vector3 camFordward; //vector camara hacia delante
     private Vector3 camRight; //camara hacia la dcha, direccion a la que mira la camara
@@ -30,6 +31,10 @@ public class DeviceActions : MonoBehaviour
     private float moveX;
     private float moveY;
     private float m_LookSense = 1.0f;
+
+    #endregion
+
+    #region UNITY CALLBACKS
 
     private void Awake()
     {
@@ -73,7 +78,7 @@ public class DeviceActions : MonoBehaviour
         _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
         //_playerRB.AddForce(Vector3.right * speed * _horizontaldirection);
 
-        
+
 
         Debug.Log(_playerRB.velocity.magnitude);
     }
@@ -85,58 +90,73 @@ public class DeviceActions : MonoBehaviour
         //pivot.LookAt(target);
     }
 
+    #endregion
+
+    #region HANDLER INPUTS
     //Asignamos las acciones mediante handlers
     private void OnEnable()
     {
         //Añade el evento moverse
         _controls.Player.Movement.performed += Move;
-        //Añade el evento atacar
-        _controls.Player.Attack.performed += Attack;
-        //Movimiento de camara
-        _controls.Player.CameraControl.performed += GetCameraMove;
+        _controls.Player.Attack.performed += Attack; //Evento atacar
+        _controls.Player.Run.performed += Run; //Evento correr
+        _controls.Player.PowerUp.performed += PowerUp; //Evento power up
+        _controls.Player.CameraControl.performed += GetCameraMove;//Movimiento de camara
+
         //Habilita el evento
         _controls.Player.Enable();
     }
 
-    //
+    //Desactivamos la acción
     private void OnDisable()
     {
         //Elimina el evento
         _controls.Player.Movement.canceled -= Move;
         _controls.Player.Attack.canceled -= Attack;
+        _controls.Player.Run.canceled -= Run;
+        _controls.Player.PowerUp.canceled -= PowerUp;
         _controls.Player.CameraControl.canceled -= GetCameraMove;
         _controls.Player.Disable();
 
     }
+
+    #endregion
+
+    #region PLAYER ACTIONS
 
     public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         //Debug.Log(context.control.device.displayName);
         _playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         //CAMBIAR ANIMACIÓN
-        //AÑADIR LO Q SEA PARA LA BOFETADA
+        //AÑADIR LO Q SEA PARA EL ZARPAZO
     }
 
     public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         //CAMBIAR ANIMACIÓN
         //AÑADIR VELOCIDAD
+
     }
     public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
     {
-        //SOLTAR CEPO
+        //ACTIVAR VISIÓN
     }
 
-    public void Move (InputAction.CallbackContext context) 
+    public void Move(InputAction.CallbackContext context)
     {
-       //Debug.Log(context.control.device.displayName);
+        //Debug.Log(context.control.device.displayName);
         _horizontaldirection = context.ReadValue<Vector2>();
     }
 
-    public void GetCameraMove(InputAction.CallbackContext context) 
+    public void GetCameraMove(InputAction.CallbackContext context)
     {
         movementCamera = context.ReadValue<Vector2>();
     }
+
+    #endregion
+
+    #region CAMERA CONTROL
 
     //Ubica la direccion de la camara para que el personaje se mueva respecto a ella
     public void CameraDirection()
@@ -169,15 +189,14 @@ public class DeviceActions : MonoBehaviour
         //pivot sigue a player
         Vector3 follow = new Vector3(this.transform.position.x, this.transform.position.y /*- 1.0f*/, this.transform.position.z);
         pivot.position = Vector3.Lerp(pivot.position, follow /*+ offset*/, Time.deltaTime * 100);
-        
+
         //Rotar pivot
         pivot.rotation = Quaternion.Euler(-moveY, moveX, 0.0f);
         //target.rotation = Quaternion.Euler(0,0, 0.0f);
 
     }
 
-    
-
-
+    #endregion
 
 }
+

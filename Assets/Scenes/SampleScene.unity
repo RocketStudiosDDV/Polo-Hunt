@@ -130,9 +130,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 652004385}
-  - component: {fileID: 652004386}
   - component: {fileID: 652004387}
   - component: {fileID: 652004388}
+  - component: {fileID: 652004389}
   m_Layer: 0
   m_Name: Player
   m_TagString: Pinga
@@ -157,26 +157,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &652004386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652004384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a479dc5ee55fcf6439ca920828bfa3d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpForce: 10
-  speed: 5
-  maxSpeed: 10
-  mainCamera: {fileID: 963194227}
-  offset: {x: 0, y: 1.7, z: -9.8}
-  movementCamera: {x: 0, y: 0}
-  target: {fileID: 1701242866}
-  pivot: {fileID: 1191824848}
 --- !u!54 &652004387
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -211,6 +191,26 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &652004389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652004384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fedc18f44bd188b48a37ce34c0b1df88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 10
+  speed: 3
+  maxSpeed: 10
+  mainCamera: {fileID: 963194227}
+  offset: {x: 0, y: 0, z: 0}
+  movementCamera: {x: 0, y: 0}
+  target: {fileID: 1701242866}
+  pivot: {fileID: 1191824848}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
