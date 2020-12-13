@@ -92,6 +92,11 @@ public class BearInput : MonoBehaviour
         }
 
         ToRun(Time.fixedTime);
+        
+        if (_playerRB.transform.position.y < -1.25)
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.transform.position.x + 3.0f, 3.0f, _playerRB.transform.position.z));
+        }
 
         Debug.Log(_playerRB.velocity.magnitude);
     }

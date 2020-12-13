@@ -19,7 +19,7 @@ public class IcePlatform : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.name == "Bear")
         {
             Destroy(gameObject, 0.05f); //Se destruye dos segs después de la colisión
         }
