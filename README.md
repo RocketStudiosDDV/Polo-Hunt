@@ -63,6 +63,7 @@ Para aumentar la experiencia y el tiempo de juego, hemos implementado varios mod
 
 
 ## Flujo de juego
+![Polo Hunt](https://user-images.githubusercontent.com/55508821/102117538-bf1a5300-3e3e-11eb-9beb-900352a75d7b.png)
 
 
 
