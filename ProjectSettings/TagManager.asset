@@ -9,6 +9,8 @@ TagManager:
   - Platform
   - Bear
   - Stocks
+  - Penguin
+  - Fish
   layers:
   - Default
   - TransparentFX

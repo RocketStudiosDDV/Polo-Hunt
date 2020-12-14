@@ -34,7 +34,9 @@ public class BearInput : MonoBehaviour
 
     private double timeDamage;
     private bool damaged = false;
-    //private double Stamina = 10.4;
+    private double finalStamina;
+    private double stamina = 600;
+    private bool firstTime = true;
 
     private double _timeRunning;
     private bool isRunning = false;
@@ -98,7 +100,7 @@ public class BearInput : MonoBehaviour
             _playerRB.MovePosition(new Vector3(_playerRB.transform.position.x + 3.0f, 3.0f, _playerRB.transform.position.z));
         }
 
-        Debug.Log(_playerRB.velocity.magnitude);
+        //Debug.Log(_playerRB.velocity.magnitude);
     }
 
     private void LateUpdate()
@@ -111,7 +113,7 @@ public class BearInput : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.name == "Stocks") //Si choca con un cepo
+        if (collision.gameObject.tag == "Stocks") //Si choca con un cepo
         {
             // Destroy(gameObject, 0.05f); //Se destruye dos segs después de la colisión
             //Hacer daño o lo q sea
@@ -121,11 +123,15 @@ public class BearInput : MonoBehaviour
             _controls.Player.Movement.Disable();
             _controls.Player.CameraControl.Disable();
             damaged = true;
-
            
         }
-        
 
+        if (collision.gameObject.tag == "Fish") //Si choca con un cepo
+        {
+            stamina += 200;
+            Debug.Log("COLAS");
+
+        }
     }
 
     #endregion
@@ -175,10 +181,21 @@ public class BearInput : MonoBehaviour
         //CAMBIAR ANIMACIÓN
         //AÑADIR VELOCIDAD
 
+        if (firstTime == true)
+        {
+            stamina += Time.fixedTime;
+            firstTime = false;
+        }
+
         isRunning = true;
         speed = 10;
         _timeRunning = Time.fixedTime + 10;
+        finalStamina = Time.fixedTime;
 
+        
+        //Stamina = 10/Time.deltaTime/1000;
+        //Stamina += /*10 */ Time.deltaTime; /// 1000;
+        //Debug.Log("Stamina " + Stamina);
     }
     public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
     {
@@ -261,10 +278,11 @@ public class BearInput : MonoBehaviour
             Debug.Log("delta time " + deltaTime);
             Debug.Log("tiempo pasado " + _timeRunning);
 
-            //Stamina -= Time.deltaTime;
-            //Debug.Log("STAMINA" + Stamina);
+            stamina--;
+            Debug.Log("final stamina " + finalStamina);
+            Debug.Log("stamina " + stamina);
 
-            if (deltaTime > _timeRunning)
+            if (finalStamina > stamina)
             {
                 speed = 3;
                 Debug.Log("delta time " + Time.deltaTime);
@@ -272,6 +290,25 @@ public class BearInput : MonoBehaviour
                 isRunning = false;
             }
 
+            //Stamina -= Time.deltaTime;
+            //Debug.Log("STAMINA" + Stamina);
+
+            /* if (deltaTime > _timeRunning)
+             {
+                 speed = 3;
+                 Debug.Log("delta time " + Time.deltaTime);
+                 Debug.Log("tiempo pasado " + _timeRunning);
+                 isRunning = false;
+             }*/
+
+        }
+        else
+        {
+            if (stamina < deltaTime + 600)
+            {
+                stamina++;
+            }
+            
         }
     }
 

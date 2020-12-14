@@ -35,6 +35,12 @@ public class PenguinInput : MonoBehaviour
     private double _timeRunning;
     private bool isRunning = false;
 
+    private bool cepoActive = false;
+    private double timeAwait;
+
+    private bool fishEaten = false;
+    private double _timeFish;
+
 
     public GameObject cepo;
 
@@ -80,7 +86,7 @@ public class PenguinInput : MonoBehaviour
         }
         
         ThirdCamera();
-        //transform.LookAt(target);
+
 
         target.transform.LookAt(pivot);
 
@@ -88,27 +94,41 @@ public class PenguinInput : MonoBehaviour
         _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
         //_playerRB.AddForce(Vector3.right * speed * _horizontaldirection);
 
-        //_timeRunning++;
 
-        ToRun(Time.fixedTime);
+        ToRun(Time.fixedTime); //Comprueba si sigue deslizandose o no
+        FishRun(Time.fixedTime);
 
-
-            Debug.Log( "velocidad " + speed);
-        //Debug.Log(_timeRunning);
-
-        //Debug.Log(_playerRB.velocity.magnitude);
+        //comprueba que puede tirar el cepo. COODOWN
+        if (cepoActive == true)
+        {
+            if(Time.fixedTime > timeAwait)
+            {
+                cepoActive = false;
+            }
+        }
     }
 
     private void LateUpdate()
     {
-        //transform.LookAt(_playerRB.transform.position);
-        //pivot.LookAt(target.position);
-        //pivot.LookAt(target);
+
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Fish") //Si choca con un pescao
+        {
+            fishEaten = true;
+            speed = 50;
+            _timeFish = Time.fixedTime + 5;
+            Debug.Log("COLAS");
+
+        }
+
+    }
     #endregion
 
     #region HANDLER CONTROLLER
+
     //Asignamos las acciones mediante handlers
     private void OnEnable()
     {
@@ -123,7 +143,7 @@ public class PenguinInput : MonoBehaviour
         _controls.Player.Enable();
     }
 
-    //
+    //Desactiva acciones
     private void OnDisable()
     {
         //Elimina el evento
@@ -141,7 +161,6 @@ public class PenguinInput : MonoBehaviour
     #region PLAYER ACTIONS
     public void Move(InputAction.CallbackContext context)
     {
-        //Debug.Log(context.control.device.displayName);
         _horizontaldirection = context.ReadValue<Vector2>();
     }
 
@@ -157,21 +176,27 @@ public class PenguinInput : MonoBehaviour
     public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         Debug.Log("DESLIZA");
-        //runTime();
+        
         isRunning = true;
         speed = 10;
         _timeRunning = Time.fixedTime + 10;
         Debug.Log("vel " + speed);
         //CAMBIAR ANIMACIÓN
-        //AÑADIR VELOCIDAD
-        //AÑADIR TEMPOSIZADOR PARA DESACTIVAR DESLIZAMIENTO
+
     }
     public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         //SOLTAR CEPO
         Debug.Log("CEPO");
 
-        Instantiate(cepo, _playerRB.transform.position, Quaternion.identity);
+        if(cepoActive == false)
+        {
+            cepoActive = true;
+            Instantiate(cepo, _playerRB.transform.position, Quaternion.identity);
+            timeAwait = Time.fixedTime + 10; //tiempo que tarada en voilver a tener aviable el cpeo
+
+        }
+        
     }
 
     public void GetCameraMove(InputAction.CallbackContext context)
@@ -198,6 +223,25 @@ public class PenguinInput : MonoBehaviour
                 Debug.Log("tiempo pasado " + _timeRunning);
                 _controls.Player.Movement.Enable();
                 isRunning = false;
+            }
+
+        }
+    }
+
+    public void FishRun(double deltaTime)
+    {
+        if (fishEaten == true)
+        {
+            Debug.Log("a correr");
+            Debug.Log("delta time " + deltaTime);
+            Debug.Log("tiempo pasado " + _timeFish);
+
+            if (deltaTime > _timeFish)
+            {
+                speed = 3;
+                Debug.Log("delta time " + Time.deltaTime);
+                Debug.Log("tiempo pasado " + _timeFish);
+                fishEaten = false;
             }
 
         }
