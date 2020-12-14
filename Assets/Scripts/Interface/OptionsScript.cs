@@ -20,4 +20,9 @@ public class OptionsScript : MonoBehaviour
     {
         Debug.Log(volume);
     }
+
+    public void SetBright(float bright)
+    {
+        Debug.Log(bright);
+    }
 }

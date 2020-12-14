@@ -21,4 +21,9 @@ public class ChangerScene : MonoBehaviour
     {
         SceneManager.LoadScene(nameScene);
     }
+
+    public void OpenWebPage(string namePage)
+    {
+        Application.OpenURL(namePage);
+    }
 }
