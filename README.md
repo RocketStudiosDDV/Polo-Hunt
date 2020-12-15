@@ -12,12 +12,14 @@ En ordenador y disporsitivos móviles
 #### Modos de Juego
 El juego consta de un
 #### Temática
-Los paisajes del juego están inspirados en el ártico, al igual que sus paisajes y los distintos animales que salen. 
-
+Los paisajes del juego están inspirados en el ártico. 
+Hemos decidido obviar las disonancias que hay entre los distintos animales situados en cada polo y hacer un juego en el que todos sus elementos sean procedentes de lugares helados independientemente de la coherencia de juntar a estos.
+[Revisar esto ]
 ## Descripción del juego
+Polo Hunt es un juego multijugador diseñado para todos los públicos, que consta de unos diversos modos de juego pensados para divertir a los jugadores haciendo gala de esta carácterística temática polar.
 Es un juego pensado para hacer una ligera crítica al cambio climático. En el hay diversos modos de juegos para participar, aunque la esencia de este y de varios de sus modos es el clásico escondite/pilla pilla.
 Los personajes principales serán pingüninos y osos polares. Los osos serán los encargados de dar caza a todos los pingüinos. Los pingüinos tendrán que salvarse escondiendose por el mapa y usando las distintas habilidades que poseen.
-
+...
 
 
 ## Personajes
@@ -54,7 +56,16 @@ Para aumentar la experiencia y el tiempo de juego, hemos implementado varios mod
 
 ## Escenarios 
 
+El juego tiene un escenario por cada modo disponible. Cada escenario ha sido desarrollado pensando en expandir la jugabilidad de su modo correspondiente. El trabajo de level design en este proyecto es muy importante, puesto que el número de jugadores y el tiempo aproximado de partida son decisivos a la hora de crear estos escenarios.
 
+Para este proyecto hemos buscado varios paquetes de assets ya definidos para incorporarlos. El trabajo de búsqueda ha sido muy importante para conseguir encontrar los elementos que más se acerque a la estética que marcan los personajes.
+
+
+Escenario Hunt:
+
+Escenario Sumo:
+
+Escenario Carreras:
 
 
 
@@ -72,9 +83,34 @@ Para aumentar la experiencia y el tiempo de juego, hemos implementado varios mod
 
 ## Experiencia de usuario
 
+Este juego tiene un gran desafío por esta parte. Conseguir la diversión del jugador es la clave para el éxito del producto y para ello tenemos unas cuantas reglas principales:
+- El movimiento de los personajes debe ser atractivo a la hora de su manejo, pero con la premisa de que la torpeza de los movimientos se encuentren en un sofisticado balance entre las físicas de los personajes y la influencia del escenario. 
+- Los modos de juego deben de tener una complejidad muy ligera. Los modos de juego tienen las siguientes caracteristicas.....
+- La temática es sin duda una de las claves de este juego. La misión principal de la temática y de sus personajes es conquistar al jugador y dotar al juego de una personalidad amable y graciosa. 
+-
 
 
 ## Modelo de negocio
+Nuestro modelo de negocio tiene como clave principal la fidelización de nuestros clientes. Vamos a ir asegurando su permanencia con una estrategia a dos años vista con continuas renovaciones del juego.
+
+La principal fuente de ingresos para este juego es la tienda que ofrece. El contenido de la tienda se renueva semanalmente con ofertas para aquellos jugadores que hayan superado los desafíos establecidos. Estos desafíos incitan al jugador a jugar de manera casi constante para que se vea beneficiado por la parte económica del ahorro en las skins.
+
+
+Para conservar a nuestra audiencia vamos a ir actualizando el juego con una buena variedad de modos de juego siguiendo con la esencia de los principales. Cada x tiempo se lanzará un nuevo modo junto con un paquete de skins para los personajes del juego.
+
+Modos de juego para el futuro:
+-
+-
+-
+-
+-
+
+Paquetes de Skins:
+-
+-
+-
+-
+-
 
 
 ## Controles y tutorial
