@@ -16,7 +16,7 @@ Los paisajes del juego están inspirados en el ártico.
 Hemos decidido obviar las disonancias que hay entre los distintos animales situados en cada polo y hacer un juego en el que todos sus elementos sean procedentes de lugares helados independientemente de la coherencia de juntar a estos.
 [Revisar esto ]
 ## Descripción del juego
-Polo Hunt es un juego multijugador diseñado para todos los públicos, que consta de unos diversos modos de juego pensados para divertir a los jugadores haciendo gala de esta carácterística temática polar.
+Polo Hunt es un juego multijugador diseñado para todos los públicos, que consta de unos diversos modos de juego pensados para divertir a los jugadores haciendo gala de esta singular temática polar.
 Es un juego pensado para hacer una ligera crítica al cambio climático. En el hay diversos modos de juegos para participar, aunque la esencia de este y de varios de sus modos es el clásico escondite/pilla pilla.
 Los personajes principales serán pingüninos y osos polares. Los osos serán los encargados de dar caza a todos los pingüinos. Los pingüinos tendrán que salvarse escondiendose por el mapa y usando las distintas habilidades que poseen.
 ...
