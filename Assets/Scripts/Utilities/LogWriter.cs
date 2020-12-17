@@ -17,9 +17,10 @@ public class LogWriter : MonoBehaviour
 
     public void Start()
     {
-        if (log == null)
+        if (verboseMode == true && log == null)
         {
-            Debug.LogWarning("LogWriter debe tener la referencia a un objeto text!");
+            Debug.LogWarning("LogWriter debe tener la referencia a un objeto text para imprimir datos.\n" +
+                "Marcar verboseMode a false en el inspector para no imprimir por pantalla");
         }
     }
 
