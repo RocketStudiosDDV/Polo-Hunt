@@ -34,6 +34,7 @@ public class PenguinInput : MonoBehaviour
 
     private double _timeRunning;
     private bool isRunning = false;
+    private Vector3 forceDirection; 
 
     private bool cepoActive = false;
     private double timeAwait;
@@ -43,6 +44,8 @@ public class PenguinInput : MonoBehaviour
 
 
     public GameObject cepo;
+
+    private bool InIceDashPlat = false;
 
     #endregion
 
@@ -70,6 +73,7 @@ public class PenguinInput : MonoBehaviour
         playerInput = new Vector3(_horizontaldirection.x, 0, _horizontaldirection.y);
         playerInput = Vector3.ClampMagnitude(playerInput, 1); //para poder normalizar la distancia. 1 es el valor max, va de 0 a 1      
 
+        
         //Para que no supere una velocidad:
         /*if(_playerRB.velocity.magnitude > maxSpeed)
         {
@@ -90,10 +94,26 @@ public class PenguinInput : MonoBehaviour
 
         target.transform.LookAt(pivot);
 
-        //Aplicamos la velocidad de movimiento WASD
-        _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
-        //_playerRB.AddForce(Vector3.right * speed * _horizontaldirection);
+        if(isRunning == false)
+        {
+            if (InIceDashPlat == true) //Movimientoi en el dash de la plat
+            {
+                _playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
+                _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
+                Debug.Log("HIELO");
+            }
+            else //movimiento normakl
+            {
+                _playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
+            }
+        }
+        
 
+        //Aplicamos la velocidad de movimiento WASD
+        //_playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
+        //_playerRB.AddForce(Vector3.forward * speed * 0.5f);
+        //_playerRB.velocity = Vector3.forward * speed * 0.5f;
+        //_playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
 
         ToRun(Time.fixedTime); //Comprueba si sigue deslizandose o no
         FishRun(Time.fixedTime);
@@ -122,6 +142,17 @@ public class PenguinInput : MonoBehaviour
             _timeFish = Time.fixedTime + 5;
             Debug.Log("COLAS");
 
+        }
+
+        if (collision.gameObject.tag == "IceDashPlat") //Si choca con un pescao
+        {
+            InIceDashPlat = true;
+
+        }
+
+        if (collision.gameObject.tag == "Floor") //Si choca con un pescao
+        {
+            InIceDashPlat = false;
         }
 
     }
@@ -176,7 +207,7 @@ public class PenguinInput : MonoBehaviour
     public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         Debug.Log("DESLIZA");
-        
+        forceDirection = _playerRB.transform.forward;
         isRunning = true;
         speed = 10;
         _timeRunning = Time.fixedTime + 10;
@@ -214,14 +245,19 @@ public class PenguinInput : MonoBehaviour
             Debug.Log("a correr");
             Debug.Log("delta time " + deltaTime);
             Debug.Log("tiempo pasado " + _timeRunning);
-            _controls.Player.Movement.Disable();
+            //_controls.Player.Movement.Disable();
+            //playerInput = new Vector3(playerInput.x, 0, playerInput.z);
+            //_playerRB.velocity = new Vector3(playerInput.x * 0.5f * speed, _playerRB.velocity.y, playerDirection.z * 0.5f * speed);
+            _playerRB.AddForce(forceDirection * speed, ForceMode.Acceleration);
+            //_playerRB.AddForce(playerInput * 0.25f, ForceMode.Impulse);
+
 
             if (deltaTime > _timeRunning)
             {
                 speed = 3;
                 Debug.Log("delta time " + Time.deltaTime);
                 Debug.Log("tiempo pasado " + _timeRunning);
-                _controls.Player.Movement.Enable();
+                //_controls.Player.Movement.Enable();
                 isRunning = false;
             }
 
