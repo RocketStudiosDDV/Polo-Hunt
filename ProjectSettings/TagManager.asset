@@ -11,6 +11,8 @@ TagManager:
   - Stocks
   - Penguin
   - Fish
+  - IceDashPlat
+  - Floor
   layers:
   - Default
   - TransparentFX
