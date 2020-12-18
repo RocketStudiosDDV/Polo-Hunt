@@ -10,6 +10,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     #region VARIABLES
     public LogWriter logWriter;
 
+    public GameObject LobbyPanel;
+    public GameObject ConnectPanel;
+    public GameObject RoomPanel;
+
     // Test variables
     public string testRoomName;
     public bool testRoomProperty;
@@ -208,15 +212,22 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     #endregion
 
     #region PUN CALLBACKS
+
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
+        LobbyPanel.SetActive(true);
+        RoomPanel.SetActive(false);
+        ConnectPanel.SetActive(false);
         logWriter.Write("Conectado al servidor" + PhotonNetwork.ServerAddress);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
+        LobbyPanel.SetActive(false);
+        RoomPanel.SetActive(false);
+        ConnectPanel.SetActive(true);
         logWriter.Write("Se ha desconectado por la causa: " + cause.ToString());
     }
 
@@ -246,12 +257,18 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
+        LobbyPanel.SetActive(false);
+        RoomPanel.SetActive(true);
+        ConnectPanel.SetActive(false);
         logWriter.Write("Sala creada");
     }
 
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        LobbyPanel.SetActive(false);
+        RoomPanel.SetActive(true);
+        ConnectPanel.SetActive(false);
         logWriter.Write("Unido a la sala " + PhotonNetwork.CurrentRoom.Name + " - nº players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers);
     }
 
