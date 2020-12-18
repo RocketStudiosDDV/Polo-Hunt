@@ -41,6 +41,7 @@ public class BearInput : MonoBehaviour
     private double _timeRunning;
     private bool isRunning = false;
 
+    public Material visionMaterial;
 
     #endregion
 
@@ -200,6 +201,9 @@ public class BearInput : MonoBehaviour
     public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         //ACTIVAR VISIÓN
+        GameObject wall = GameObject.FindGameObjectWithTag("Wall");
+        Renderer rend = wall.GetComponent<Renderer>();
+        rend.material =  visionMaterial;
     }
 
     public void Move(InputAction.CallbackContext context)

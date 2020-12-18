@@ -94,17 +94,22 @@ public class PenguinInput : MonoBehaviour
 
         target.transform.LookAt(pivot);
 
-        if(isRunning == false)
+        ToRun(Time.fixedTime); //Comprueba si sigue deslizandose o no
+        FishRun(Time.fixedTime);
+
+
+        if (isRunning == false)
         {
             if (InIceDashPlat == true) //Movimientoi en el dash de la plat
             {
-                _playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
+                _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
                 _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
                 Debug.Log("HIELO");
             }
             else //movimiento normakl
             {
-                _playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
+                _playerRB.AddForce(Vector3.forward * 0, ForceMode.Impulse);
+                _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
             }
         }
         
@@ -115,9 +120,7 @@ public class PenguinInput : MonoBehaviour
         //_playerRB.velocity = Vector3.forward * speed * 0.5f;
         //_playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
 
-        ToRun(Time.fixedTime); //Comprueba si sigue deslizandose o no
-        FishRun(Time.fixedTime);
-
+        
         //comprueba que puede tirar el cepo. COODOWN
         if (cepoActive == true)
         {
@@ -215,7 +218,7 @@ public class PenguinInput : MonoBehaviour
         //CAMBIAR ANIMACIÓN
 
     }
-    public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
+    public void PowerUp(InputAction.CallbackContext context) //Soltar cepo -L1 - space
     {
         //SOLTAR CEPO
         Debug.Log("CEPO");
@@ -257,6 +260,7 @@ public class PenguinInput : MonoBehaviour
                 speed = 3;
                 Debug.Log("delta time " + Time.deltaTime);
                 Debug.Log("tiempo pasado " + _timeRunning);
+                _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
                 //_controls.Player.Movement.Enable();
                 isRunning = false;
             }

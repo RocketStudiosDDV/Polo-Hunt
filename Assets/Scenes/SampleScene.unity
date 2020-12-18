@@ -386,7 +386,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &652004385
 Transform:
   m_ObjectHideFlags: 0
@@ -754,7 +754,7 @@ Transform:
   m_GameObject: {fileID: 1309981638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 31.9, y: 1, z: 43.2}
+  m_LocalScale: {x: 78.25, y: 1, z: 43.2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -1640,7 +1640,7 @@ GameObject:
   - component: {fileID: 1949202498}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1676,7 +1676,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1e318e95a41c5764fa43e18617c459a1, type: 2}
+  - {fileID: 2100000, guid: 786c824d5cff72c4da1bef1e4fcf8663, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1889,7 +1889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2134349463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1910,6 +1910,7 @@ MonoBehaviour:
   movementCamera: {x: 0, y: 0}
   target: {fileID: 1701242866}
   pivot: {fileID: 1191824848}
+  visionMaterial: {fileID: 2100000, guid: a31a5cb16f50e5f43ab7496e3e1cc206, type: 2}
 --- !u!143 &2134349464
 CharacterController:
   m_ObjectHideFlags: 0
