@@ -43,6 +43,9 @@ public class BearInput : MonoBehaviour
 
     public Material visionMaterial;
 
+    private bool atacking = false;
+    private double _timeAtacking;
+
     #endregion
 
     #region UNITY CALLBACKS
@@ -89,13 +92,19 @@ public class BearInput : MonoBehaviour
         _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
         //_playerRB.AddForce(Vector3.right * speed * _horizontaldirection);
 
-        if(damaged == true)
+        if (damaged == true)
         {
             BearDamaged(Time.fixedTime);
         }
 
         ToRun(Time.fixedTime);
-        
+
+        //que el ataque dure un seg
+        if (Time.deltaTime > _timeAtacking)
+        {
+            atacking = false;
+        }
+
         if (_playerRB.transform.position.y < -1.25)
         {
             _playerRB.MovePosition(new Vector3(_playerRB.transform.position.x + 3.0f, 3.0f, _playerRB.transform.position.z));
@@ -124,7 +133,7 @@ public class BearInput : MonoBehaviour
             _controls.Player.Movement.Disable();
             _controls.Player.CameraControl.Disable();
             damaged = true;
-           
+
         }
 
         if (collision.gameObject.tag == "Fish") //Si choca con un cepo
@@ -132,6 +141,17 @@ public class BearInput : MonoBehaviour
             stamina += 200;
             Debug.Log("COLAS");
 
+        }
+
+        if (collision.gameObject.tag == "Penguin")
+        {
+            if (atacking == true)
+            {
+                GameObject pengu = collision.gameObject;
+
+                Destroy(pengu);
+                //collision.gameObject.GetComponent<GameObject>().gameObject.des;
+            }
         }
     }
 
@@ -172,9 +192,11 @@ public class BearInput : MonoBehaviour
     public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         //Debug.Log(context.control.device.displayName);
-        _playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        //_playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         //CAMBIAR ANIMACIÓN
         //AÑADIR LO Q SEA PARA EL ZARPAZO
+        atacking = true;
+        _timeAtacking = Time.fixedTime + 1;
     }
 
     public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
@@ -193,7 +215,7 @@ public class BearInput : MonoBehaviour
         _timeRunning = Time.fixedTime + 10;
         finalStamina = Time.fixedTime;
 
-        
+
         //Stamina = 10/Time.deltaTime/1000;
         //Stamina += /*10 */ Time.deltaTime; /// 1000;
         //Debug.Log("Stamina " + Stamina);
@@ -203,7 +225,7 @@ public class BearInput : MonoBehaviour
         //ACTIVAR VISIÓN
         GameObject wall = GameObject.FindGameObjectWithTag("Wall");
         Renderer rend = wall.GetComponent<Renderer>();
-        rend.material =  visionMaterial;
+        rend.material = visionMaterial;
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -312,9 +334,10 @@ public class BearInput : MonoBehaviour
             {
                 stamina++;
             }
-            
+
         }
     }
 
 }
+
 
