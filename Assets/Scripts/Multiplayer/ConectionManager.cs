@@ -152,6 +152,21 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             logWriter.Write("No está en ningún lobby");
         }
     }
+
+    /// <summary>
+    /// Inicia la partida (cambia la escena al nivel de juego). 
+    /// Sólo lo puede llamar el MasterClient (host)
+    /// </summary>
+    public void StartMatch()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.LoadLevel("MultiplayerGameplayTestScene");
+            }
+        }
+    }
     #endregion
 
     #region PRIVATE METHODS
@@ -211,82 +226,105 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     }
     #endregion
 
+    #region UNITY CALLBACKS
+    private void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+    #endregion
+
     #region PUN CALLBACKS
 
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
+        if (logWriter != null)
+            logWriter.Write("Conectado al servidor" + PhotonNetwork.ServerAddress);
+
         LobbyPanel.SetActive(true);
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
-        logWriter.Write("Conectado al servidor" + PhotonNetwork.ServerAddress);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
+        if (logWriter != null)
+            logWriter.Write("Se ha desconectado por la causa: " + cause.ToString());
+
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(true);
-        logWriter.Write("Se ha desconectado por la causa: " + cause.ToString());
     }
 
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-        logWriter.Write("Se ha unido al lobby");
+        if (logWriter != null)
+            logWriter.Write("Se ha unido al lobby");
     }
 
     public override void OnLeftLobby()
     {
         base.OnLeftLobby();
-        logWriter.Write("Se ha marchado del lobby");
+        if (logWriter != null)
+            logWriter.Write("Se ha marchado del lobby");
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
-        logWriter.Write("--ROOMS UPDATE START--");
-        foreach(RoomInfo roomInfo in roomList)
+        if (logWriter != null)
         {
-            logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString());
+            logWriter.Write("--ROOMS UPDATE START--");
+            foreach (RoomInfo roomInfo in roomList)
+            {
+                logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString());
+            }
+            logWriter.Write("--ROOMS UPDATE END--");
         }
-        logWriter.Write("--ROOMS UPDATE END--");
     }
 
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
+        if (logWriter != null)
+            logWriter.Write("Sala creada");
+
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(true);
         ConnectPanel.SetActive(false);
-        logWriter.Write("Sala creada");
     }
 
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        if (logWriter != null)
+            logWriter.Write("Unido a la sala " + PhotonNetwork.CurrentRoom.Name + " - nº players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers);
+
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(true);
         ConnectPanel.SetActive(false);
-        logWriter.Write("Unido a la sala " + PhotonNetwork.CurrentRoom.Name + " - nº players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         base.OnJoinRoomFailed(returnCode, message);
-        logWriter.Write("Fallo al unirse a sala: " + message);
+        if (logWriter != null)
+            logWriter.Write("Fallo al unirse a sala: " + message);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         base.OnJoinRandomFailed(returnCode, message);
-        logWriter.Write("Error al unirse a sala aleatoria: " + message);
+        if (logWriter != null)
+            logWriter.Write("Error al unirse a sala aleatoria: " + message);
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         base.OnCreateRoomFailed(returnCode, message);
-        logWriter.Write("Creación de sala fallida por error: " + message);
+        if (logWriter != null)
+            logWriter.Write("Creación de sala fallida por error: " + message);
     }
     #endregion
 
