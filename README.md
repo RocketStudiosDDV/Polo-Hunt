@@ -51,8 +51,25 @@ Para aumentar la experiencia y el tiempo de juego, hemos implementado varios mod
 
 
 
+## Movimientos y habilidades
+La distintas velocidades de cada animal son el ajuste más importante del juego para poder conseguir una jugabilidad bien definida y agradable para los usuarios. Para compensar el desnivel de velocidades, hemos decidido que se ajuste mediante el juego de los usuarios cuando utilicen sus sprints y sus correspondientes habilidades.
 
+Los sprints de cada animal son distintos:
+- Pingüinos: Los pingüinos podrán aprovechar su velocidad instantánea o los desniveles causados por la nieve para poder tumbarse y aumentar su velocidad de movimiento de manera considerable mientras que este decae por la desaceleración. 
+- Osos: Los osos podrán correr, pero la duración de su carrera va a estar limitada por una barra de aguante.
+
+
+
+
+Cada animal dispondrá de una habilidad:
+- Pingüinos: estos tendrán la habilidad de soltar cepos a sus espaldas, si uno de estos consigue colisionar con el oso, este se verá petrificado por unos instantes a modo de penalización.
+- Osos: Los osos tendrán la habilidad de la (nombre de la habilidad vision ). Para compensar el número de pingüinos y el tamaño del escenario, el oso cada cierto tiempo podrá ver la posición de todos los pingüinos. 
+
+Con estas dos habilidades se busca un balanceo justo para las deficiencias de cada animal. 
+Los pingüinos al tener un movimiento más lento, se encuentran en una clara desventaja a la hora de huir en sitios donde el deslizamiento sea casi nulo. 
+Los osos podrán obtener la posición de sus presas con cierta frecuencia para aprovechar también los laberintos que puede encontrar en la ciudad y en las montañas. 
 ## Mecánicas de juego
+
 
 ## Escenarios 
 
