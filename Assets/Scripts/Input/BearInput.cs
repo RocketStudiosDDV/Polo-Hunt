@@ -225,7 +225,10 @@ public class BearInput : MonoBehaviour
         //ACTIVAR VISIÓN
         GameObject wall = GameObject.FindGameObjectWithTag("Wall");
         Renderer rend = wall.GetComponent<Renderer>();
+        
         rend.material = visionMaterial;
+        visionMaterial.CopyPropertiesFromMaterial(visionMaterial);
+        //visionMaterial.SetOverrideTag("PlayerPos", "pinga");
     }
 
     public void Move(InputAction.CallbackContext context)

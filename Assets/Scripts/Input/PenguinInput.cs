@@ -138,6 +138,7 @@ public class PenguinInput : MonoBehaviour
             }
         }
 
+        //_playerRB.
 
         //Aplicamos la velocidad de movimiento WASD
         //_playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
