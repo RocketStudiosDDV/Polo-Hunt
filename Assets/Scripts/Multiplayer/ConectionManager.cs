@@ -8,13 +8,17 @@ using UnityEngine.UI;
 public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks, ILobbyCallbacks, IMatchmakingCallbacks
 {
     #region VARIABLES
+    // PUBLICAS
     public LogWriter logWriter;
 
     public GameObject LobbyPanel;
     public GameObject ConnectPanel;
     public GameObject RoomPanel;
 
-    // Test variables
+    // PRIVADAS
+    HashSet<int> roomCodes = new HashSet<int>();
+
+    // TEST
     public string testRoomName;
     public bool testRoomProperty;
     #endregion
@@ -118,6 +122,43 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayers, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties });
     }
 
+    /// <summary>
+    /// Crea una sala privada con el nombre y el nº máximo de jugadores pasados como parámetro.
+    /// Para unirse a la sala sólo hace falta el nombre.
+    /// Nombre default = nickname del cliente + "Room"
+    /// maxPlayers default = 10
+    /// </summary>
+    /// <param name="roomName"></param>
+    /// <param name="maxPlayers"></param>
+    public void CreatePrivateRoom(string roomName, byte maxPlayers = 10)
+    {
+        logWriter.Write("Creando sala privada...");
+
+        if (roomName == null || roomName == "")
+        {
+            roomName = PhotonNetwork.NickName + "Room";
+        }
+
+        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable();   // Valor por defecto de sala (modo caza)
+        customRoomProperties["gameMode"] = GameMode.Hunt;
+
+        PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayers, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties, IsVisible = false });
+    }
+
+    /// <summary>
+    /// Devuelve el string del nombre de la sala
+    /// null si no está en sala
+    /// </summary>
+    /// <returns></returns>
+    public string GetRoomName()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            return PhotonNetwork.CurrentRoom.Name;
+        }
+        return null;
+    }
+
     // QUE PASA SI ESTA LLENA ????????????????????????
     /// <summary>
     /// Se une a la sala con el nombre pasado como parámetro
@@ -140,6 +181,14 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     }
 
     /// <summary>
+    /// Desconecta al usuario de la sala y del lobby.
+    /// </summary>
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
+    /// <summary>
     /// Imprime el nombre del lobby actual
     /// </summary>
     public void PrintLobbyName()
@@ -154,6 +203,21 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     }
 
     /// <summary>
+    /// Settea el modo de juego (sólo si es el Master Client (host))
+    /// </summary>
+    /// <param name="gameMode"></param>
+    public void SetGameMode(GameMode gameMode)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+            newCustomRoomProperties["gameMode"] = gameMode;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
+        }       
+
+    }
+
+    /// <summary>
     /// Inicia la partida (cambia la escena al nivel de juego). 
     /// Sólo lo puede llamar el MasterClient (host)
     /// </summary>
@@ -164,6 +228,43 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.LoadLevel("MultiplayerGameplayTestScene");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Devuelve una lista de String con los NickNames de los jugadores presentes en la sala.
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetPlayersList()
+    {
+        List<string> playersList = new List<string>();
+        Dictionary<int, Player> players = PhotonNetwork.CurrentRoom.Players;
+        foreach(Player player in players.Values)
+        {
+            playersList.Add(player.NickName);
+        }
+        return playersList;
+    }
+
+    /// <summary>
+    /// Echa al jugador pasado como parámetro de la sala.
+    /// Sólo lo puede echar el Master Client (host).
+    /// Se debe pasar su NickName (string).
+    /// Se obtienen los nicknames con GetPlayersList()
+    /// </summary>
+    /// <param name="playerNickName"></param>
+    public void KickPlayer(string playerNickName)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Dictionary<int, Player> players = PhotonNetwork.CurrentRoom.Players;
+            foreach (Player player in players.Values)
+            {
+                if (player.NickName.Equals(playerNickName))
+                {
+                    PhotonNetwork.CloseConnection(player);
+                }
             }
         }
     }
@@ -279,7 +380,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             logWriter.Write("--ROOMS UPDATE START--");
             foreach (RoomInfo roomInfo in roomList)
             {
-                logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString());
+                if (roomInfo != null)
+                    logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString());
             }
             logWriter.Write("--ROOMS UPDATE END--");
         }
@@ -300,7 +402,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         base.OnJoinedRoom();
         if (logWriter != null)
-            logWriter.Write("Unido a la sala " + PhotonNetwork.CurrentRoom.Name + " - nº players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers);
+            logWriter.Write("Unido a la sala " + GetRoomName() + " - nº players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers);
 
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(true);
