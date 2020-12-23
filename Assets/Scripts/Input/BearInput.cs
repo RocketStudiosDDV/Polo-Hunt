@@ -8,43 +8,58 @@ public class BearInput : MonoBehaviour
     #region VARIABLES
 
     //CONTROL DEL PLAYER
-    [SerializeField] float jumpForce = 10;
     [SerializeField] float speed = 3;
-    [SerializeField] float maxSpeed = 10;
+    //[SerializeField] float jumpForce = 10;
+    //[SerializeField] float maxSpeed = 10;
 
-    private PlayerControls _controls;
-    private Rigidbody _playerRB; //Rigid body del pingu
+    private PlayerControls _controls; //Consigue los controles por teclado y mando
+    private Rigidbody _playerRB; //Rigid body del pingu, controla las fisicas
 
-    private Vector2 _horizontaldirection;
-    private Vector3 playerInput; //guarda la info del input
+    private Vector2 _horizontaldirection; //Vector que recoge la info del joystick de movimiento (direccion de mov  y cantidad)
+    private Vector3 playerInput; //Guarda la info del input
     private Vector3 playerDirection; //Hacia donde se mueve el jugador
 
     //CONTROL DE LA CÁMARA
+
+    //Gestión del movimiento del personaje respecto de la cámara
     public Camera mainCamera; //Guarda cuál es nuestra cámara
     private Vector3 camFordward; //vector camara hacia delante
     private Vector3 camRight; //camara hacia la dcha, direccion a la que mira la camara
 
-    public Vector3 offset;
-    public Vector2 movementCamera;
+    //Gestión de la cámara en tercera persona
     public Transform target;
     public Transform pivot;
+    public Vector3 offset;
+    public Vector2 movementCamera;
     private float moveX;
     private float moveY;
     private float m_LookSense = 1.0f;
 
-    private double timeDamage;
+    //Daño por caida al agua del oso
+    private double _timeDamage;
     private bool damaged = false;
+
+    //Gestión de la stamina
     private double finalStamina;
     private double stamina = 600;
     private bool firstTime = true;
 
-    private double _timeRunning;
+    //Gestiona correr
     private bool isRunning = false;
+    private double _timeRunning;
 
-    public Material visionMaterial;
-
+    //Gestiona el ataque
     private bool atacking = false;
     private double _timeAtacking;
+
+    //Gestiona el power up
+    private bool powerUpOn = false;
+    private double _timePowerUp;
+
+    public Material visionMaterial;
+    public Material normalMaterial;
+
+    
 
     #endregion
 
@@ -52,19 +67,12 @@ public class BearInput : MonoBehaviour
 
     private void Awake()
     {
-        _controls = new PlayerControls();
+        _controls = new PlayerControls(); //Recoge los controles
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        _playerRB = GetComponent<Rigidbody>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        _playerRB = GetComponent<Rigidbody>(); //identifica el rigidbdy del oso
     }
 
     private void FixedUpdate()
@@ -80,30 +88,22 @@ public class BearInput : MonoBehaviour
 
         playerDirection = playerInput.x * camRight + playerInput.z * camFordward; //Almacena la direccion hacia la que se esta moviendo el player
 
-        _playerRB.transform.LookAt(_playerRB.transform.position + playerDirection);
+        _playerRB.transform.LookAt(_playerRB.transform.position + playerDirection); //Hace que el jugador mire al frente
 
-        CameraDirection();
-        ThirdCamera();
-        //transform.LookAt(target);
+        //Funciones de control de cámara
+        CameraDirection(); //movimiento respecto de la camara
+        ThirdCamera(); //control cámara tercera persona
 
         target.transform.LookAt(pivot);
 
         //Aplicamos la velocidad de movimiento WASD
         _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
-        //_playerRB.AddForce(Vector3.right * speed * _horizontaldirection);
 
-        if (damaged == true)
-        {
-            BearDamaged(Time.fixedTime);
-        }
-
+        ToDamage(Time.fixedTime);
         ToRun(Time.fixedTime);
-
-        //que el ataque dure un seg
-        if (Time.deltaTime > _timeAtacking)
-        {
-            atacking = false;
-        }
+        UsePoweUp(Time.fixedTime);
+        ToAttack(Time.fixedTime);
+        
 
         if (_playerRB.transform.position.y < -1.25)
         {
@@ -125,22 +125,19 @@ public class BearInput : MonoBehaviour
 
         if (collision.gameObject.tag == "Stocks") //Si choca con un cepo
         {
-            // Destroy(gameObject, 0.05f); //Se destruye dos segs después de la colisión
             //Hacer daño o lo q sea
-            timeDamage = Time.fixedTime + 10;
+            _timeDamage = Time.fixedTime + 10;
             Debug.Log("DAÑO");
             speed = 0;
             _controls.Player.Movement.Disable();
             _controls.Player.CameraControl.Disable();
             damaged = true;
-
         }
 
         if (collision.gameObject.tag == "Fish") //Si choca con un cepo
         {
             stamina += 200;
             Debug.Log("COLAS");
-
         }
 
         if (collision.gameObject.tag == "Penguin")
@@ -150,7 +147,6 @@ public class BearInput : MonoBehaviour
                 GameObject pengu = collision.gameObject;
 
                 Destroy(pengu);
-                //collision.gameObject.GetComponent<GameObject>().gameObject.des;
             }
         }
     }
@@ -191,8 +187,6 @@ public class BearInput : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
     {
-        //Debug.Log(context.control.device.displayName);
-        //_playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         //CAMBIAR ANIMACIÓN
         //AÑADIR LO Q SEA PARA EL ZARPAZO
         atacking = true;
@@ -223,13 +217,17 @@ public class BearInput : MonoBehaviour
     public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         //ACTIVAR VISIÓN
-        GameObject wall = GameObject.FindGameObjectWithTag("Wall");
-        Renderer rend = wall.GetComponent<Renderer>();
-        
-        rend.material = visionMaterial;
-        visionMaterial.CopyPropertiesFromMaterial(visionMaterial);
-        //visionMaterial.SetOverrideTag("PlayerPos", "pinga");
-    }
+        GameObject [] penguins = GameObject.FindGameObjectsWithTag("Penguin");
+
+        for (int i = 0; i < penguins.Length; i++)
+        {
+            Renderer rend = penguins[i].GetComponent<Renderer>();
+            rend.material = visionMaterial;
+        }
+
+        powerUpOn = true;
+        _timePowerUp = Time.fixedTime + 2;
+}
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -286,15 +284,48 @@ public class BearInput : MonoBehaviour
 
     #endregion
 
-    public void BearDamaged(double deltaTime)
+    //Que el daño dure x tiempo
+    public void ToDamage(double deltaTime)
     {
-        if (deltaTime > timeDamage)
+        if (damaged == true)
         {
-            speed = 3;
-            _controls.Player.Movement.Enable();
-            _controls.Player.CameraControl.Enable();
-            damaged = false;
-            Debug.Log("Ya estoy bien :)");
+            if (deltaTime > _timeDamage)
+            {
+                speed = 3;
+                _controls.Player.Movement.Enable();
+                _controls.Player.CameraControl.Enable();
+                damaged = false;
+                Debug.Log("Ya estoy bien :)");
+            }
+        }
+    }
+
+    //Que el ataque dure un seg
+    public void ToAttack(double deltaTime)
+    {
+        if (deltaTime > _timeAtacking)
+        {
+            atacking = false;
+        }
+    }
+
+    //Tiempo que dura la vision
+    public void UsePoweUp (double deltaTime)
+    {
+        if (powerUpOn == true)
+        {
+            if(deltaTime > _timePowerUp)
+            {
+                GameObject[] penguins = GameObject.FindGameObjectsWithTag("Penguin");
+
+                for (int i = 0; i < penguins.Length; i++)
+                {
+                    Renderer rend = penguins[i].GetComponent<Renderer>();
+                    rend.material = normalMaterial;
+                }
+
+                powerUpOn = false;
+            }
         }
     }
 

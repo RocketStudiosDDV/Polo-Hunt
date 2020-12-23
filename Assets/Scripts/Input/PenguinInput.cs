@@ -102,7 +102,9 @@ public class PenguinInput : MonoBehaviour
         target.transform.LookAt(pivot);
 
         ToRun(Time.fixedTime); //Comprueba si sigue deslizandose o no
-        FishRun(Time.fixedTime);
+        FishRun(Time.fixedTime); //Velocidad despues de comer el pez
+        ToStand(Time.fixedTime);
+        ToThrowStocks(Time.fixedTime);
 
         /*if (caer == true)
         {
@@ -115,51 +117,22 @@ public class PenguinInput : MonoBehaviour
             }
         }*/
 
-        if (_playerRB.transform.rotation == Quaternion.Euler(0f, 0f, 90f))
-        {
-            if (Time.fixedTime > _timeFall)
-            {
-                _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            }
-        }
-
         if (isRunning == false)
         {
             if (InIceDashPlat == true) //Movimientoi en el dash de la plat
             {
                 _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
                 _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
-                Debug.Log("HIELO");
+                //Debug.Log("HIELO");
+                isRunning = false;
             }
-            else //movimiento normakl
+            else //movimiento normal
             {
                 _playerRB.AddForce(Vector3.forward * 0, ForceMode.Impulse);
                 _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
             }
         }
-
-        //_playerRB.
-
-        //Aplicamos la velocidad de movimiento WASD
-        //_playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
-        //_playerRB.AddForce(Vector3.forward * speed * 0.5f);
-        //_playerRB.velocity = Vector3.forward * speed * 0.5f;
-        //_playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
-
-
-        //comprueba que puede tirar el cepo. COODOWN
-        if (cepoActive == true)
-        {
-            if (Time.fixedTime > timeAwait)
-            {
-                cepoActive = false;
-            }
-        }
-    }
-
-    private void LateUpdate()
-    {
-
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -170,26 +143,36 @@ public class PenguinInput : MonoBehaviour
             speed = 50;
             _timeFish = Time.fixedTime + 5;
             Debug.Log("COLAS");
-
         }
 
         if (collision.gameObject.tag == "IceDashPlat") //Si choca con un pescao
         {
+            _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
+            _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
             InIceDashPlat = true;
+            Debug.Log("HIELO");
 
+            if (isRunning == true) //Si esta corriendo deja de correr
+            {
+                isRunning = false;
+                speed = 3;
+            }
         }
 
         if (collision.gameObject.tag == "Floor") //Si choca con un pescao
         {
+            Debug.Log("SUELO");
+            _playerRB.AddForce(Vector3.forward * 0, ForceMode.Impulse);
+            _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
             InIceDashPlat = false;
         }
 
-        if (collision.gameObject.tag == "Penguin") //Si choca con un pescao
+        if (collision.gameObject.tag == "Penguin") //Si choca con un pinguino
         {
-            if (isAttacking == true) //si tu no estas dando colleja
+            if (isAttacking == true) //si estas dando colleja
             {
                 _timeFall = Time.fixedTime + 3;
-                Rigidbody enemy = collision.gameObject.GetComponent<Rigidbody>();
+                Rigidbody enemy = collision.gameObject.GetComponent<Rigidbody>(); //le tiras
                 enemy.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
                 isAttacking = false;
             }
@@ -237,8 +220,6 @@ public class PenguinInput : MonoBehaviour
     public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         Debug.Log("BOFETÓN");
-        //Debug.Log(context.control.device.displayName);
-        //_playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         //CAMBIAR ANIMACIÓN
         //AÑADIR LO Q SEA PARA LA BOFETADA
         //tirar = true;
@@ -254,8 +235,8 @@ public class PenguinInput : MonoBehaviour
         _timeRunning = Time.fixedTime + 10;
         Debug.Log("vel " + speed);
         //CAMBIAR ANIMACIÓN
-
     }
+
     public void PowerUp(InputAction.CallbackContext context) //Soltar cepo -L1 - space
     {
         //SOLTAR CEPO
@@ -266,9 +247,7 @@ public class PenguinInput : MonoBehaviour
             cepoActive = true;
             Instantiate(cepo, _playerRB.transform.position, Quaternion.identity);
             timeAwait = Time.fixedTime + 10; //tiempo que tarada en voilver a tener aviable el cpeo
-
         }
-
     }
 
     public void GetCameraMove(InputAction.CallbackContext context)
@@ -277,6 +256,10 @@ public class PenguinInput : MonoBehaviour
     }
 
     #endregion
+
+
+
+    #region ACTIONS TIME
 
     //Controla el tiempo que esta activo el deslizamiento
     public void ToRun(double deltaTime)
@@ -292,7 +275,6 @@ public class PenguinInput : MonoBehaviour
             _playerRB.AddForce(forceDirection * speed, ForceMode.Acceleration);
             //_playerRB.AddForce(playerInput * 0.25f, ForceMode.Impulse);
 
-
             if (deltaTime > _timeRunning)
             {
                 speed = 3;
@@ -302,10 +284,10 @@ public class PenguinInput : MonoBehaviour
                 //_controls.Player.Movement.Enable();
                 isRunning = false;
             }
-
         }
     }
 
+    //Tiempo que dura con la velocidad por el pez
     public void FishRun(double deltaTime)
     {
         if (fishEaten == true)
@@ -324,6 +306,32 @@ public class PenguinInput : MonoBehaviour
 
         }
     }
+
+    //Se levanta despues de x tiempo caído
+    public void ToStand (double deltaTime)
+    {
+        if (_playerRB.transform.rotation == Quaternion.Euler(0f, 0f, 90f))
+        {
+            if (deltaTime > _timeFall)
+            {
+                _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            }
+        }
+    }
+
+    //Comprueba que puede tirar el cepo
+    public void ToThrowStocks (double deltaTime)
+    {
+        if (cepoActive == true)
+        {
+            if (Time.fixedTime > timeAwait)
+            {
+                cepoActive = false;
+            }
+        }
+    }
+
+    #endregion
 
     #region CAMERA CONTROL
 
