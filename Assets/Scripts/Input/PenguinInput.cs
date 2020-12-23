@@ -14,6 +14,7 @@ public class PenguinInput : MonoBehaviour
 
     private PlayerControls _controls;
     private Rigidbody _playerRB; //Rigid body del pingu
+    private GameObject penguinBody;
 
     private Vector2 _horizontaldirection;
     private Vector3 playerInput; //guarda la info del input
@@ -53,6 +54,7 @@ public class PenguinInput : MonoBehaviour
     private float _timeFall;
     private bool isAttacking = false;
 
+    private MatchInfo matchInfo;
 
     #endregion
 
@@ -67,6 +69,8 @@ public class PenguinInput : MonoBehaviour
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>();
+        penguinBody = GetComponent<GameObject>();
+        matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
     }
 
     // Update is called once per frame
@@ -119,10 +123,75 @@ public class PenguinInput : MonoBehaviour
 
         if (isRunning == false)
         {
+            Debug.Log("direccion z " + playerDirection.z);
+            Debug.Log("direccion x " + playerDirection.x);
+            Debug.Log("VELOCIDAD " + _playerRB.velocity.magnitude);
+            int lastPressed = 1;
+
             if (InIceDashPlat == true) //Movimientoi en el dash de la plat
             {
                 _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
-                _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
+
+                if (_playerRB.velocity.magnitude > 3)
+                {
+                    speed = speed / 2;
+                }
+                
+                if (playerDirection.z > 0)
+                {
+                    _playerRB.AddForce(Vector3.forward * - 0.5f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
+                    lastPressed = 0;
+
+                }
+                else if (playerDirection.z < 0)
+                {
+                    _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(Vector3.forward * - 0.25f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(Vector3.right * 0.25f * speed, ForceMode.Impulse);
+                    lastPressed = 1;
+                }
+                else if(playerDirection.x > 0)
+                {
+                    _playerRB.AddForce(Vector3.left * 0.5f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(Vector3.left * 0.25f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(Vector3.forward * -0.25f * speed, ForceMode.Impulse);
+                    lastPressed = 2;
+                }
+                else if (playerDirection.x < 0)
+                {
+                    _playerRB.AddForce(Vector3.right * 0.5f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
+                    lastPressed = 3;
+                }
+                else
+                {
+                    if(lastPressed == 0)
+                    {
+                        _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
+                        _playerRB.AddForce(Vector3.right * 0.25f * speed, ForceMode.Impulse);
+                    }
+                    else if (lastPressed == 1)
+                    {
+                        _playerRB.AddForce(Vector3.forward * -0.5f * speed, ForceMode.Impulse);
+                        _playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
+                    }
+                    else if (lastPressed == 2)
+                    {
+                        _playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
+                        _playerRB.AddForce(Vector3.right * 0.5f * speed, ForceMode.Impulse);
+                    }
+                    else if (lastPressed == 3)
+                    {
+                        _playerRB.AddForce(Vector3.forward * -0.25f * speed, ForceMode.Impulse);
+                        _playerRB.AddForce(Vector3.right * -0.5f * speed, ForceMode.Impulse);
+                    }
+
+                }
+
+                //_playerRB.AddForce(Vector3.forward * - 0.25f * speed, ForceMode.Impulse);
                 //Debug.Log("HIELO");
                 isRunning = false;
             }
@@ -147,8 +216,19 @@ public class PenguinInput : MonoBehaviour
 
         if (collision.gameObject.tag == "IceDashPlat") //Si choca con un pescao
         {
-            _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
-            _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
+            /*_playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
+            if( playerDirection.z < 0)
+            {
+                //_playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed * 2);
+                
+                _playerRB.AddForce(Vector3.forward * - 0.5f * speed, ForceMode.Impulse);
+            }
+            else{
+                _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
+            }
+            */
+            //_playerRB.AddForce(Vector3.forward * -0.25f * speed, ForceMode.Impulse);
+            //_playerRB.AddForce(Vector3.left * 0.25f * speed, ForceMode.Impulse);
             InIceDashPlat = true;
             Debug.Log("HIELO");
 
@@ -161,9 +241,11 @@ public class PenguinInput : MonoBehaviour
 
         if (collision.gameObject.tag == "Floor") //Si choca con un pescao
         {
+
             Debug.Log("SUELO");
-            _playerRB.AddForce(Vector3.forward * 0, ForceMode.Impulse);
-            _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
+            //_playerRB.AddForce(Vector3.forward * 0, ForceMode.Impulse);
+            //_playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
+            speed = 3;
             InIceDashPlat = false;
         }
 
@@ -171,11 +253,21 @@ public class PenguinInput : MonoBehaviour
         {
             if (isAttacking == true) //si estas dando colleja
             {
-                _timeFall = Time.fixedTime + 3;
-                Rigidbody enemy = collision.gameObject.GetComponent<Rigidbody>(); //le tiras
-                enemy.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+                //_timeFall = Time.fixedTime + 3;
+                //Rigidbody enemy = collision.gameObject.GetComponent<Rigidbody>(); //le tiras
+                //enemy.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+
+                //LE MANDAS AL OTRO A CAERSE -> EJECUTAR TO FALL
                 isAttacking = false;
             }
+        }
+
+        //PRUEBAS
+        if (collision.gameObject.tag == "caca") //Si choca con un pescao
+        {
+
+            ToDie();
+            //mainCamera = collision.gameObject.GetComponent<Camera>();
         }
     }
     #endregion
@@ -317,6 +409,21 @@ public class PenguinInput : MonoBehaviour
                 _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
+    }
+
+
+    //Caerse
+    public void ToFall()
+    {
+        _timeFall = Time.fixedTime + 3;
+        _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+    }
+
+    //morir
+    public void ToDie()
+    {
+        _controls.Player.Disable();
+        Destroy(gameObject);
     }
 
     //Comprueba que puede tirar el cepo
