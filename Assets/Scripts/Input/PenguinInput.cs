@@ -267,7 +267,8 @@ public class PenguinInput : MonoBehaviour
         {
 
             ToDie();
-            //mainCamera = collision.gameObject.GetComponent<Camera>();
+            //
+            mainCamera = collision.gameObject.GetComponent<Camera>();
         }
     }
     #endregion
