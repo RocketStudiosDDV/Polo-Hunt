@@ -62,8 +62,9 @@ Los sprints de cada animal son distintos:
 
 
 Cada animal dispondrá de una habilidad:
+
 - Pingüinos: estos tendrán la habilidad de soltar cepos a sus espaldas, si uno de estos consigue colisionar con el oso, este se verá petrificado por unos instantes a modo de penalización.
-- Osos: Los osos tendrán la habilidad de la (nombre de la habilidad vision ). Para compensar el número de pingüinos y el tamaño del escenario, el oso cada cierto tiempo podrá ver la posición de todos los pingüinos. 
+- Osos: Los osos tendrán la habilidad de la visión Berserker. Para compensar el número de pingüinos y el tamaño del escenario, el oso cada cierto tiempo podrá ver la posición de todos los pingüinos. 
 
 Con estas dos habilidades se busca un balanceo justo para las deficiencias de cada animal. 
 Los pingüinos al tener un movimiento más lento, se encuentran en una clara desventaja a la hora de huir en sitios donde el deslizamiento sea casi nulo. 
@@ -78,7 +79,39 @@ El juego tiene un escenario por cada modo disponible. Cada escenario ha sido des
 Para este proyecto hemos buscado varios paquetes de assets ya definidos para incorporarlos. El trabajo de búsqueda ha sido muy importante para conseguir encontrar los elementos que más se acerque a la estética que marcan los personajes.
 
 
-Escenario Hunt:
+Escenario Hunt: El escenario principal del modo hunt está dividido por cuadrantes. En cada cuadrante hay una área especial para sacar el rendimiento a las físicas y a las propias reglas del juego.
+
+- Zona hielo: A la hora de concebir el juego esta era una zona fundamental. Gran parte de la esencia a la hora de definir las físicas de este juego, han sido orientadas al desarrollo de esta parte del escenario. El hielo juega con el deslizaminto y y la inercia para poder incidir mejor en la movimiento de los personajes. En este punto del juego se lleva a los jugadores.(Físicas)
+
+Agujeros......
+
+(Incluir fotos)
+
+
+
+- Zona ciudad: Esta parte está inspiranda en la ciudad de Pyramiden, fue un asentamiento minero de carbón construido por los soviéticos. La función de este área es jugar con las posiciones de los edificios y utilizarlos como encondite. Esto sumado al sonido por proximidad del oso, se convierte en una combinación efectiva a la hora de recrear la sensación de estar escondido. El ambiente esta zona es un representación de cómo se encuentra el asentamiento minero en la actualidad, abandonado y con los edificios en declive.
+
+Imagen del pequeño pueblo abandonado.
+![imagen](https://user-images.githubusercontent.com/55508821/103051659-a117c580-4597-11eb-8291-0b3ff7270de1.png)
+
+![imagen](https://user-images.githubusercontent.com/55508821/103051727-c6a4cf00-4597-11eb-9311-80a5813b2329.png)
+
+(Incluir aqui las imágenes del escenario en esa zona)
+
+Todos los edificios implementados en el mapa son material gratuito buscado a conciencia para crear una estética homogenea entre si. La premisa para esta zona del escenario es recrear un pequeño pueblo sumergido en la nieve. 
+
+
+
+
+
+
+
+
+- Zona laberinto en las montañas: Esta zona se utiliza para intensificar la sensación de persecución utilizando como factor clave la sensación de agobio provocada por el pequeño espacio entre las laderas de las montañas y sus estrechos pasadizos. Es un sitio ideal para despistar entre varias a los osos debido al número de recorridos que hay. 
+
+- Zona Bosque: 
+
+- Zona Copo de nieve: 
 
 Escenario Sumo:
 
@@ -86,8 +119,10 @@ Escenario Carreras:
 
 
 
-## Interfaz y menús
+## Interfaz
 
+
+## Menús
 
 
 ## Flujo de juego
@@ -95,8 +130,8 @@ Escenario Carreras:
 
 
 
-## Estilo artístico y música
-
+## Estilo artístico
+## Música
 
 ## Experiencia de usuario
 
@@ -105,6 +140,8 @@ Este juego tiene un gran desafío por esta parte. Conseguir la diversión del ju
 - Los modos de juego deben de tener una complejidad muy ligera. Los modos de juego tienen las siguientes caracteristicas.....
 - La temática es sin duda una de las claves de este juego. La misión principal de la temática y de sus personajes es conquistar al jugador y dotar al juego de una personalidad amable y graciosa. 
 -
+
+## Servidores y multijugador
 
 
 ## Modelo de negocio
