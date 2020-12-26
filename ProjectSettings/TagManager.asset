@@ -15,6 +15,13 @@ TagManager:
   - Floor
   - Wall
   - caca
+  - LeftPenguin
+  - RightPenguin
+  - Sky
+  - LeftSky
+  - RightSky
+  - Goal
+  - RestZone
   layers:
   - Default
   - TransparentFX
