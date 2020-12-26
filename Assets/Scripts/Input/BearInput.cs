@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class BearInput : MonoBehaviour
 {
     #region VARIABLES
+    //HUD OSO
+    public GameObject BearHUD;
+    public GameObject PenguinHUD;
 
     //CONTROL DEL PLAYER
     [SerializeField] float speed = 3;
@@ -41,7 +45,8 @@ public class BearInput : MonoBehaviour
 
     //Gestión de la stamina
     private double finalStamina;
-    private double stamina = 600;
+    private float stamina = 600;
+    public Image Stamina;
     private bool firstTime = true;
 
     //Gestiona correr
@@ -73,6 +78,8 @@ public class BearInput : MonoBehaviour
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>(); //identifica el rigidbdy del oso
+        BearHUD.SetActive(true);
+        PenguinHUD.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -115,6 +122,7 @@ public class BearInput : MonoBehaviour
 
     private void LateUpdate()
     {
+        Stamina.fillAmount = stamina/600;
         //transform.LookAt(_playerRB.transform.position);
         //pivot.LookAt(target.position);
         //pivot.LookAt(target);
@@ -339,6 +347,7 @@ public class BearInput : MonoBehaviour
             Debug.Log("tiempo pasado " + _timeRunning);
 
             stamina--;
+            
             Debug.Log("final stamina " + finalStamina);
             Debug.Log("stamina " + stamina);
 

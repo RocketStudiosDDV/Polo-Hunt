@@ -7,6 +7,10 @@ public class PenguinInput : MonoBehaviour
 {
     #region VARIABLES
 
+    //PINGUINO HUD 
+    public GameObject BearHUD;
+    public GameObject PenguinHUD;
+
     //CONTROL DEL PLAYER
     [SerializeField] float jumpForce = 10;
     [SerializeField] float speed = 3;
@@ -68,6 +72,8 @@ public class PenguinInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BearHUD.SetActive(false);
+        PenguinHUD.SetActive(true);
         _playerRB = GetComponent<Rigidbody>();
         penguinBody = GetComponent<GameObject>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
