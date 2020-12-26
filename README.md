@@ -17,8 +17,18 @@ Hemos decidido obviar las disonancias que hay entre los distintos animales situa
 [Revisar esto ]
 ## Descripción del juego
 Polo Hunt es un juego multijugador diseñado para todos los públicos, que consta de unos diversos modos de juego pensados para divertir a los jugadores haciendo gala de esta singular temática polar.
-Es un juego pensado para hacer una ligera crítica al cambio climático. En el hay diversos modos de juegos para participar, aunque la esencia de este y de varios de sus modos es el clásico escondite/pilla pilla.
-Los personajes principales serán pingüninos y osos polares. Los osos serán los encargados de dar caza a todos los pingüinos. Los pingüinos tendrán que salvarse escondiendose por el mapa y usando las distintas habilidades que poseen.
+
+Es un juego pensado para hacer una ligera crítica al cambio climático. En el hay diversos modos de juegos para participar, aunque la esencia de este y de varios de sus modos es el clásico escondite/pilla pilla.(Revisar)
+
+Los personajes principales son pingüinos y osos polares. Los osos serán los encargados de dar caza a todos los pingüinos, estos tendrán que salvarse escondiendose por el mapa y usando las distintas habilidades que poseen. Para que el juego resulte atractivo su diseño se centra en el diseño de escenarios, el movimiento de los personajes y las habilidades de estos para huir y atrapar.
+
+El desarrollo de una partida normal sigue la dinámica del clásico juego pilla pilla. El oso hace una cuenta atrás con los ojos cerrados y mientras los pingüinos recorren el mapa buscando un buen escondite. Una vez el oso termine de contar este va a dar caza a las aves usando su habilidad especial  y su ventaja a la hora de correr más rápido. En el modo principal una vez el oso atrapa a un jugador, este desaperece (esto cambia en función al modo), el flujo de la partida está limitado por dos condiciones, el tiempo establecido o la victoria del oso sobre los otros. 
+
+El escenario está ideado para poder explotar las habilidades de ambos personajes y esconderse o despistar al oso en muchos sitios. 
+
+Aunque el pilla pilla sea su modo principal, hay un modo de carreras y un modo de sumo también.
+
+
 ...
 
 
@@ -30,12 +40,15 @@ Aquí se muestra la hoja del pingüino base que hay en el juego.
 
 ![Pingas](https://user-images.githubusercontent.com/55508821/101229277-b76ce880-369f-11eb-8cf7-dd9dc3491c90.jpeg)
 
-El oso polar era una de las grandes opciones que barajábamos como posibles enemigos. 
+
+El oso polar era una de las grandes opciones que barajábamos como posibles enemigos. Este ha sido el animal escogido para dar caza debido a que la fisonomía de este era el más plausible a la hora de desarrollar, teniendo como premisa que el rol de cazador lo debía ejecutar también un animal relacionado con el hielo.
+
 
 ![ositos](https://user-images.githubusercontent.com/55508821/101229282-c05dba00-369f-11eb-99f0-5ebefa601b05.jpeg)
 
 
 ## Modos de juego
+
 La esencia de nuestro juego y su modo principal es cacería, el clásico pilla pilla. Aquí los osos perseguirán a los pingüinos hasta que se acabe el tiempo o estos hayan dado caza a todos.
 En función a este modo pricipal, hemos desarrollado varios de este estilo:
 - Supervivencia: En esto modo solo habrá uno o dos pingüinos, estos dispondrán de un aumento de velocidad para compensar su inferioridad numérica.
@@ -56,19 +69,18 @@ La distintas velocidades de cada animal son el ajuste más importante del juego 
 
 Los sprints de cada animal son distintos:
 - Pingüinos: Los pingüinos podrán aprovechar su velocidad instantánea o los desniveles causados por la nieve para poder tumbarse y aumentar su velocidad de movimiento de manera considerable mientras que este decae por la desaceleración. 
-- Osos: Los osos podrán correr, pero la duración de su carrera va a estar limitada por una barra de aguante.
+- Osos: Los osos podrán correr, pero la duración de su carrera va a estar limitada por una barra de aguante. De esta manera se balancea la ventaja de velocidad que este tiene frente a los adversarios. 
 
 
 
 
 Cada animal dispondrá de una habilidad:
 
-- Pingüinos: estos tendrán la habilidad de soltar cepos a sus espaldas, si uno de estos consigue colisionar con el oso, este se verá petrificado por unos instantes a modo de penalización.
+- Pingüinos: estos tendrán la habilidad de soltar cepos a sus espaldas, si uno de estos consigue colisionar con el oso, este se verá petrificado por unos instantes a modo de penalización. Este habilidad es permanente, pero tiene un tiempo de espera para poder volver a usarla. El correcto uso de esta habilidad es esencial para poder sobrevivir
 - Osos: Los osos tendrán la habilidad de la visión Berserker. Para compensar el número de pingüinos y el tamaño del escenario, el oso cada cierto tiempo podrá ver la posición de todos los pingüinos. 
 
-Con estas dos habilidades se busca un balanceo justo para las deficiencias de cada animal. 
-Los pingüinos al tener un movimiento más lento, se encuentran en una clara desventaja a la hora de huir en sitios donde el deslizamiento sea casi nulo. 
-Los osos podrán obtener la posición de sus presas con cierta frecuencia para aprovechar también los laberintos que puede encontrar en la ciudad y en las montañas. 
+Con estas dos habilidades se busca un balanceo justo para las deficiencias de cada animal. Los pingüinos al tener un movimiento más lento, se encuentran en una clara desventaja a la hora de huir en sitios donde el deslizamiento sea casi nulo. 
+Los osos podrán obtener la posición de sus presas con cierta frecuencia para aprovechar también los laberintos que puede encontrar en la ciudad y en las montañas y no hacer de su rol una misión imposible. 
 ## Mecánicas de juego
 
 
@@ -131,21 +143,23 @@ Escenario Carreras:
 
 
 ## Estilo artístico
+
 ## Música
 
 ## Experiencia de usuario
 
 Este juego tiene un gran desafío por esta parte. Conseguir la diversión del jugador es la clave para el éxito del producto y para ello tenemos unas cuantas reglas principales:
-- El movimiento de los personajes debe ser atractivo a la hora de su manejo, pero con la premisa de que la torpeza de los movimientos se encuentren en un sofisticado balance entre las físicas de los personajes y la influencia del escenario. 
+- El movimiento de los personajes debe ser atractivo a la hora de su manejo, pero con la premisa de que la torpeza de los movimientos se encuentren en un elaborado balance entre las físicas de los personajes y la influencia del escenario. 
 - Los modos de juego deben de tener una complejidad muy ligera. Los modos de juego tienen las siguientes caracteristicas.....
 - La temática es sin duda una de las claves de este juego. La misión principal de la temática y de sus personajes es conquistar al jugador y dotar al juego de una personalidad amable y graciosa. 
 -
 
 ## Servidores y multijugador
 
+##Tutorial
 
 ## Modelo de negocio
-Nuestro modelo de negocio tiene como clave principal la fidelización de nuestros clientes. Vamos a ir asegurando su permanencia con una estrategia a dos años vista con continuas renovaciones del juego.
+Nuestro modelo de negocio tiene como clave principal la fidelización de nuestros clientes. Vamos a ir asegurando su permanencia con una estrategia a dos años vista con continuas renovaciones del juego. 
 
 La principal fuente de ingresos para este juego es la tienda que ofrece. El contenido de la tienda se renueva semanalmente con ofertas para aquellos jugadores que hayan superado los desafíos establecidos. Estos desafíos incitan al jugador a jugar de manera casi constante para que se vea beneficiado por la parte económica del ahorro en las skins.
 
@@ -167,6 +181,19 @@ Paquetes de Skins:
 -
 
 
-## Controles y tutorial
+## Controles
+Los controles del juego varian en función a cada plataforma, ya que en la versión de ordenador se puede jugar con el teclado y ratón, y también se podrá jugar con mando. Por la parte de dispositivos móviles solo vamos a ofrecer el control del juego a traves de la pantalla táctil.
+
+Ordenador:
+Teclador y ratón:
+
+Consola:
+
+
+
+Móvil:
+
+
+
 
 
