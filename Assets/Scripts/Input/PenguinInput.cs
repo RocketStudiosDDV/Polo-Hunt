@@ -8,8 +8,8 @@ public class PenguinInput : MonoBehaviour
     #region VARIABLES
 
     //PINGUINO HUD 
-    public GameObject BearHUD;
-    public GameObject PenguinHUD;
+   // public GameObject BearHUD;
+    //public GameObject PenguinHUD;
 
     //CONTROL DEL PLAYER
     [SerializeField] float jumpForce = 10;
@@ -72,8 +72,8 @@ public class PenguinInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BearHUD.SetActive(false);
-        PenguinHUD.SetActive(true);
+        //BearHUD.SetActive(false);
+        //PenguinHUD.SetActive(true);
         _playerRB = GetComponent<Rigidbody>();
         penguinBody = GetComponent<GameObject>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
@@ -222,19 +222,6 @@ public class PenguinInput : MonoBehaviour
 
         if (collision.gameObject.tag == "IceDashPlat") //Si choca con un pescao
         {
-            /*_playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
-            if( playerDirection.z < 0)
-            {
-                //_playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed * 2);
-                
-                _playerRB.AddForce(Vector3.forward * - 0.5f * speed, ForceMode.Impulse);
-            }
-            else{
-                _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
-            }
-            */
-            //_playerRB.AddForce(Vector3.forward * -0.25f * speed, ForceMode.Impulse);
-            //_playerRB.AddForce(Vector3.left * 0.25f * speed, ForceMode.Impulse);
             InIceDashPlat = true;
             Debug.Log("HIELO");
 
@@ -269,13 +256,13 @@ public class PenguinInput : MonoBehaviour
         }
 
         //PRUEBAS
-        if (collision.gameObject.tag == "caca") //Si choca con un pescao
+      /*  if (collision.gameObject.tag == "caca") //Si choca con un pescao
         {
 
             ToDie();
             //
             mainCamera = collision.gameObject.GetComponent<Camera>();
-        }
+        }*/
     }
     #endregion
 
@@ -366,19 +353,29 @@ public class PenguinInput : MonoBehaviour
         if (isRunning == true)
         {
             Debug.Log("a correr");
-            Debug.Log("delta time " + deltaTime);
-            Debug.Log("tiempo pasado " + _timeRunning);
+           // Debug.Log("delta time " + deltaTime);
+            Debug.Log("tiempo a correr " + _timeRunning);
             //_controls.Player.Movement.Disable();
             //playerInput = new Vector3(playerInput.x, 0, playerInput.z);
             //_playerRB.velocity = new Vector3(playerInput.x * 0.5f * speed, _playerRB.velocity.y, playerDirection.z * 0.5f * speed);
-            _playerRB.AddForce(forceDirection * speed, ForceMode.Acceleration);
+            _playerRB.AddForce(forceDirection * 10, ForceMode.Acceleration);
             //_playerRB.AddForce(playerInput * 0.25f, ForceMode.Impulse);
 
-            if (deltaTime > _timeRunning)
+            if (_playerRB.velocity.magnitude < 1)
             {
                 speed = 3;
                 Debug.Log("delta time " + Time.deltaTime);
                 Debug.Log("tiempo pasado " + _timeRunning);
+                Debug.Log("ESTOY");
+                _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
+                //_controls.Player.Movement.Enable();
+                isRunning = false;
+            } else if (deltaTime > _timeRunning)
+            {
+                speed = 3;
+                Debug.Log("delta time " + Time.deltaTime);
+                Debug.Log("tiempo pasado " + _timeRunning);
+                Debug.Log("ESTOY");
                 _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
                 //_controls.Player.Movement.Enable();
                 isRunning = false;
