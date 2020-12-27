@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class ChangerScene : MonoBehaviour
 {
+    public AudioSource sound;
+    public AudioClip soundMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,5 +28,12 @@ public class ChangerScene : MonoBehaviour
     public void OpenWebPage(string namePage)
     {
         Application.OpenURL(namePage);
+    }
+
+    public void SoundButton()
+    {
+        sound.clip = soundMenu;
+        sound.enabled = false;
+        sound.enabled = true;
     }
 }
