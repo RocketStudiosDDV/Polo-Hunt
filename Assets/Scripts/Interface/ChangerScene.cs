@@ -7,6 +7,7 @@ public class ChangerScene : MonoBehaviour
 {
     public AudioSource sound;
     public AudioClip soundMenu;
+    public GameObject pelota;
 
     // Start is called before the first frame update
     void Start()
