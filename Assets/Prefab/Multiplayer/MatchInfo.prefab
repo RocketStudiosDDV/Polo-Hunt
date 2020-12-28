@@ -46,3 +46,8 @@ MonoBehaviour:
   penguinsAlive: 0
   bearsConnected: 0
   penguinsConnected: 0
+  playersReady: 
+  numberOfBears: 1
+  fishPrefab: {fileID: 801315341884206941, guid: 441a92808c8bf474198d8ddc434b8d61,
+    type: 3}
+  fishPositions: []

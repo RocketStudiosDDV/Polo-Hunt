@@ -19,6 +19,11 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public List<bool> playersReady;
     public int numberOfBears = 1;
 
+    // Pescados
+    public GameObject fishPrefab;
+    private FishMultiplayer[] fishList;
+    public List<Transform> fishPositions;
+
     // Referencias
     private MatchManager matchManager;
 
@@ -31,6 +36,14 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         playersList = new List<Player>();
         playersReady = new List<bool>();
         matchManager = FindObjectOfType<MatchManager>();
+
+        // Instanciamos los pescados
+        fishList = new FishMultiplayer[fishPositions.Count];
+        for (int i = 0; i < fishPositions.Count; i++)
+        {
+            Vector3 position = fishPositions[i].position;
+            fishList[i] = (FishMultiplayer) Instantiate(fishPrefab, position, Quaternion.identity).GetComponent<FishMultiplayer>();
+        }
 
         // Obtenemos los jugadores
         IEnumerator<Player> playerEnumerator = PhotonNetwork.CurrentRoom.Players.Values.GetEnumerator();
@@ -177,6 +190,14 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
     }
 
+    public void DestroyFish(int fishId)
+    {
+        if (fishList[fishId] != null)
+        {
+            Destroy(fishList[fishId]);
+        }
+    }
+
     public void OnPlayerEnteredRoom(Player newPlayer)
     {
         throw new System.NotImplementedException();
@@ -217,7 +238,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         if (allReady)
         {
             Debug.Log("Starting match..");
-            matchManager.StartMatch();
+            matchManager.InstantiatePlayers();
         }
     }
 

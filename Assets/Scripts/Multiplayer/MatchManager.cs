@@ -5,20 +5,22 @@ using UnityEngine;
 
 
 //Sincronizacion info ataques, muertes y eso
-public class MatchManager : MonoBehaviour
+public class MatchManager : MonoBehaviourPun
 {
-    #region PUBLIC VARIABLES
+    #region VARIABLES
 
     public List<Transform> startPositions;
     public GameObject penguinPrefab;
     public GameObject bearPrefab;
 
+    private MatchInfo matchInfo;
     #endregion
 
 
     #region UNITY CALLBACKS
     void Start()
     {
+        matchInfo = FindObjectOfType<MatchInfo>();
     }
 
     // Update is called once per frame
@@ -40,12 +42,13 @@ public class MatchManager : MonoBehaviour
     }
 
     //que cuando un pinguino se come un pescado, desaparezca para todos los pinguinos
-    public void EatFish()
+    [PunRPC]
+    public void EatFish(int fishId)
     {
-
+        matchInfo.DestroyFish(fishId);
     }
 
-    public void StartMatch()
+    public void InstantiatePlayers()
     {
         object isPenguin;
         Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out isPenguin) + " eo");
