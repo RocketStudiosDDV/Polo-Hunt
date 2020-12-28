@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MatchInfo : MonoBehaviour
+public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 {
     #region VARIABLES
 
@@ -12,11 +14,76 @@ public class MatchInfo : MonoBehaviour
 
     private double _totalTime = 0; //tiempo que dura la partida
 
-    #endregion
+    // Información
+    public List<Player> playersList;
+    public List<bool> playersReady;
+    public int numberOfBears = 1;
 
-    void Start()
+    // Referencias
+    private MatchManager matchManager;
+
+    #endregion
+    #region UNITY CALLBACKS
+
+    private void Awake()
     {
-        
+        // Inicializamos variables necesarias
+        playersList = new List<Player>();
+        playersReady = new List<bool>();
+        matchManager = FindObjectOfType<MatchManager>();
+
+        // Obtenemos los jugadores
+        IEnumerator<Player> playerEnumerator = PhotonNetwork.CurrentRoom.Players.Values.GetEnumerator();
+        while (playerEnumerator.MoveNext())
+        {
+            playersList.Add(playerEnumerator.Current);
+            playersReady.Add(false);
+        }
+
+        // Decidimos el rol de cada uno y se lo anotamos en customProperties al jugador
+        if (PhotonNetwork.IsMasterClient)
+        {
+            int bearsToAssign = numberOfBears;
+            int penguinsToAssign = playersList.Count - numberOfBears;
+            Debug.Log("Players= " + playersList.Count + " - Bears= " + bearsToAssign + " - Pingus=" + penguinsToAssign);
+            foreach (Player player in playersList)
+            {
+                ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
+                bool isPenguin = true;
+                while (bearsToAssign > 0 || penguinsToAssign > 0)
+                {
+                    if (Random.Range(0, 2) == 0)
+                    {
+                        if (penguinsToAssign > 0)
+                        {
+                            isPenguin = true;
+                            penguinsToAssign--;
+                        }
+                        else
+                        {
+                            isPenguin = false;
+                            bearsToAssign--;
+                        }
+                    }
+                    else
+                    {
+                        if (bearsToAssign > 0)
+                        {
+                            isPenguin = false;
+                            bearsToAssign--;
+                        }
+                        else
+                        {
+                            isPenguin = true;
+                            penguinsToAssign--;
+                        }
+                    }
+                }
+                hashtable.Add("isPenguin", isPenguin);
+                player.SetCustomProperties(hashtable);
+            }
+        }        
+        Debug.Log("Awake Finished");
     }
 
     // Update is called once per frame
@@ -28,7 +95,12 @@ public class MatchInfo : MonoBehaviour
         
     }
 
-    #region METHODS
+    #endregion
+    #region PRIVATE METHODS
+    
+    #endregion
+
+    #region PUBLIC METHODS
 
     //RPC que comprobara cuantps pingguinos hay vivvos y los actualizara
     //cuando el master sepa que han maatdo a un pingu, hace que todos llamen a esto
@@ -64,7 +136,7 @@ public class MatchInfo : MonoBehaviour
     public void StartGame()
     {
         _totalTime = _totalTime + 600; //le sumamos en segs el tiempo que dura la partida
-        //inicializar posiciones de los pinguinos y cosas del mapa (pescados y así)
+                                       //inicializar posiciones de los pinguinos y cosas del mapa (pescados y así)
 
         //MANU
     }
@@ -104,5 +176,55 @@ public class MatchInfo : MonoBehaviour
             //se acaba la partoida
         }
     }
+
+    public void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        Debug.Log("Player Property update");
+        // Ponemos como listo al jugador que ha recibido el cambio de customProperties
+        for(int i = 0; i < playersList.Count; i++)
+        {
+            Player player = playersList[i];
+            if (targetPlayer.ActorNumber == player.ActorNumber)
+            {
+                playersReady[i] = true;
+            }
+        }
+
+        bool allReady = true;
+        foreach(bool ready in playersReady)
+        {
+            if (ready == false)
+            {
+                allReady = false;
+            }
+        }
+
+        if (allReady)
+        {
+            Debug.Log("Starting match..");
+            matchManager.StartMatch();
+        }
+    }
+
+    public void OnMasterClientSwitched(Player newMasterClient)
+    {
+        throw new System.NotImplementedException();
+    }
     #endregion
+
 }

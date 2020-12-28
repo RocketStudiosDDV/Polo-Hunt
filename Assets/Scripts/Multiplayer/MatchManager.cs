@@ -9,23 +9,21 @@ public class MatchManager : MonoBehaviour
 {
     #region PUBLIC VARIABLES
 
-    public Transform startPosition;
+    public List<Transform> startPositions;
     public GameObject penguinPrefab;
+    public GameObject bearPrefab;
 
     #endregion
 
 
     #region UNITY CALLBACKS
-    // Start is called before the first frame update
     void Start()
     {
-        PhotonNetwork.Instantiate(this.penguinPrefab.name, startPosition.position, Quaternion.identity, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
     #endregion
 
@@ -45,6 +43,25 @@ public class MatchManager : MonoBehaviour
     public void EatFish()
     {
 
+    }
+
+    public void StartMatch()
+    {
+        object isPenguin;
+        Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out isPenguin) + " eo");
+        if (isPenguin == null)
+        {
+            Debug.Log("NULOOOOOOOOOO");
+            isPenguin = true;
+        }
+        if ((bool)isPenguin)
+        {
+            PhotonNetwork.Instantiate(this.penguinPrefab.name, startPositions[0].position, Quaternion.identity, 0);
+        }
+        else
+        {
+            PhotonNetwork.Instantiate(this.bearPrefab.name, startPositions[0].position, Quaternion.identity, 0);
+        }
     }
 
 }
