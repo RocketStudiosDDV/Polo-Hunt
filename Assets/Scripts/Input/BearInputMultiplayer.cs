@@ -75,7 +75,7 @@ public class BearInputMultiplayer : MonoBehaviour
     private void Awake()
     {
         _controls = new PlayerControls(); //Recoge los controles
-        if (GetComponent<PhotonView>().IsMine)  // Si es nuestro pingüino, seguirlo con la cámara
+        if (GetComponent<PhotonView>().IsMine || !PhotonNetwork.IsConnected)  // Si es nuestro pingüino, seguirlo con la cámara
         {
             mainCamera = Object.FindObjectOfType<Camera>();
             pivot = Instantiate(pivotPrefab).transform;
@@ -92,7 +92,7 @@ public class BearInputMultiplayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!GetComponent<PhotonView>().IsMine)
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
         {
             return;
         }
@@ -135,7 +135,7 @@ public class BearInputMultiplayer : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!GetComponent<PhotonView>().IsMine)
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
         {
             return;
         }
@@ -148,7 +148,7 @@ public class BearInputMultiplayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!GetComponent<PhotonView>().IsMine)
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
         {
             return;
         }
