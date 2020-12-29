@@ -55,11 +55,21 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
     private bool InIceDashPlat = false;
 
+    //CONTROL DE ANIMACIONES
+    Animator penguin_animator;
+
+    private bool walking_animation = false;
+    private bool hit_animation = false;
+    private bool sliding_animation = false;
+    private bool afk_animation = false;
+
+
     //prueba bofetada 
     private bool caer = false;
     private bool tirar = false;
     private float _timeFall;
     private bool isAttacking = false;
+    public double _timeAttacking;
 
     private MatchInfo matchInfo;
 
@@ -86,12 +96,39 @@ public class PenguinInputMultiplayer : MonoBehaviour
         _playerRB = GetComponent<Rigidbody>();
         penguinBody = GetComponent<GameObject>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
+
+        penguin_animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        penguin_animator.SetBool("walking", walking_animation);
+        //penguin_animator.SetBool("sliding", sliding_animation);
 
+        //ANIMACIÓN ATACAR
+        if (isAttacking == false)
+        {
+            hit_animation = false;
+        }
+        else
+        {
+            hit_animation = true;
+        }
+
+        penguin_animator.SetBool("hit", hit_animation);
+
+        //ANIMACIÓN DESLIZARSE
+        if (isRunning == true)
+        {
+            sliding_animation = true;
+        }
+        else
+        {
+            sliding_animation = false;
+        }
+
+        penguin_animator.SetBool("sliding", sliding_animation);
     }
 
     private void FixedUpdate()
@@ -129,6 +166,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         FishRun(Time.fixedTime); //Velocidad despues de comer el pez
         ToStand(Time.fixedTime);
         ToThrowStocks(Time.fixedTime);
+        ToHit(Time.fixedTime); //Se asegura de que el ataque dura solo un instante (1 seg) y no que cuando le des este smp atacando
 
         /*if (caer == true)
         {
@@ -320,6 +358,16 @@ public class PenguinInputMultiplayer : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         _horizontaldirection = context.ReadValue<Vector2>();
+
+        if (context.control.IsPressed() == true)
+        {
+            walking_animation = true;
+        }
+        else
+        {
+            walking_animation = false;
+        }
+
     }
 
     public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
@@ -329,6 +377,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         //AÑADIR LO Q SEA PARA LA BOFETADA
         //tirar = true;
         isAttacking = true;
+        _timeAttacking = Time.fixedTime + 2;
     }
 
     public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
@@ -437,12 +486,22 @@ public class PenguinInputMultiplayer : MonoBehaviour
             } else if (deltaTime > _timeRunning)
             {
                 speed = 3;
+                _controls.Player.Movement.Disable();
                 Debug.Log("delta time " + Time.deltaTime);
                 Debug.Log("tiempo pasado " + _timeRunning);
                 Debug.Log("ESTOY");
                 _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
                 //_controls.Player.Movement.Enable();
                 isRunning = false;
+            }
+        }
+        else
+        {
+            if (deltaTime > _timeRunning + 3)
+            {
+                Debug.Log("AWAKE");
+                //speed = 3;
+                _controls.Player.Movement.Enable();
             }
         }
     }
@@ -456,24 +515,34 @@ public class PenguinInputMultiplayer : MonoBehaviour
             Debug.Log("delta time " + deltaTime);
             Debug.Log("tiempo pasado " + _timeFish);
 
-            if ((deltaTime > _timeFish - 4) && (deltaTime < _timeRunning - 3))
+            if ((deltaTime > _timeFish - 4) && (deltaTime < _timeFish - 3))
             {
                 speed = 6;
+                Debug.Log("speed 6 " + speed);
             }
-            else if ((deltaTime > _timeRunning - 3) && (deltaTime < _timeRunning - 2))
+            else if ((deltaTime > _timeFish - 3) && (deltaTime < _timeFish - 2))
             {
                 speed = 8;
+                Debug.Log("speed 8 " + speed);
 
-            }else if ((deltaTime > _timeRunning - 1) && (deltaTime < _timeRunning))
+            }
+            else if ((deltaTime > _timeFish - 2) && (deltaTime < _timeFish - 1))
             {
                 speed = 10;
+                Debug.Log("speed 10 " + speed);
             }
+            else if ((deltaTime > _timeFish - 1) && (deltaTime < _timeFish))
+            {
+                speed = 6;
+                Debug.Log("speed 10 " + speed);
+            }/*
             else
             {
                 speed = 4;
-            }
+                Debug.Log("speed 6 " + speed);
+            }*/
 
-                if (deltaTime > _timeFish)
+            if (deltaTime > _timeFish)
             {
                 speed = 3;
                 Debug.Log("delta time " + Time.deltaTime);
@@ -487,13 +556,22 @@ public class PenguinInputMultiplayer : MonoBehaviour
     //Se levanta despues de x tiempo caído
     public void ToStand (double deltaTime)
     {
-        if (_playerRB.transform.rotation == Quaternion.Euler(0f, 0f, 90f))
+        /*if (_playerRB.transform.rotation == Quaternion.Euler(0f, 0f, 90f))
         {
             if (deltaTime > _timeFall)
             {
                 _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
+        }*/
+
+        if (sliding_animation == true)
+        {
+            if (deltaTime > _timeFall)
+            {
+                sliding_animation = false;
+            }
         }
+
     }
 
 
@@ -501,7 +579,8 @@ public class PenguinInputMultiplayer : MonoBehaviour
     public void ToFall()
     {
         _timeFall = Time.fixedTime + 3;
-        _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+        //_playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+        sliding_animation = true;
     }
 
     //morir
@@ -519,6 +598,17 @@ public class PenguinInputMultiplayer : MonoBehaviour
             if (Time.fixedTime > timeAwait)
             {
                 cepoActive = false;
+            }
+        }
+    }
+
+    public void ToHit(double deltaTime)
+    {
+        if (isAttacking == true)
+        {
+            if (Time.fixedTime > _timeAttacking)
+            {
+                isAttacking = false;
             }
         }
     }
