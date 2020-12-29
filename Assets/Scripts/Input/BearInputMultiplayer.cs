@@ -146,13 +146,8 @@ public class BearInputMultiplayer : MonoBehaviour
         //pivot.LookAt(target);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
-        {
-            return;
-        }
-
         if (collision.gameObject.tag == "Stocks") //Si choca con un cepo
         {
             //Hacer daño o lo q sea
@@ -163,22 +158,32 @@ public class BearInputMultiplayer : MonoBehaviour
             _controls.Player.CameraControl.Disable();
             damaged = true;
         }
+    }
 
-        if (collision.gameObject.tag == "Fish") //Si choca con un cepo
+    private void OnCollisionEnter(Collision collision)
+    {
+    if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+    {
+        return;
+    }
+
+
+
+    if (collision.gameObject.tag == "Fish") //Si choca con un cepo
+    {
+        stamina += 200;
+        Debug.Log("COLAS");
+    }
+
+    if (collision.gameObject.tag == "Penguin")
+    {
+        if (atacking == true)
         {
-            stamina += 200;
-            Debug.Log("COLAS");
-        }
+            GameObject pengu = collision.gameObject;
 
-        if (collision.gameObject.tag == "Penguin")
-        {
-            if (atacking == true)
-            {
-                GameObject pengu = collision.gameObject;
-
-                Destroy(pengu);
-            }
+            Destroy(pengu);
         }
+    }
     }
 
     #endregion
@@ -234,10 +239,19 @@ public class BearInputMultiplayer : MonoBehaviour
             firstTime = false;
         }
 
-        isRunning = true;
-        speed = 10;
-        _timeRunning = Time.fixedTime + 10;
-        finalStamina = Time.fixedTime;
+        if (context.control.IsPressed() == true)
+        {
+            Debug.Log("A correr");
+            isRunning = true;
+            speed = 10;
+            _timeRunning = Time.fixedTime + 10;
+            finalStamina = Time.fixedTime;
+        }
+        else
+        {
+            isRunning = false;
+            Debug.Log("Dejo de correr");
+        }
 
 
         //Stamina = 10/Time.deltaTime/1000;
@@ -395,6 +409,8 @@ public class BearInputMultiplayer : MonoBehaviour
         }
         else
         {
+            speed = 3;
+
             if (stamina < deltaTime + 600)
             {
                 stamina++;

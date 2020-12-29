@@ -8,8 +8,8 @@ public class BearInput : MonoBehaviour
 {
     #region VARIABLES
     //HUD OSO
-    public GameObject BearHUD;
-    public GameObject PenguinHUD;
+    //public GameObject BearHUD;
+    //public GameObject PenguinHUD;
 
     //CONTROL DEL PLAYER
     [SerializeField] float speed = 3;
@@ -78,8 +78,8 @@ public class BearInput : MonoBehaviour
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>(); //identifica el rigidbdy del oso
-        BearHUD.SetActive(true);
-        PenguinHUD.SetActive(false);
+        //BearHUD.SetActive(true);
+        //PenguinHUD.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -122,15 +122,14 @@ public class BearInput : MonoBehaviour
 
     private void LateUpdate()
     {
-        Stamina.fillAmount = stamina/600;
+        //Stamina.fillAmount = stamina/600;
         //transform.LookAt(_playerRB.transform.position);
         //pivot.LookAt(target.position);
         //pivot.LookAt(target);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-
         if (collision.gameObject.tag == "Stocks") //Si choca con un cepo
         {
             //Hacer daño o lo q sea
@@ -142,6 +141,9 @@ public class BearInput : MonoBehaviour
             damaged = true;
         }
 
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
         if (collision.gameObject.tag == "Fish") //Si choca con un cepo
         {
             stamina += 200;
@@ -201,10 +203,11 @@ public class BearInput : MonoBehaviour
         _timeAtacking = Time.fixedTime + 1;
     }
 
-    public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
+    public void Run(InputAction.CallbackContext context) 
     {
         //CAMBIAR ANIMACIÓN
         //AÑADIR VELOCIDAD
+        Debug.Log("intento correr");
 
         if (firstTime == true)
         {
@@ -212,12 +215,35 @@ public class BearInput : MonoBehaviour
             firstTime = false;
         }
 
-        isRunning = true;
-        speed = 10;
-        _timeRunning = Time.fixedTime + 10;
-        finalStamina = Time.fixedTime;
-
-
+        
+        if (context.control.IsPressed() == true)
+        {
+            Debug.Log("A correr");
+            isRunning = true;
+            speed = 10;
+            _timeRunning = Time.fixedTime + 10;
+            finalStamina = Time.fixedTime;
+        }
+        else
+        {
+            isRunning = false;
+            Debug.Log("Dejo de correr");
+        }
+        /*
+            if (isRunning == true)
+        {
+            isRunning = false;
+            Debug.Log ("Dejo de correr");
+        }
+        else
+        {
+            Debug.Log("A correr");
+            isRunning = true;
+            speed = 10;
+            _timeRunning = Time.fixedTime + 10;
+            finalStamina = Time.fixedTime;
+        }
+        */
         //Stamina = 10/Time.deltaTime/1000;
         //Stamina += /*10 */ Time.deltaTime; /// 1000;
         //Debug.Log("Stamina " + Stamina);
@@ -342,10 +368,6 @@ public class BearInput : MonoBehaviour
     {
         if (isRunning == true)
         {
-            Debug.Log("a correr");
-            Debug.Log("delta time " + deltaTime);
-            Debug.Log("tiempo pasado " + _timeRunning);
-
             stamina--;
             
             Debug.Log("final stamina " + finalStamina);
@@ -353,31 +375,19 @@ public class BearInput : MonoBehaviour
 
             if (finalStamina > stamina)
             {
+                Debug.Log("fin de la stamina");
                 speed = 3;
-                Debug.Log("delta time " + Time.deltaTime);
-                Debug.Log("tiempo pasado " + _timeRunning);
                 isRunning = false;
             }
-
-            //Stamina -= Time.deltaTime;
-            //Debug.Log("STAMINA" + Stamina);
-
-            /* if (deltaTime > _timeRunning)
-             {
-                 speed = 3;
-                 Debug.Log("delta time " + Time.deltaTime);
-                 Debug.Log("tiempo pasado " + _timeRunning);
-                 isRunning = false;
-             }*/
-
         }
         else
         {
+            speed = 3;
+
             if (stamina < deltaTime + 600)
             {
                 stamina++;
             }
-
         }
     }
 

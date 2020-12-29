@@ -7,7 +7,7 @@ public class PenguinInput : MonoBehaviour
 {
     #region VARIABLES
 
-    //PINGUINO HUD 
+    //PINGUINO HUD
    // public GameObject BearHUD;
     //public GameObject PenguinHUD;
 
@@ -47,7 +47,7 @@ public class PenguinInput : MonoBehaviour
     private bool fishEaten = false;
     private double _timeFish;
 
-
+    public Vector3 lookingAt;
     public GameObject cepo;
 
     private bool InIceDashPlat = false;
@@ -56,17 +56,18 @@ public class PenguinInput : MonoBehaviour
     Animator penguin_animator;
 
     private bool walking_animation = false;
-    private bool walking = false;
     private bool hit_animation = false;
-    private bool get_hit_animation = false;
     private bool sliding_animation = false;
     private bool afk_animation = false;
 
-    //prueba bofetada 
+    //prueba bofetada
     private bool caer = false;
     private bool tirar = false;
     private float _timeFall;
     private bool isAttacking = false;
+    public double _timeAttacking;
+
+    private SkinnedMeshRenderer penguinSkin;
 
     private MatchInfo matchInfo;
 
@@ -88,31 +89,39 @@ public class PenguinInput : MonoBehaviour
         penguinBody = GetComponent<GameObject>();
         penguin_animator = GetComponent<Animator>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
+        penguinSkin = FindObjectOfType<SkinnedMeshRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_playerRB.velocity.magnitude > 0.1)
+
+        //ANIMACIÓN CORRER
+        /*if (_playerRB.velocity.magnitude > 0.1)
         {
             walking_animation = true;
-        } else
+        } 
+        else
         {
             walking_animation = false;
-        }
-        penguin_animator.SetBool("walking", walking_animation);
-        penguin_animator.SetBool("sliding", sliding_animation);
+        }*/
 
+        penguin_animator.SetBool("walking", walking_animation);
+        //penguin_animator.SetBool("sliding", sliding_animation);
+
+        //ANIMACIÓN ATACAR
         if (isAttacking == false)
         {
-            hit_animation = false;            
-        } else
+            hit_animation = false;
+        } 
+        else
         {
             hit_animation = true;
         }
+
         penguin_animator.SetBool("hit", hit_animation);
-        Debug.Log("AAAAAAAAAAAAAAisAttacking " + isAttacking);
-        Debug.Log("AAAAAAAAAAAAAAhit_animation " + isAttacking);
+
+        //ANIMACIÓN DESLIZARSE
         if (isRunning == true)
         {
             sliding_animation = true;
@@ -121,13 +130,14 @@ public class PenguinInput : MonoBehaviour
         {
             sliding_animation = false;
         }
+
         penguin_animator.SetBool("sliding", sliding_animation);
     }
 
     private void FixedUpdate()
     {
         playerInput = new Vector3(_horizontaldirection.x, 0, _horizontaldirection.y);
-        playerInput = Vector3.ClampMagnitude(playerInput, 1); //para poder normalizar la distancia. 1 es el valor max, va de 0 a 1      
+        playerInput = Vector3.ClampMagnitude(playerInput, 1); //para poder normalizar la distancia. 1 es el valor max, va de 0 a 1
 
 
         //Para que no supere una velocidad:
@@ -139,6 +149,7 @@ public class PenguinInput : MonoBehaviour
         playerDirection = playerInput.x * camRight + playerInput.z * camFordward; //Almacena la direccion hacia la que se esta moviendo el player
 
         _playerRB.transform.LookAt(_playerRB.transform.position + playerDirection);
+        lookingAt = _playerRB.transform.forward;//(_playerRB.transform.position + playerDirection).normalized;
 
         if (isRunning == false)
         {
@@ -154,6 +165,7 @@ public class PenguinInput : MonoBehaviour
         FishRun(Time.fixedTime); //Velocidad despues de comer el pez
         ToStand(Time.fixedTime);
         ToThrowStocks(Time.fixedTime);
+        ToHit(Time.fixedTime); //Se asegura de que el ataque dura solo un instante (1 seg) y no que cuando le des este smp atacando
 
         /*if (caer == true)
         {
@@ -181,7 +193,7 @@ public class PenguinInput : MonoBehaviour
                 {
                     speed = speed / 2;
                 }
-                
+
                 if (playerDirection.z > 0)
                 {
                     _playerRB.AddForce(Vector3.forward * - 0.5f * speed, ForceMode.Impulse);
@@ -246,7 +258,7 @@ public class PenguinInput : MonoBehaviour
                 _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
             }
         }
-        
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -254,7 +266,7 @@ public class PenguinInput : MonoBehaviour
         if (collision.gameObject.tag == "Fish") //Si choca con un pescao
         {
             fishEaten = true;
-            speed = 50;
+            speed = 4;
             _timeFish = Time.fixedTime + 5;
             Debug.Log("COLAS");
         }
@@ -339,7 +351,18 @@ public class PenguinInput : MonoBehaviour
     #region PLAYER ACTIONS
     public void Move(InputAction.CallbackContext context)
     {
+
         _horizontaldirection = context.ReadValue<Vector2>();
+
+        if (context.control.IsPressed() == true)
+        {
+            walking_animation = true;
+        }
+        else
+        {
+            walking_animation = false;
+        }
+
         //CAMBIAR ANIMACIÓN
         //walking_animation = true;
         //penguin_animator.SetBool("walking", walking_animation);
@@ -348,10 +371,11 @@ public class PenguinInput : MonoBehaviour
     public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         Debug.Log("BOFETÓN");
-        
+
         //AÑADIR LO Q SEA PARA LA BOFETADA
         //tirar = true;
         isAttacking = true;
+        _timeAttacking = Time.fixedTime + 2;
         //CAMBIAR ANIMACIÓN
         //hit_animation = true;
         //penguin_animator.SetBool("hit", hit_animation);
@@ -360,11 +384,12 @@ public class PenguinInput : MonoBehaviour
 
     public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
     {
+
         Debug.Log("DESLIZA");
         forceDirection = _playerRB.transform.forward;
         isRunning = true;
         speed = 10;
-        _timeRunning = Time.fixedTime + 2;
+        _timeRunning = Time.fixedTime + 5;
         Debug.Log("vel " + speed);
         //CAMBIAR ANIMACIÓN
         //sliding_animation = true;
@@ -379,8 +404,29 @@ public class PenguinInput : MonoBehaviour
         if (cepoActive == false)
         {
             cepoActive = true;
-            Instantiate(cepo, _playerRB.transform.position, Quaternion.identity);
-            timeAwait = Time.fixedTime + 10; //tiempo que tarada en voilver a tener aviable el cpeo
+
+            if ((lookingAt.x > 0) && (lookingAt.z < 0))
+            {
+                Instantiate(cepo, new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y, _playerRB.transform.position.z + 1), Quaternion.identity);
+
+            }
+            else if ((lookingAt.x < 0)&& (lookingAt.z < 0))
+            {
+                Instantiate(cepo, new Vector3(_playerRB.transform.position.x + 1, _playerRB.transform.position.y, _playerRB.transform.position.z), Quaternion.identity);
+
+            }
+            else if ((lookingAt.x > 0) && (lookingAt.z > 0))
+            {
+                Instantiate(cepo, new Vector3(_playerRB.transform.position.x - 1, _playerRB.transform.position.y, _playerRB.transform.position.z ), Quaternion.identity);
+
+            }
+            else if ((lookingAt.x < 0) && (lookingAt.z > 0))
+            {
+                Instantiate(cepo, new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y, _playerRB.transform.position.z - 1), Quaternion.identity);
+
+            }
+            //Instantiate(cepo, new Vector3 (_playerRB.transform.position.x , _playerRB.transform.position.y, _playerRB.transform.position.z - (lookingAt.normalized.z * 1)), Quaternion.identity);
+            timeAwait = Time.fixedTime + 1; //tiempo que tarada en voilver a tener aviable el cpeo
         }
     }
 
@@ -406,12 +452,37 @@ public class PenguinInput : MonoBehaviour
             //_controls.Player.Movement.Disable();
             //playerInput = new Vector3(playerInput.x, 0, playerInput.z);
             //_playerRB.velocity = new Vector3(playerInput.x * 0.5f * speed, _playerRB.velocity.y, playerDirection.z * 0.5f * speed);
-            _playerRB.AddForce(forceDirection * 10, ForceMode.Acceleration);
+
             //_playerRB.AddForce(playerInput * 0.25f, ForceMode.Impulse);
 
+            Debug.Log("velocidad" + _playerRB.velocity.magnitude);
+
+            if ((deltaTime > _timeRunning - 3) && (deltaTime < _timeRunning - 2))
+            {
+                _playerRB.AddForce(forceDirection * 7, ForceMode.Acceleration);
+                Debug.Log("3 segs");
+            }
+            else if ((deltaTime > _timeRunning - 2) && (deltaTime < _timeRunning - 1))
+            {
+                _playerRB.AddForce(forceDirection * 4, ForceMode.Acceleration);
+                Debug.Log("2 segs");
+            }
+            else if ((deltaTime > _timeRunning - 1) && (deltaTime < _timeRunning))
+            {
+                _playerRB.AddForce(forceDirection * 1.5f, ForceMode.Acceleration);
+                Debug.Log("1 segs");
+            }
+            else
+            {
+                _playerRB.AddForce(forceDirection * 10, ForceMode.Acceleration);
+                Debug.Log("0 segs");
+            }
+
+            //FORMAS DE PARARSE
             if (_playerRB.velocity.magnitude < 1)
             {
                 speed = 3;
+                //_controls.Player.Movement.Disable();
                 Debug.Log("delta time " + Time.deltaTime);
                 Debug.Log("tiempo pasado " + _timeRunning);
                 Debug.Log("ESTOY");
@@ -419,9 +490,11 @@ public class PenguinInput : MonoBehaviour
                 //_controls.Player.Movement.Enable();
                 isRunning = false;
                // sliding_animation = false;
-            } else if (deltaTime > _timeRunning)
+            } 
+            else if (deltaTime > _timeRunning)
             {
                 speed = 3;
+                _controls.Player.Movement.Disable();
                 Debug.Log("delta time " + Time.deltaTime);
                 Debug.Log("tiempo pasado " + _timeRunning);
                 Debug.Log("ESTOY");
@@ -429,6 +502,17 @@ public class PenguinInput : MonoBehaviour
                 //_controls.Player.Movement.Enable();
                 isRunning = false;
                // sliding_animation = false;
+
+                
+            }
+        }
+        else
+        {
+            if (deltaTime > _timeRunning + 3)
+            {
+                Debug.Log("AWAKE");
+                //speed = 3;
+                _controls.Player.Movement.Enable();
             }
         }
     }
@@ -441,6 +525,33 @@ public class PenguinInput : MonoBehaviour
             Debug.Log("a correr");
             Debug.Log("delta time " + deltaTime);
             Debug.Log("tiempo pasado " + _timeFish);
+
+            if ((deltaTime > _timeFish - 4) && (deltaTime < _timeFish - 3))
+            {
+                speed = 6;
+                Debug.Log("speed 6 " + speed);
+            }
+            else if ((deltaTime > _timeFish - 3) && (deltaTime < _timeFish - 2))
+            {
+                speed = 8;
+                Debug.Log("speed 8 " + speed);
+
+            }
+            else if ((deltaTime > _timeFish - 2) && (deltaTime < _timeFish - 1))
+            {
+                speed = 10;
+                Debug.Log("speed 10 " + speed);
+            }
+            else if ((deltaTime > _timeFish - 1) && (deltaTime < _timeFish))
+            {
+                speed = 6;
+                Debug.Log("speed 10 " + speed);
+            }/*
+            else
+            {
+                speed = 4;
+                Debug.Log("speed 6 " + speed);
+            }*/
 
             if (deltaTime > _timeFish)
             {
@@ -456,11 +567,11 @@ public class PenguinInput : MonoBehaviour
     //Se levanta despues de x tiempo caído
     public void ToStand (double deltaTime)
     {
-        if (_playerRB.transform.rotation == Quaternion.Euler(0f, 0f, 90f))
+        if (sliding_animation == true)
         {
             if (deltaTime > _timeFall)
             {
-                _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                sliding_animation = false;
             }
         }
     }
@@ -470,7 +581,8 @@ public class PenguinInput : MonoBehaviour
     public void ToFall()
     {
         _timeFall = Time.fixedTime + 3;
-        _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+        //_playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+        sliding_animation = true;
     }
 
     //morir
@@ -478,6 +590,17 @@ public class PenguinInput : MonoBehaviour
     {
         _controls.Player.Disable();
         Destroy(gameObject);
+    }
+
+    public void ToHit (double deltaTime)
+    {
+        if (isAttacking == true)
+        {
+            if (Time.fixedTime > _timeAttacking)
+            {
+                isAttacking = false;
+            }
+        }
     }
 
     //Comprueba que puede tirar el cepo

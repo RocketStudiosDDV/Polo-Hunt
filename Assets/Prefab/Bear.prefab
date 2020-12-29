@@ -175,14 +175,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fef8c892df141b4184b52d7924f706d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10
   speed: 3
-  maxSpeed: 10
   mainCamera: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  movementCamera: {x: 0, y: 0}
   target: {fileID: 0}
   pivot: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  movementCamera: {x: 0, y: 0}
+  Stamina: {fileID: 0}
+  visionMaterial: {fileID: 0}
+  normalMaterial: {fileID: 0}
 --- !u!1 &4452311131440329724
 GameObject:
   m_ObjectHideFlags: 0
