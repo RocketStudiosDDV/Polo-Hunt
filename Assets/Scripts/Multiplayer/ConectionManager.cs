@@ -15,6 +15,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public GameObject ConnectPanel;
     public GameObject RoomPanel;
     public GameObject ChooseTypePanel;
+    public GameObject OnlineOfflinePanel;
 
     // PRIVADAS
     HashSet<int> roomCodes = new HashSet<int>();
@@ -380,6 +381,18 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         ConnectPanel.SetActive(false);
         if (logWriter != null)
             logWriter.Write("Se ha marchado del lobby");
+    }
+
+    public void MultiplayerButton()
+    {     
+        OnlineOfflinePanel.SetActive(false); 
+        ConnectPanel.SetActive(true);
+    }
+
+    public void BackMultiplayerButton()
+    {     
+        OnlineOfflinePanel.SetActive(true); 
+        ConnectPanel.SetActive(false);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
