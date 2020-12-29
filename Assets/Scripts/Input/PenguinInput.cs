@@ -52,6 +52,16 @@ public class PenguinInput : MonoBehaviour
 
     private bool InIceDashPlat = false;
 
+    //CONTROL DE ANIMACIONES
+    Animator penguin_animator;
+
+    private bool walking_animation = false;
+    private bool walking = false;
+    private bool hit_animation = false;
+    private bool get_hit_animation = false;
+    private bool sliding_animation = false;
+    private bool afk_animation = false;
+
     //prueba bofetada 
     private bool caer = false;
     private bool tirar = false;
@@ -76,13 +86,42 @@ public class PenguinInput : MonoBehaviour
         //PenguinHUD.SetActive(true);
         _playerRB = GetComponent<Rigidbody>();
         penguinBody = GetComponent<GameObject>();
+        penguin_animator = GetComponent<Animator>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (_playerRB.velocity.magnitude > 0.1)
+        {
+            walking_animation = true;
+        } else
+        {
+            walking_animation = false;
+        }
+        penguin_animator.SetBool("walking", walking_animation);
+        penguin_animator.SetBool("sliding", sliding_animation);
 
+        if (isAttacking == false)
+        {
+            hit_animation = false;            
+        } else
+        {
+            hit_animation = true;
+        }
+        penguin_animator.SetBool("hit", hit_animation);
+        Debug.Log("AAAAAAAAAAAAAAisAttacking " + isAttacking);
+        Debug.Log("AAAAAAAAAAAAAAhit_animation " + isAttacking);
+        if (isRunning == true)
+        {
+            sliding_animation = true;
+        }
+        else
+        {
+            sliding_animation = false;
+        }
+        penguin_animator.SetBool("sliding", sliding_animation);
     }
 
     private void FixedUpdate()
@@ -301,15 +340,22 @@ public class PenguinInput : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         _horizontaldirection = context.ReadValue<Vector2>();
+        //CAMBIAR ANIMACIÓN
+        //walking_animation = true;
+        //penguin_animator.SetBool("walking", walking_animation);
     }
 
     public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         Debug.Log("BOFETÓN");
-        //CAMBIAR ANIMACIÓN
+        
         //AÑADIR LO Q SEA PARA LA BOFETADA
         //tirar = true;
         isAttacking = true;
+        //CAMBIAR ANIMACIÓN
+        //hit_animation = true;
+        //penguin_animator.SetBool("hit", hit_animation);
+        //hit_animation = false;
     }
 
     public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
@@ -318,9 +364,11 @@ public class PenguinInput : MonoBehaviour
         forceDirection = _playerRB.transform.forward;
         isRunning = true;
         speed = 10;
-        _timeRunning = Time.fixedTime + 10;
+        _timeRunning = Time.fixedTime + 2;
         Debug.Log("vel " + speed);
         //CAMBIAR ANIMACIÓN
+        //sliding_animation = true;
+        //penguin_animator.SetBool("sliding", sliding_animation);
     }
 
     public void PowerUp(InputAction.CallbackContext context) //Soltar cepo -L1 - space
@@ -370,6 +418,7 @@ public class PenguinInput : MonoBehaviour
                 _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
                 //_controls.Player.Movement.Enable();
                 isRunning = false;
+               // sliding_animation = false;
             } else if (deltaTime > _timeRunning)
             {
                 speed = 3;
@@ -379,6 +428,7 @@ public class PenguinInput : MonoBehaviour
                 _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
                 //_controls.Player.Movement.Enable();
                 isRunning = false;
+               // sliding_animation = false;
             }
         }
     }

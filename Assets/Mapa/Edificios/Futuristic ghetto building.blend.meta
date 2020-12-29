@@ -6,6 +6,9 @@ ModelImporter:
   - first:
       74: -606443687133139074
     second: Building_1
+  - first:
+      74: 1989289236423521904
+    second: Default Take
   externalObjects: {}
   materials:
     materialImportMode: 1

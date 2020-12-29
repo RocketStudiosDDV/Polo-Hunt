@@ -2,8 +2,46 @@ fileFormatVersion: 2
 guid: cabdfb0f5d62bd940bd2a98b7275c554
 ModelImporter:
   serializedVersion: 19301
-  internalIDToNameTable: []
-  externalObjects: {}
+  internalIDToNameTable:
+  - first:
+      74: 1989289236423521904
+    second: Default Take
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal1
+    second: {fileID: 2100000, guid: a2929b2a1432b8c4aa9f8c13ce20d731, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal2
+    second: {fileID: 2100000, guid: 202e3159876f1e94cbc315fd2beb2775, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal3
+    second: {fileID: 2100000, guid: 4839e3d19bd24654ea756c2985af4296, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal4
+    second: {fileID: 2100000, guid: 789b653b4b05c1245a53b3df8ce70d96, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WoodFrame
+    second: {fileID: 2100000, guid: 76562b75d1efc814990b040d150fb5ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ground
+    second: {fileID: 2100000, guid: 136477a1995798848a9b7ccdcb5521cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tarp
+    second: {fileID: 2100000, guid: 1b440b463ff56a345ab26b7a7d5ded4e, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
