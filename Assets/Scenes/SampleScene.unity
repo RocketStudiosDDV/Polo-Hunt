@@ -1571,7 +1571,7 @@ GameObject:
   - component: {fileID: 1309981639}
   m_Layer: 0
   m_Name: Suelo
-  m_TagString: Floor
+  m_TagString: IceDashPlat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

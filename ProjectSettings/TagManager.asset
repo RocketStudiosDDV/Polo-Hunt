@@ -22,6 +22,7 @@ TagManager:
   - RightSky
   - Goal
   - RestZone
+  - Start
   layers:
   - Default
   - TransparentFX

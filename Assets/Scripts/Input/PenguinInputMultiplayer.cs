@@ -185,66 +185,75 @@ public class PenguinInputMultiplayer : MonoBehaviour
             Debug.Log("direccion x " + playerDirection.x);
             Debug.Log("VELOCIDAD " + _playerRB.velocity.magnitude);
             int lastPressed = 1;
+            float indexBig = 0.3f;
 
             if (InIceDashPlat == true) //Movimientoi en el dash de la plat
             {
                 _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
 
-                if (_playerRB.velocity.magnitude > 3)
+                /*if (_playerRB.velocity.magnitude > 3)
                 {
                     speed = speed / 2;
-                }
+                }*/
                 
                 if (playerDirection.z > 0)
                 {
-                    _playerRB.AddForce(Vector3.forward * - 0.5f * speed, ForceMode.Impulse);
-                    _playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
-                    _playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.forward * - 0.5f * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
                     lastPressed = 0;
 
                 }
                 else if (playerDirection.z < 0)
                 {
-                    _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
-                    _playerRB.AddForce(Vector3.forward * - 0.25f * speed, ForceMode.Impulse);
-                    _playerRB.AddForce(Vector3.right * 0.25f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.forward * - 0.25f * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.right * 0.25f * speed, ForceMode.Impulse);
                     lastPressed = 1;
                 }
                 else if(playerDirection.x > 0)
                 {
-                    _playerRB.AddForce(Vector3.left * 0.5f * speed, ForceMode.Impulse);
-                    _playerRB.AddForce(Vector3.left * 0.25f * speed, ForceMode.Impulse);
-                    _playerRB.AddForce(Vector3.forward * -0.25f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.left * 0.5f * speed, ForceMode.Impulse);
+                    // _playerRB.AddForce(Vector3.left * 0.25f * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.forward * -0.25f * speed, ForceMode.Impulse);
                     lastPressed = 2;
                 }
                 else if (playerDirection.x < 0)
                 {
-                    _playerRB.AddForce(Vector3.right * 0.5f * speed, ForceMode.Impulse);
-                    _playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
-                    _playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.right * 0.5f * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
+                    //_playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
                     lastPressed = 3;
                 }
                 else
                 {
                     if(lastPressed == 0)
                     {
-                        _playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
-                        _playerRB.AddForce(Vector3.right * 0.25f * speed, ForceMode.Impulse);
+                        _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
+                        //_playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
+                        //_playerRB.AddForce(Vector3.right * 0.25f * speed, ForceMode.Impulse);
                     }
                     else if (lastPressed == 1)
                     {
-                        _playerRB.AddForce(Vector3.forward * -0.5f * speed, ForceMode.Impulse);
-                        _playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
+                        _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
+                        //_playerRB.AddForce(Vector3.forward * -0.5f * speed, ForceMode.Impulse);
+                        //_playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
                     }
                     else if (lastPressed == 2)
                     {
-                        _playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
-                        _playerRB.AddForce(Vector3.right * 0.5f * speed, ForceMode.Impulse);
+                        _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
+                        //_playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
+                        //_playerRB.AddForce(Vector3.right * 0.5f * speed, ForceMode.Impulse);
                     }
                     else if (lastPressed == 3)
                     {
-                        _playerRB.AddForce(Vector3.forward * -0.25f * speed, ForceMode.Impulse);
-                        _playerRB.AddForce(Vector3.right * -0.5f * speed, ForceMode.Impulse);
+                        _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
+                        //_playerRB.AddForce(Vector3.forward * -0.25f * speed, ForceMode.Impulse);
+                        //_playerRB.AddForce(Vector3.right * -0.5f * speed, ForceMode.Impulse);
                     }
 
                 }

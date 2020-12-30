@@ -42,6 +42,14 @@ public class InputRunnerMode : MonoBehaviour
 
     private bool isHitted = false;
 
+    //CONTROL DE ANIMACIONES
+    Animator penguin_animator;
+
+    private bool walking_animation = true;
+    private bool hit_animation = false;
+    private bool sliding_animation = false;
+
+
     //empujon
     private double _timeAttacking;
     private bool isAttacking = false;
@@ -68,11 +76,21 @@ public class InputRunnerMode : MonoBehaviour
     {
         _playerRB = GetComponent<Rigidbody>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
+        penguin_animator = GetComponent<Animator>();  
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (walking_animation == true)
+        {
+            Debug.Log("A andar");
+            _playerRB.AddForce(Vector3.forward * 3f, ForceMode.Force);
+        }
+
+        penguin_animator.SetBool("walking", walking_animation);
+        penguin_animator.SetBool("sliding", sliding_animation);
 
     }
 
@@ -92,20 +110,29 @@ public class InputRunnerMode : MonoBehaviour
         FishRun(Time.fixedTime); //Velocidad despues de comer el pez
 
         //movimiento
-        if (toStop == false)
-        {
-            _playerRB.AddForce(Vector3.forward * 10, ForceMode.Acceleration);
-            _playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerInput.z * speed);
-        }
-        else
-        {           
-            if (Time.fixedTime < _timeTillStop)
+        
+        if (walking_animation == false)
+        {            
+            if (toStop == false)
             {
-                _playerRB.AddForce(Vector3.left * 10, ForceMode.Acceleration);
+                
+                _playerRB.AddForce(Vector3.forward * 10, ForceMode.Acceleration);
                 _playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerInput.z * speed);
             }
+            else
+            {
+                if (Time.fixedTime < _timeTillStop)
+                {
+                    _playerRB.AddForce(Vector3.left * 10, ForceMode.Acceleration);
+                    _playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerInput.z * speed);
+                }
+                else
+                {
+                    sliding_animation = false;
+                }
+            }
         }
-        
+              
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -115,7 +142,7 @@ public class InputRunnerMode : MonoBehaviour
         {
             inFloor = false;
             penguinPos = _playerRB.position;
-            _playerRB.MovePosition(new Vector3(penguinPos.x - 10, penguinPos.y + 10, penguinPos.z)); //la coloca en medio, si la cuesta es recta no hace falta dcha izq, sino si
+            _playerRB.MovePosition(new Vector3(penguinPos.x - 2, penguinPos.y + 10, penguinPos.z)); //la coloca en medio, si la cuesta es recta no hace falta dcha izq, sino si
             Debug.Log("ME CAIGO");
         }
 
@@ -123,12 +150,16 @@ public class InputRunnerMode : MonoBehaviour
         {
             inFloor = false;
             penguinPos = _playerRB.position;
-            _playerRB.MovePosition(new Vector3(penguinPos.x + 10, penguinPos.y + 10, penguinPos.z)); //la coloca en medio, si la cuesta es recta no hace falta dcha izq, sino si
+            _playerRB.MovePosition(new Vector3(penguinPos.x + 2, penguinPos.y + 10, penguinPos.z)); //la coloca en medio, si la cuesta es recta no hace falta dcha izq, sino si
             Debug.Log("ME CAIGO");
         }
 
         if (collision.gameObject.tag == "Goal") //LLEGA A LA META
         {
+            int numRand = Random.Range(2, 6);
+            Debug.Log(numRand);
+            _timeTillStop = Time.fixedTime + numRand;
+            toStop = true;
             Debug.Log("Oleee");
         }
 
@@ -143,6 +174,14 @@ public class InputRunnerMode : MonoBehaviour
             isHitted = true;
             WasHitted(true);
         }
+
+
+        if (collision.gameObject.tag == "Start") //Si choca con el lado dch de un pingu
+        {
+            walking_animation = false;
+            sliding_animation = true;
+        }
+        
     }
 
 
@@ -159,10 +198,7 @@ public class InputRunnerMode : MonoBehaviour
         if (collision.gameObject.tag == "RestZone") //Si choca con un pescao
         {
             Debug.Log("DESCANSO");
-            int numRand = Random.Range(1, 4);
-            Debug.Log(numRand);
-            _timeTillStop = Time.fixedTime + numRand;
-            toStop = true;            
+                      
         }
 
         if (collision.gameObject.tag == "Floor") //Si esta en el mapa
@@ -333,7 +369,7 @@ public class InputRunnerMode : MonoBehaviour
         moveY = Mathf.Clamp(moveY, -50.0f, 70.0f);
 
         //pivot sigue a player
-        Vector3 follow = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 follow = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 3f);
         pivot.position = Vector3.Lerp(pivot.position, follow, Time.deltaTime * 100);
 
         //Rotar pivot
