@@ -86,7 +86,7 @@ public class InputRunnerMode : MonoBehaviour
         if (walking_animation == true)
         {
             Debug.Log("A andar");
-            _playerRB.AddForce(Vector3.forward * 3f, ForceMode.Force);
+            _playerRB.AddForce(Vector3.forward * 2.5f, ForceMode.Acceleration);
         }
 
         penguin_animator.SetBool("walking", walking_animation);
@@ -111,7 +111,7 @@ public class InputRunnerMode : MonoBehaviour
 
         //movimiento
         
-        if (walking_animation == false)
+        if ((walking_animation == false) && (isHitted == false))
         {            
             if (toStop == false)
             {
@@ -123,11 +123,12 @@ public class InputRunnerMode : MonoBehaviour
             {
                 if (Time.fixedTime < _timeTillStop)
                 {
-                    _playerRB.AddForce(Vector3.left * 10, ForceMode.Acceleration);
+                    _playerRB.AddForce(Vector3.forward * 3, ForceMode.Acceleration);
                     _playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerInput.z * speed);
                 }
                 else
                 {
+                    Debug.Log("slide flase");
                     sliding_animation = false;
                 }
             }
@@ -142,7 +143,7 @@ public class InputRunnerMode : MonoBehaviour
         {
             inFloor = false;
             penguinPos = _playerRB.position;
-            _playerRB.MovePosition(new Vector3(penguinPos.x - 2, penguinPos.y + 10, penguinPos.z)); //la coloca en medio, si la cuesta es recta no hace falta dcha izq, sino si
+            _playerRB.MovePosition(new Vector3(penguinPos.x - 4, penguinPos.y + 10, penguinPos.z)); //la coloca en medio, si la cuesta es recta no hace falta dcha izq, sino si
             Debug.Log("ME CAIGO");
         }
 
@@ -150,7 +151,7 @@ public class InputRunnerMode : MonoBehaviour
         {
             inFloor = false;
             penguinPos = _playerRB.position;
-            _playerRB.MovePosition(new Vector3(penguinPos.x + 2, penguinPos.y + 10, penguinPos.z)); //la coloca en medio, si la cuesta es recta no hace falta dcha izq, sino si
+            _playerRB.MovePosition(new Vector3(penguinPos.x + 4, penguinPos.y + 10, penguinPos.z)); //la coloca en medio, si la cuesta es recta no hace falta dcha izq, sino si
             Debug.Log("ME CAIGO");
         }
 
@@ -271,7 +272,7 @@ public class InputRunnerMode : MonoBehaviour
         if (inFloor == true)
         {
             Debug.Log("SALTO");
-            _playerRB.AddForce(Vector3.up * 3.5f, ForceMode.Impulse);
+            _playerRB.AddForce(Vector3.up * 4.5f, ForceMode.Impulse);
             inFloor = false;
         }   
     }
@@ -319,7 +320,8 @@ public class InputRunnerMode : MonoBehaviour
             if (side == false)
             {
                 Debug.Log("LEFT");
-                _playerRB.AddForce(Vector3.left * 25, ForceMode.Impulse);
+                //_playerRB.AddForce(Vector3.left * 250, ForceMode.Impulse);
+                _playerRB.AddRelativeForce(Vector3.left * 250, ForceMode.Impulse);
                 //penguinPos = _playerRB.position;
                 //_playerRB.MovePosition(new Vector3(penguinPos.x, penguinPos.y, penguinPos.z - 5));
                 isHitted = false;
@@ -327,7 +329,7 @@ public class InputRunnerMode : MonoBehaviour
             else
             {
                 Debug.Log("TRUE");
-                _playerRB.AddForce(Vector3.right * 25, ForceMode.Impulse);
+                _playerRB.AddRelativeForce(Vector3.right * 250, ForceMode.Impulse);
                 isHitted = false;
             }
         }           

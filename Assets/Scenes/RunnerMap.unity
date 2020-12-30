@@ -577,11 +577,11 @@ MonoBehaviour:
   jumpForce: 10
   speed: 5
   maxSpeed: 10
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 1378142680}
   offset: {x: 0, y: 0, z: 0}
   movementCamera: {x: 0, y: 0}
-  target: {fileID: 0}
-  pivot: {fileID: 0}
+  target: {fileID: 348688878}
+  pivot: {fileID: 348688877}
   penguinPos: {x: 0, y: 0, z: 0}
   inFloor: 1
 --- !u!1 &658889985
@@ -1142,7 +1142,7 @@ GameObject:
   - component: {fileID: 1152019237}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1310,7 +1310,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259729064}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -57.97, y: 66.88, z: -72.32}
+  m_LocalPosition: {x: -57.97, y: 66.88, z: -77.67}
   m_LocalScale: {x: 1.86, y: 1, z: 0.13}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1875,12 +1875,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991629405}
-  m_LocalRotation: {x: 0, y: 0, z: 0.8284515, w: 0.56006086}
-  m_LocalPosition: {x: -60.1, y: 45.2, z: 2.78}
+  m_LocalRotation: {x: 0.6281772, y: 0.36081988, z: 0.3662148, w: 0.5840284}
+  m_LocalPosition: {x: -60.47, y: 44.8, z: 3.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1551443661}
   - {fileID: 1947798673}
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 111.88}
+  m_LocalEulerAnglesHint: {x: 28, y: 93.22, z: 93.73}
