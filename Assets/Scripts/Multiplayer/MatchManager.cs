@@ -8,7 +8,6 @@ using UnityEngine;
 public class MatchManager : MonoBehaviourPun
 {
     #region VARIABLES
-
     public List<Transform> startPositions;
     public GameObject penguinPrefab;
     public GameObject bearPrefab;
@@ -51,19 +50,20 @@ public class MatchManager : MonoBehaviourPun
     public void InstantiatePlayers()
     {
         object isPenguin;
-        Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out isPenguin) + " eo");
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out isPenguin);
         if (isPenguin == null)
         {
-            Debug.Log("NULOOOOOOOOOO");
             isPenguin = true;
         }
         if ((bool)isPenguin)
         {
-            PhotonNetwork.Instantiate(this.penguinPrefab.name, startPositions[0].position, Quaternion.identity, 0);
+            GameObject myPenguin = PhotonNetwork.Instantiate(this.penguinPrefab.name, startPositions[0].position, Quaternion.identity, 0);
+            myPenguin.GetComponent<PenguinInputMultiplayer>().ownerActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
         }
         else
         {
-            PhotonNetwork.Instantiate(this.bearPrefab.name, startPositions[0].position, Quaternion.identity, 0);
+            GameObject myBear = PhotonNetwork.Instantiate(this.bearPrefab.name, startPositions[0].position, Quaternion.identity, 0);
+            myBear.GetComponent<BearInputMultiplayer>().ownerActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
         }
     }
 

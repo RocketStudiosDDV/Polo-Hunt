@@ -94,7 +94,9 @@ MonoBehaviour:
   movementCamera: {x: 0, y: 0}
   target: {fileID: 0}
   pivot: {fileID: 0}
-  cepo: {fileID: 6193383704093716309, guid: 957a1810af608a241b637da49f56cd6e, type: 3}
+  lookingAt: {x: 0, y: 0, z: 0}
+  cepo: {fileID: 6193383704093716309, guid: 9a3a2bc4dafc50242af489f3788b3eb0, type: 3}
+  _timeAttacking: 0
 --- !u!114 &8651604414373585643
 MonoBehaviour:
   m_ObjectHideFlags: 0

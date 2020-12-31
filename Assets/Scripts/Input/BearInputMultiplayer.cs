@@ -66,6 +66,8 @@ public class BearInputMultiplayer : MonoBehaviour
     public Material visionMaterial;
     public Material normalMaterial;
 
+    // ONLINE
+    public int ownerActorNumber;
     
 
     #endregion
@@ -139,8 +141,8 @@ public class BearInputMultiplayer : MonoBehaviour
         {
             return;
         }
-
-        Stamina.fillAmount = stamina/600;
+        if (Stamina != null)
+            Stamina.fillAmount = stamina/600;
         //transform.LookAt(_playerRB.transform.position);
         //pivot.LookAt(target.position);
         //pivot.LookAt(target);
@@ -148,6 +150,11 @@ public class BearInputMultiplayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
+
         if (collision.gameObject.tag == "Stocks") //Si choca con un cepo
         {
             //Hacer daño o lo q sea
@@ -162,28 +169,34 @@ public class BearInputMultiplayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-    if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
-    {
-        return;
-    }
-
-
-
-    if (collision.gameObject.tag == "Fish") //Si choca con un cepo
-    {
-        stamina += 200;
-        Debug.Log("COLAS");
-    }
-
-    if (collision.gameObject.tag == "Penguin")
-    {
-        if (atacking == true)
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
         {
-            GameObject pengu = collision.gameObject;
-
-            Destroy(pengu);
+            return;
         }
-    }
+
+        if (collision.gameObject.tag == "Fish") //Si choca con un cepo
+        {
+            stamina += 200;
+            Debug.Log("COLAS");
+        }
+
+        if (collision.gameObject.tag == "Penguin")  // Si colisiona con pinguino
+        {
+            if (atacking == true)   // Si está atacando
+            {
+                GameObject pengu = collision.gameObject;
+                if (!PhotonNetwork.IsConnected) // Si es offline, lo elimina
+                {
+                    Destroy(pengu);
+                } else  // Si es online, le pide que se muera y le pasa información para comprobar que no hubo lag
+                {
+                    object[] objectArray = new object[2];
+                    objectArray[0] = pengu.transform.position;
+                    objectArray[1] = ownerActorNumber;
+                    pengu.GetComponent<PhotonView>().RPC("ToDie", pengu.GetComponent<PhotonView>().Owner, objectArray as object);
+                }
+            }
+        }
     }
 
     #endregion
@@ -328,6 +341,17 @@ public class BearInputMultiplayer : MonoBehaviour
 
     #endregion
 
+    public void Stun()
+    {
+        //Hacer daño o lo q sea
+        _timeDamage = Time.fixedTime + 10;
+        Debug.Log("DAÑO");
+        speed = 0;
+        _controls.Player.Movement.Disable();
+        _controls.Player.CameraControl.Disable();
+        damaged = true;
+    }
+
     //Que el daño dure x tiempo
     public void ToDamage(double deltaTime)
     {
@@ -378,20 +402,20 @@ public class BearInputMultiplayer : MonoBehaviour
     {
         if (isRunning == true)
         {
-            Debug.Log("a correr");
-            Debug.Log("delta time " + deltaTime);
-            Debug.Log("tiempo pasado " + _timeRunning);
+            //Debug.Log("a correr");
+            //Debug.Log("delta time " + deltaTime);
+            //Debug.Log("tiempo pasado " + _timeRunning);
 
             stamina--;
             
-            Debug.Log("final stamina " + finalStamina);
-            Debug.Log("stamina " + stamina);
+            //Debug.Log("final stamina " + finalStamina);
+            //Debug.Log("stamina " + stamina);
 
             if (finalStamina > stamina)
             {
                 speed = 3;
-                Debug.Log("delta time " + Time.deltaTime);
-                Debug.Log("tiempo pasado " + _timeRunning);
+                //Debug.Log("delta time " + Time.deltaTime);
+                //Debug.Log("tiempo pasado " + _timeRunning);
                 isRunning = false;
             }
 

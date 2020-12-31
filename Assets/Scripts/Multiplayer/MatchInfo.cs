@@ -4,9 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Almacena la información de partida.
+/// Crea los pescados del mapa.
+/// Decide quién es oso y quien es pinguino, y pide a MatchManager comenzar la partida cuando esten los jugadores listos.
+/// </summary>
 public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 {
     #region VARIABLES
+    // Información de partida
+    public int numberOfBears = 1;   // nº de osos de la partida
 
     public int penguinsAlive; //pinguinos restantes
     public int bearsConnected; //osos conectados
@@ -14,12 +21,13 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     private double _totalTime = 0; //tiempo que dura la partida
 
-    // Información
-    public List<Player> playersList;
-    public List<bool> playersReady;
-    public int numberOfBears = 1;
+    public List<Player> playersList;    // lista de jugadores
 
-    // Pescados
+    // Información de sincronización
+    public List<bool> playersReady; // lista de jugadores listos
+    private object penguinsCountLock;
+
+    // Información de creación y sincronización de pescados
     public GameObject fishPrefab;
     private FishMultiplayer[] fishList;
     public List<Transform> fishPositions;
@@ -115,11 +123,18 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     #region PUBLIC METHODS
 
-    //RPC que comprobara cuantps pingguinos hay vivvos y los actualizara
-    //cuando el master sepa que han maatdo a un pingu, hace que todos llamen a esto
-    public void ActualiceNumPenguins (int penguins)
+    /// <summary>
+    /// Actualiza el número de pinguinos vivos (thread-safe)
+    /// </summary>
+    [PunRPC]
+    public void ActualiceNumPenguins()
     {
-        //MANU
+        lock(penguinsCountLock)
+        {
+            penguinsAlive--;
+            if (penguinsAlive == 0)
+                ShowResults();
+        }
     }
 
     //modo espectador -> aunque haya game over que puedas seguir la camañar de la persona que te ha matado
@@ -133,13 +148,15 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         //pinguino funcion muerte
         //pinguino al morir invoca a esta funcion
 
-       /* Camera newCamera = pinguino.GetComponent<Camera>();
-        newCamera = oso.GetComponent<Camera>();
-        */
+        /* Camera newCamera = pinguino.GetComponent<Camera>();
+         newCamera = oso.GetComponent<Camera>();
+         */
+        Debug.Log("MODO ESPECTADOR");
     }
 
 
     //método que se llamará cuando el juego decida que se acabara la partida y se muestra a quien siga dntro de la partida
+    //debe bloquear el input a todos los jugadores y enseñarles la pantalla de resultados, inferida de penguinsAlive y bearsConnected
     public void ShowResults()
     {
         //Paula / tomas

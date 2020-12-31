@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +22,10 @@ public class FishMultiplayer : MonoBehaviour
             {
                 matchManager.EatFish(id);
             }
-            Destroy(gameObject); //Se destruye dos segs después de la colisión
+            if (!PhotonNetwork.IsConnected)
+            {
+                Destroy(gameObject); //Se destruye dos segs después de la colisión
+            }
         }
 
         if (collision.gameObject.tag == "Penguin")
@@ -30,7 +34,10 @@ public class FishMultiplayer : MonoBehaviour
             {
                 matchManager.EatFish(id);
             }
-            Destroy(gameObject); //Se destruye dos segs después de la colisión
+            if (!PhotonNetwork.IsConnected)
+            {
+                Destroy(gameObject); //Se destruye dos segs después de la colisión
+            }
         }
 
     }
