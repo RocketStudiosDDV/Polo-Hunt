@@ -12,14 +12,18 @@ public class MatchManager : MonoBehaviourPun
     public GameObject penguinPrefab;
     public GameObject bearPrefab;
 
-    private MatchInfo matchInfo;
+    public MatchInfo matchInfo;
+    public MatchInfo matchInfoPrefab;
     #endregion
 
 
     #region UNITY CALLBACKS
     void Start()
     {
-        matchInfo = FindObjectOfType<MatchInfo>();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate(this.matchInfoPrefab.name, Vector3.zero, Quaternion.identity);
+        }
     }
 
     // Update is called once per frame
@@ -53,6 +57,7 @@ public class MatchManager : MonoBehaviourPun
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out isPenguin);
         if (isPenguin == null)
         {
+            Debug.LogError("NULOOOOOOOOOOOO");
             isPenguin = true;
         }
         if ((bool)isPenguin)

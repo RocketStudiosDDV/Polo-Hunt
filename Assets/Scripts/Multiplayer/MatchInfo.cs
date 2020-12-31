@@ -19,13 +19,18 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public int bearsConnected; //osos conectados
     public int penguinsConnected; //pinguinos conectados
 
-    private double _totalTime = 0; //tiempo que dura la partida
+    private double matchLength = 20; //tiempo que dura la partida
+    private double matchTime;
 
     public List<Player> playersList;    // lista de jugadores
 
+    private bool matchFinished;     // Se acabo la partida?
+    private bool matchStarted;  // Se empezó la partida?
+    private bool hostLeft;
+
     // Información de sincronización
     public List<bool> playersReady; // lista de jugadores listos
-    private object penguinsCountLock;
+    private object infoLock = new object();
 
     // Información de creación y sincronización de pescados
     public GameObject fishPrefab;
@@ -34,6 +39,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     // Referencias
     private MatchManager matchManager;
+
+    // TESTEO
+    private LogWriter logWriter;
 
     #endregion
     #region UNITY CALLBACKS
@@ -44,6 +52,11 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         playersList = new List<Player>();
         playersReady = new List<bool>();
         matchManager = FindObjectOfType<MatchManager>();
+        matchManager.matchInfo = this;
+        matchFinished = false;
+        matchStarted = false;
+        hostLeft = false;
+        logWriter = FindObjectOfType<LogWriter>();
 
         // Instanciamos los pescados
         fishList = new FishMultiplayer[fishPositions.Count];
@@ -65,54 +78,61 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             int bearsToAssign = numberOfBears;
+            bearsConnected = numberOfBears;
             int penguinsToAssign = playersList.Count - numberOfBears;
+            penguinsConnected = penguinsToAssign;
+            penguinsAlive = penguinsConnected;
             Debug.Log("Players= " + playersList.Count + " - Bears= " + bearsToAssign + " - Pingus=" + penguinsToAssign);
             foreach (Player player in playersList)
             {
                 ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
                 bool isPenguin = true;
-                while (bearsToAssign > 0 || penguinsToAssign > 0)
+                if (Random.Range(0, 2) == 0)
                 {
-                    if (Random.Range(0, 2) == 0)
+                    if (penguinsToAssign > 0)
                     {
-                        if (penguinsToAssign > 0)
-                        {
-                            isPenguin = true;
-                            penguinsToAssign--;
-                        }
-                        else
-                        {
-                            isPenguin = false;
-                            bearsToAssign--;
-                        }
+                        isPenguin = true;
+                        penguinsToAssign--;
                     }
                     else
                     {
-                        if (bearsToAssign > 0)
-                        {
-                            isPenguin = false;
-                            bearsToAssign--;
-                        }
-                        else
-                        {
-                            isPenguin = true;
-                            penguinsToAssign--;
-                        }
+                        isPenguin = false;
+                        bearsToAssign--;
+                    }
+                }
+                else
+                {
+                    if (bearsToAssign > 0)
+                    {
+                        isPenguin = false;
+                        bearsToAssign--;
+                    }
+                    else
+                    {
+                        isPenguin = true;
+                        penguinsToAssign--;
                     }
                 }
                 hashtable.Add("isPenguin", isPenguin);
                 player.SetCustomProperties(hashtable);
             }
-        }        
-        Debug.Log("Awake Finished");
+            object[] objectArray = new object[2];
+            objectArray[0] = penguinsConnected;
+            objectArray[1] = bearsConnected;
+            Debug.Log("enviando info pinguinos = " + (int)objectArray[0] + " osos = " + (int)objectArray[1]);
+            GetComponent<PhotonView>().RPC("SetNumberOfPlayers", RpcTarget.All, objectArray as object);
+        }
+        Debug.Log("Awake Finished \n\n\n\n\n\n\n\n\n");
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        endTime(Time.fixedTime);
-        endGame();
+        if (!matchFinished && matchStarted)
+        {
+            endTime(Time.deltaTime);
+            endGame();
+        }
         
     }
 
@@ -127,14 +147,49 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// Actualiza el número de pinguinos vivos (thread-safe)
     /// </summary>
     [PunRPC]
-    public void ActualiceNumPenguins()
+    public void ActualizeNumPenguins()
     {
-        lock(penguinsCountLock)
+        lock(infoLock)
         {
             penguinsAlive--;
+            Debug.Log("penguins alive = " + penguinsAlive);
             if (penguinsAlive == 0)
                 ShowResults();
         }
+    }
+
+    [PunRPC]
+    public void ActualizeNumPenguinsConnected()
+    {
+        lock(infoLock)
+        {
+            penguinsConnected--;
+            penguinsAlive--;
+        }
+    }
+
+    [PunRPC]
+    public void ActualizeNumBearsConnected()
+    {
+        lock (infoLock)
+        {
+            bearsConnected--;
+        }
+    }
+
+    [PunRPC]
+    public void SetNumberOfPlayers(object[] objectArray)
+    {
+        int numberOfPenguins = (int) objectArray[0];
+        int numberOfBears = (int)objectArray[1];
+        lock(infoLock)
+        {
+            penguinsAlive = numberOfPenguins;
+            penguinsConnected = numberOfPenguins;
+            bearsConnected = numberOfBears;
+        }
+        Debug.Log(" pinguinos = " + penguinsConnected + " - osos = " + bearsConnected);
+        matchStarted = true;
     }
 
     //modo espectador -> aunque haya game over que puedas seguir la camañar de la persona que te ha matado
@@ -159,13 +214,30 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     //debe bloquear el input a todos los jugadores y enseñarles la pantalla de resultados, inferida de penguinsAlive y bearsConnected
     public void ShowResults()
     {
+        matchFinished = true;
         //Paula / tomas
+        logWriter.Write("SE ACABO LA PARTIDA");
+        if (bearsConnected == 0)
+        {
+            logWriter.Write("se fueron todos los osos");
+        } else if (penguinsConnected == 0)
+        {
+            logWriter.Write("se fueron todos los pinguinos");
+        } else if (penguinsAlive == 0)
+        {
+            logWriter.Write("todos los pinguinos han sido cazados");
+        } else if (hostLeft == true)
+        {
+            logWriter.Write("el host se fue");
+        } else
+        {
+            logWriter.Write("se acabo el tiempo");
+        }
     }
 
     //inicia la partida
     public void StartGame()
     {
-        _totalTime = _totalTime + 600; //le sumamos en segs el tiempo que dura la partida
                                        //inicializar posiciones de los pinguinos y cosas del mapa (pescados y así)
 
         //MANU
@@ -183,16 +255,19 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         if (penguinsAlive == 0)
         {
             //se acaba Y SE LLAMARA A LA PUNTUACION - SHOW REUSLTS
+            ShowResults();
         }
 
         if (penguinsConnected == 0)
         {
             //se acaba
+            ShowResults();
         }
 
         if (bearsConnected == 0)
         {
             //se acaba
+            ShowResults();
         }
     }
     //cuando se acaba el tiempo
@@ -200,10 +275,11 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
 
         //MANU
-
-        if (deltaTime > _totalTime)
+        matchTime += deltaTime;
+        if (matchTime > matchLength)
         {
             //se acaba la partoida
+            ShowResults();
         }
     }
 
@@ -222,12 +298,23 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     public void OnPlayerLeftRoom(Player otherPlayer)
     {
-        throw new System.NotImplementedException();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            object wasPenguin;
+            otherPlayer.CustomProperties.TryGetValue("isPenguin", out wasPenguin);
+            if ((bool)wasPenguin)
+            {
+                GetComponent<PhotonView>().RPC("ActualizeNumPenguinsConnected", RpcTarget.All);
+            } else
+            {
+                GetComponent<PhotonView>().RPC("ActualizeNumBearsConnected", RpcTarget.All);
+            }
+        }
     }
 
     public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
@@ -261,7 +348,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     public void OnMasterClientSwitched(Player newMasterClient)
     {
-        throw new System.NotImplementedException();
+        logWriter.Write("el host se fue");
+        hostLeft = true;
+        ShowResults();
     }
     #endregion
 

@@ -43,6 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a898beaa296e9b54cb9e29177f6ac18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {fileID: 0}
+  startPositions: []
   penguinPrefab: {fileID: 7246395623112196607, guid: 528a795a532be50438b318a3dcb50d73,
+    type: 3}
+  bearPrefab: {fileID: 0}
+  matchInfoPrefab: {fileID: 1993143252994167033, guid: b4e1beff8543ed64cbaf5fb3c879217d,
     type: 3}

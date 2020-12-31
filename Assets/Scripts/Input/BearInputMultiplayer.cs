@@ -88,8 +88,10 @@ public class BearInputMultiplayer : MonoBehaviour
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>(); //identifica el rigidbdy del oso
-        BearHUD.SetActive(true);
-        PenguinHUD.SetActive(false);
+        if (BearHUD != null)
+            BearHUD.SetActive(true);
+        if (PenguinHUD != null)
+            PenguinHUD.SetActive(false);
     }
 
     private void FixedUpdate()

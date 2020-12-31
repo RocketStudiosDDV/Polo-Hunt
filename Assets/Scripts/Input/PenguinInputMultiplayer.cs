@@ -77,6 +77,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     // ONLINE
     private float maxDistanceToKill = 5.0f; // Distancia máxima entre el pingüino de los dos clientes para considerar que hubo kill
     public int ownerActorNumber;
+    private bool isDead = false;
 
     #endregion
 
@@ -609,20 +610,24 @@ public class PenguinInputMultiplayer : MonoBehaviour
     [PunRPC]
     public void ToDie(object[] objectArray)
     {
+        if (isDead)
+            return;
+        isDead = true;
         if (PhotonNetwork.IsConnected)
         {
             Vector3 positionCheck = (Vector3) objectArray[0];
             int bearActorNumber = (int)objectArray[1];
             if (Vector3.Distance(positionCheck, transform.position) < maxDistanceToKill)
             {
-                PhotonNetwork.Destroy(gameObject);
                 GameObject killerBear = null;
                 foreach(BearInputMultiplayer bear in FindObjectsOfType<BearInputMultiplayer>())
                 {
                     if (bear.ownerActorNumber == bearActorNumber)
                         killerBear = bear.gameObject;
                 }
+                matchInfo.GetComponent<PhotonView>().RPC("ActualizeNumPenguins", RpcTarget.All);
                 matchInfo.SpectatorMode(gameObject, killerBear);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }
