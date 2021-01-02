@@ -60,9 +60,10 @@ public class PenguinInput : MonoBehaviour
     private bool sliding_animation = false;
     private bool afk_animation = false;
 
-    //prueba bofetada
-    private bool caer = false;
-    private bool tirar = false;
+    //Variables bofetada
+    private bool toFall = false;
+    private bool enableControlsAfterFallen = true;
+    //private bool tirar = false;
     private float _timeFall;
     private bool isAttacking = false;
     public double _timeAttacking;
@@ -132,6 +133,9 @@ public class PenguinInput : MonoBehaviour
         }
 
         penguin_animator.SetBool("sliding", sliding_animation);
+
+        //CaerSe
+        penguin_animator.SetBool("sliding", toFall);
     }
 
     private void FixedUpdate()
@@ -306,7 +310,7 @@ public class PenguinInput : MonoBehaviour
 
         if (collision.gameObject.tag == "Penguin") //Si choca con un pinguino
         {
-            if (isAttacking == true) //si estas dando colleja
+            /*if (isAttacking == true) //si estas dando colleja
             {
                 //_timeFall = Time.fixedTime + 3;
                 //Rigidbody enemy = collision.gameObject.GetComponent<Rigidbody>(); //le tiras
@@ -314,7 +318,10 @@ public class PenguinInput : MonoBehaviour
 
                 //LE MANDAS AL OTRO A CAERSE -> EJECUTAR TO FALL
                 isAttacking = false;
-            }
+            }*/
+
+            ToFall();
+            Destroy(collision.gameObject);
         }
 
         //PRUEBAS
@@ -395,16 +402,12 @@ public class PenguinInput : MonoBehaviour
 
     public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
     {
-
         Debug.Log("DESLIZA");
         forceDirection = _playerRB.transform.forward;
         isRunning = true;
         speed = 10;
         _timeRunning = Time.fixedTime + 5;
         Debug.Log("vel " + speed);
-        //CAMBIAR ANIMACIÓN
-        //sliding_animation = true;
-        //penguin_animator.SetBool("sliding", sliding_animation);
     }
 
     public void PowerUp(InputAction.CallbackContext context) //Soltar cepo -L1 - space
@@ -523,7 +526,11 @@ public class PenguinInput : MonoBehaviour
             {
                 Debug.Log("AWAKE");
                 //speed = 3;
-                _controls.Player.Movement.Enable();
+                if (enableControlsAfterFallen == true)
+                {
+                    _controls.Player.Movement.Enable();
+                }
+                
             }
         }
     }
@@ -578,22 +585,41 @@ public class PenguinInput : MonoBehaviour
     //Se levanta despues de x tiempo caído
     public void ToStand (double deltaTime)
     {
-        if (sliding_animation == true)
+        if (toFall == true)
         {
             if (deltaTime > _timeFall)
             {
-                sliding_animation = false;
+                Debug.Log("ya estoy bien");
+                toFall = false;
+            }                     
+        }
+
+        if (enableControlsAfterFallen == false)
+        {
+            if (deltaTime > _timeFall + 1)
+            {
+                speed = 3;
+                _controls.Player.Run.Enable();
+                enableControlsAfterFallen = true;
             }
         }
+        
     }
 
 
     //Caerse
     public void ToFall()
     {
-        _timeFall = Time.fixedTime + 3;
+        Debug.Log("Me escoño");
+        _controls.Player.Movement.Disable();
+        _controls.Player.Run.Disable();
+        speed = 0;
+        _timeFall = Time.fixedTime + 2;
         //_playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-        sliding_animation = true;
+        //sliding_animation = true;      
+        enableControlsAfterFallen = false;
+        toFall = true;
+       
     }
 
     //morir

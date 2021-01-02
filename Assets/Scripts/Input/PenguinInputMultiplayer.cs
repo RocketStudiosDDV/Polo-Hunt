@@ -65,12 +65,13 @@ public class PenguinInputMultiplayer : MonoBehaviour
     private bool afk_animation = false;
 
 
-    //prueba bofetada 
-    private bool caer = false;
-    private bool tirar = false;
+    //Variables bofetada
+    private bool toFall = false;
+    private bool enableControlsAfterFallen = true;
+    //private bool tirar = false;
     private float _timeFall;
     private bool isAttacking = false;
-    public double _timeAttacking;
+    public double _timeAttacking;;
 
     private MatchInfo matchInfo;
 
@@ -110,7 +111,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
     void Update()
     {
         if (penguin_animator != null)
+        {
             penguin_animator.SetBool("walking", walking_animation);
+        }
+            
         //penguin_animator.SetBool("sliding", sliding_animation);
 
         //ANIMACIÓN ATACAR
@@ -124,8 +128,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
         }
 
         if (penguin_animator != null)
+        {
             penguin_animator.SetBool("hit", hit_animation);
-
+        }
+            
         //ANIMACIÓN DESLIZARSE
         if (isRunning == true)
         {
@@ -137,7 +143,16 @@ public class PenguinInputMultiplayer : MonoBehaviour
         }
 
         if (penguin_animator != null)
+        {
             penguin_animator.SetBool("sliding", sliding_animation);
+        }
+
+        //Caerse
+        if (penguin_animator != null)
+        {
+            penguin_animator.SetBool("sliding", toFall);
+        }
+
     }
 
     private void FixedUpdate()
@@ -573,31 +588,39 @@ public class PenguinInputMultiplayer : MonoBehaviour
     //Se levanta despues de x tiempo caído
     public void ToStand (double deltaTime)
     {
-        /*if (_playerRB.transform.rotation == Quaternion.Euler(0f, 0f, 90f))
+        if (toFall == true)
         {
             if (deltaTime > _timeFall)
             {
-                _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            }
-        }*/
-
-        if (sliding_animation == true)
-        {
-            if (deltaTime > _timeFall)
-            {
-                sliding_animation = false;
+                Debug.Log("ya estoy bien");
+                toFall = false;
             }
         }
 
+        if (enableControlsAfterFallen == false)
+        {
+            if (deltaTime > _timeFall + 1)
+            {
+                speed = 3;
+                _controls.Player.Run.Enable();
+                enableControlsAfterFallen = true;
+            }
+        }
     }
 
 
     //Caerse
     public void ToFall()
     {
-        _timeFall = Time.fixedTime + 3;
+        Debug.Log("Me escoño");
+        _controls.Player.Movement.Disable();
+        _controls.Player.Run.Disable();
+        speed = 0;
+        _timeFall = Time.fixedTime + 2;
         //_playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-        sliding_animation = true;
+        //sliding_animation = true;      
+        enableControlsAfterFallen = false;
+        toFall = true;
     }
 
     //morir
