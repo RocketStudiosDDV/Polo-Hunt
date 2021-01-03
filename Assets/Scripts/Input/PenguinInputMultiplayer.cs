@@ -71,7 +71,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     //private bool tirar = false;
     private float _timeFall;
     private bool isAttacking = false;
-    public double _timeAttacking;;
+    public double _timeAttacking;
 
     private MatchInfo matchInfo;
 

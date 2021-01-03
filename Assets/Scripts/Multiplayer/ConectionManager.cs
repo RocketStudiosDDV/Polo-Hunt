@@ -162,7 +162,6 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         return null;
     }
 
-    // QUE PASA SI ESTA LLENA ????????????????????????
     /// <summary>
     /// Se une a la sala con el nombre pasado como parámetro
     /// Callbacks OnJoinedRoom y OnJoinRoomFailed
@@ -185,10 +184,14 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     /// <summary>
     /// Desconecta al usuario de la sala y del lobby.
+    /// Llama al callback OnLeftRoom
     /// </summary>
     public void LeaveRoom()
     {
-        PhotonNetwork.LeaveRoom();
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
     }
 
     /// <summary>
@@ -217,6 +220,20 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             newCustomRoomProperties["gameMode"] = gameMode;
             PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
         }       
+    }
+
+    /// <summary>
+    /// Asigna el número de osos de la partida
+    /// </summary>
+    /// <param name="numberOfBears"></param>
+    public void SetNumberOfBears(int numberOfBears)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+            newCustomRoomProperties["numberOfBears"] = numberOfBears;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
+        }
     }
 
     /// <summary>
@@ -303,6 +320,11 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
     }
 
+    public void SetNumberOfBearsTest()
+    {
+        SetNumberOfBears(2);
+    }
+
     /// <summary>
     /// TESTEO
     /// Crea una sala con el nombre del nickname del cliente + "Room" y 10 jugadores máximo
@@ -312,8 +334,9 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         string roomName = PhotonNetwork.NickName + "Room";
         byte maxPlayers = 10;
 
-        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable();   // Valor por defecto de sala (modo caza)
-        customRoomProperties["gameMode"] = GameMode.Hunt;
+        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable();
+        customRoomProperties["gameMode"] = GameMode.Hunt;   // Valor por defecto de sala (modo caza)
+        customRoomProperties["numberOfBears"] = 1;  // Valor por defecto de sala (1 oso)
 
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayers, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties });
     }
@@ -486,6 +509,13 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        if (logWriter != null)
+            logWriter.Write("Sala abandonada");
     }
     #endregion
 

@@ -57,7 +57,6 @@ public class MatchManager : MonoBehaviourPun
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out isPenguin);
         if (isPenguin == null)
         {
-            Debug.LogError("NULOOOOOOOOOOOO");
             isPenguin = true;
         }
         if ((bool)isPenguin)

@@ -13,7 +13,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 {
     #region VARIABLES
     // Información de partida
-    public int numberOfBears = 1;   // nº de osos de la partida
+    private int numberOfBears = 0;   // nº de osos de la partida
 
     public int penguinsAlive; //pinguinos restantes
     public int bearsConnected; //osos conectados
@@ -57,6 +57,10 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         matchStarted = false;
         hostLeft = false;
         logWriter = FindObjectOfType<LogWriter>();
+        object customPropertyBears;
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("numberOfBears", out customPropertyBears))
+            numberOfBears = (int)customPropertyBears;
+
 
         // Instanciamos los pescados
         fishList = new FishMultiplayer[fishPositions.Count];

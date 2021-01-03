@@ -221,6 +221,7 @@ MonoBehaviour:
   Stamina: {fileID: 0}
   visionMaterial: {fileID: 0}
   normalMaterial: {fileID: 0}
+  ownerActorNumber: 0
 --- !u!114 &488222940191732667
 MonoBehaviour:
   m_ObjectHideFlags: 0
