@@ -23,6 +23,9 @@ TagManager:
   - Goal
   - RestZone
   - Start
+  - RunnerCollider
+  - Snowman
+  - Fence
   layers:
   - Default
   - TransparentFX

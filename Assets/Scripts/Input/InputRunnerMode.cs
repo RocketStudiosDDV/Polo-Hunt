@@ -9,8 +9,9 @@ public class InputRunnerMode : MonoBehaviour
 
     //CONTROL DEL PLAYER
     [SerializeField] float jumpForce = 10;
-    [SerializeField] float speed = 5;
-    [SerializeField] float maxSpeed = 10;
+    [SerializeField] float speed = 12;
+    [SerializeField] float force = 50;
+    
 
     private PlayerControls _controls;
     private Rigidbody _playerRB; //Rigid body del pingu
@@ -35,20 +36,17 @@ public class InputRunnerMode : MonoBehaviour
     private bool fishEaten = false;
     private double _timeFish;
 
-    //prueba bofetada 
-    private bool caer = false;
-    private bool tirar = false;
-    private float _timeFall;
-
     private bool isHitted = false;
 
     //CONTROL DE ANIMACIONES
     Animator penguin_animator;
 
     private bool walking_animation = true;
-    private bool hit_animation = false;
     private bool sliding_animation = false;
 
+    //rotacion inicio 
+    private bool toStart = false;
+    private double _timeStart;
 
     //empujon
     private double _timeAttacking;
@@ -59,6 +57,15 @@ public class InputRunnerMode : MonoBehaviour
 
     public Vector3 penguinPos; //guarda la posicion por si el pingu se cae para respawnearlo ahi
     public bool inFloor = true; //comprueba si esta en el suelo o se ha caído
+
+    private bool snowmanCollided = false;
+    private double _timeSnowman;
+
+    private bool fenceTriggered = false;
+    private double _timeFence;
+
+    private bool stopped = false;
+    private double _timeStopped = 0;
 
     private MatchInfo matchInfo;
 
@@ -76,8 +83,11 @@ public class InputRunnerMode : MonoBehaviour
     {
         _playerRB = GetComponent<Rigidbody>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
-        penguin_animator = GetComponent<Animator>();  
+        penguin_animator = GetComponent<Animator>();
 
+        //correr y moverse deben estar unabled antes del inicio
+        _controls.Player.Run.Disable();
+        _controls.Player.Movement.Disable();
     }
 
     // Update is called once per frame
@@ -86,7 +96,7 @@ public class InputRunnerMode : MonoBehaviour
         if (walking_animation == true)
         {
             Debug.Log("A andar");
-            _playerRB.AddForce(Vector3.forward * 2.5f, ForceMode.Acceleration);
+            _playerRB.AddForce(Vector3.forward * 2.25f, ForceMode.Acceleration);
         }
 
         penguin_animator.SetBool("walking", walking_animation);
@@ -109,15 +119,27 @@ public class InputRunnerMode : MonoBehaviour
 
         FishRun(Time.fixedTime); //Velocidad despues de comer el pez
 
-        //movimiento
-        
+        //movimiento previo
+        if (toStart == true)
+        {
+            if (Time.fixedTime > _timeStart)
+            {
+                _playerRB.GetComponentInChildren<CapsuleCollider>().transform.rotation = Quaternion.Euler(90f, _playerRB.transform.rotation.y, 0f); //Controla que el collider se mueva con el `pingo
+                _playerRB.GetComponentInChildren<CapsuleCollider>().transform.position = new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y + 0.25f, _playerRB.transform.position.z - 0.3f);
+                _controls.Player.Run.Enable();
+                _controls.Player.Movement.Enable();
+                toStart = false;
+            }
+        }
+
+        //movimiento durante        
         if ((walking_animation == false) && (isHitted == false))
         {            
             if (toStop == false)
-            {
-                
-                _playerRB.AddForce(Vector3.forward * 10, ForceMode.Acceleration);
+            {                 
                 _playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerInput.z * speed);
+                _playerRB.AddForce(Vector3.up * -100, ForceMode.Force); //hace fuerza hacia abajo de forma que no vuele
+                _playerRB.transform.rotation = Quaternion.Euler(20f, _playerRB.velocity.x, 0f);
             }
             else
             {
@@ -133,6 +155,59 @@ public class InputRunnerMode : MonoBehaviour
                 }
             }
         }
+
+        //Choque con snowman
+        if (snowmanCollided == true)
+        {
+            if ((Time.fixedTime > _timeSnowman - 3) && (Time.fixedTime < _timeSnowman - 2))
+            {
+                speed = 7;
+            }
+
+            if ((Time.fixedTime > _timeSnowman - 2) && (Time.fixedTime < _timeSnowman - 1))
+            {
+                speed = 15;
+            }
+
+            if ((Time.fixedTime > _timeSnowman - 1) && (Time.fixedTime < _timeSnowman))
+            {
+                speed = 25;
+            }
+        }
+
+        //choque con valla
+        if (fenceTriggered == true)
+        {
+            speed = 15;
+
+            if (Time.fixedTime > _timeFence)
+            {
+                speed = 25;
+                fenceTriggered = false;
+            }
+        }
+
+        //comrpobar si esta atascado
+        if (_playerRB.velocity.magnitude < 0.1)
+        {
+            Debug.Log("me atasque");
+            //stopped = true;
+            _timeStopped++;
+            Debug.Log("tiempo atascado " + _timeStopped);
+
+            if (_timeStopped > 10)
+            {
+                _playerRB.MovePosition(new Vector3(penguinPos.x + 4, penguinPos.y + 10, penguinPos.z));
+                _timeStopped = 0;
+            }
+        }
+        else
+        {
+            Debug.Log("no mas tiempo atacaado");
+            _timeStopped = 0;
+        }
+
+        Debug.Log("velocidad " + _playerRB.velocity);
               
     }
 
@@ -176,13 +251,20 @@ public class InputRunnerMode : MonoBehaviour
             WasHitted(true);
         }
 
-
         if (collision.gameObject.tag == "Start") //Si choca con el lado dch de un pingu
         {
             walking_animation = false;
             sliding_animation = true;
+            _timeStart = Time.fixedTime + 1.5;
+            toStart = true;
         }
-        
+
+        if (collision.gameObject.tag == "Fence") //Si choca con el lado dch de un pingu
+        {
+            fenceTriggered = true;
+            _timeFence = Time.fixedTime + 3;
+        }
+
     }
 
 
@@ -212,15 +294,21 @@ public class InputRunnerMode : MonoBehaviour
         }
 
 
-       /* if (collision.gameObject.tag == "Penguin") //Si choca con un pinguino
+        if (collision.gameObject.tag == "Snowman") //Si choca con el lado dch de un pingu
         {
-            if (isAttacking == true) //si estas dando colleja
-            {
-                //LE MANDAS AL OTRO A CAERSE -> EJECUTAR TO FALL
-                isAttacking = false;
-            }
-        }*/
+            speed = 3;
+            snowmanCollided = true;
+            _timeSnowman = Time.fixedTime + 5;
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x + 5f, _playerRB.position.y, _playerRB.position.z));
+            
+            //_playerRB.AddForce(Vector3.forward * -force, ForceMode.Impulse);
+            //_playerRB.AddForce(Vector3.right * -force, ForceMode.Impulse);
+            //_playerRB.AddForce(Vector3.up * -force/2, ForceMode.Impulse);
+            //_playerRB.AddForce(Vector3.up * -500, ForceMode.Force);
+            //_playerRB.AddForce(Vector3.right * 10000, ForceMode.Force);
+        }
     }
+
     #endregion
 
     #region HANDLER CONTROLLER
@@ -230,8 +318,8 @@ public class InputRunnerMode : MonoBehaviour
     {
         //Añade el evento moverse
         _controls.Player.Movement.performed += Move;
-        _controls.Player.Attack.performed += Attack; //Evento atacar
-        _controls.Player.Run.performed += Jump; //Evento correr
+        _controls.Player.Attack.performed += Attack; //Evento 
+        _controls.Player.Run.performed += Jump; //Evento SALTAR
         _controls.Player.CameraControl.performed += GetCameraMove;//Movimiento de camara
 
         //Habilita el evento
@@ -272,7 +360,8 @@ public class InputRunnerMode : MonoBehaviour
         if (inFloor == true)
         {
             Debug.Log("SALTO");
-            _playerRB.AddForce(Vector3.up * 4.5f, ForceMode.Impulse);
+            //_playerRB.AddForce(Vector3.up * 0, ForceMode.Force); //hace fuerza hacia abajo de forma que no vuele
+            _playerRB.AddForce(Vector3.up * 20f, ForceMode.Impulse);
             inFloor = false;
         }   
     }
