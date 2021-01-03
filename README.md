@@ -138,7 +138,8 @@ Escenario Carreras:
 
 
 ## Flujo de juego
-![Polo Hunt](https://user-images.githubusercontent.com/55508821/102117538-bf1a5300-3e3e-11eb-9beb-900352a75d7b.png)
+![Polo Hunt](https://user-images.githubusercontent.com/55508821/103471602-85c06d80-4d82-11eb-882c-96868767f85c.png)
+
 
 
 
