@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPositions: []
-  penguinPrefab: {fileID: 69048888687589988, guid: 1f6b99508ffaed04a93153ca51feb9fd,
+  fishPositions: []
+  penguinPrefab: {fileID: 7246395623112196607, guid: 528a795a532be50438b318a3dcb50d73,
     type: 3}
   bearPrefab: {fileID: 621551584260340872, guid: b89fc2b9d4a75a4498741903b933ade3,
     type: 3}

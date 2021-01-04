@@ -3177,6 +3177,12 @@ PrefabInstance:
       propertyPath: fishPositions.Array.data[3]
       value: 
       objectReference: {fileID: 792682194}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinPrefab
+      value: 
+      objectReference: {fileID: 7246395623112196607, guid: 528a795a532be50438b318a3dcb50d73,
+        type: 3}
     - target: {fileID: 4502031446558974751, guid: b75c4b06d67fe5343bf822e77491f5e3,
         type: 3}
       propertyPath: m_Name
