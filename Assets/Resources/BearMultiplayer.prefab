@@ -218,6 +218,7 @@ MonoBehaviour:
   pivot: {fileID: 0}
   offset: {x: 0, y: 0, z: 0}
   movementCamera: {x: 0, y: 0}
+  keysPressed: 0
   Stamina: {fileID: 0}
   visionMaterial1: {fileID: 0}
   visionMaterial2: {fileID: 0}

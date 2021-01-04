@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -448,6 +448,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         OnlineOfflinePanel.SetActive(false); 
         ConnectPanel.SetActive(true);
     }
+
+    public void JoinRoomButton()
+    {     
+        ChooseTypePanel.SetActive(false); 
+        LobbyPanel.SetActive(true);
+    }
     public void CreateRoomButton()
     {     
         ChooseTypePanel.SetActive(false); 
@@ -528,15 +534,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        FinalRoom();
         if (logWriter != null)
             logWriter.Write("Unido a la sala " + GetRoomName() + " - nº players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers);
-        ChooseTypePanel.SetActive(false);
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(true);
-        ConnectPanel.SetActive(false);
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(true);
-        ConnectPanel.SetActive(false);
+        
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -544,10 +545,6 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         base.OnJoinRoomFailed(returnCode, message);
         if (logWriter != null)
             logWriter.Write("Fallo al unirse a sala: " + message);
-        ChooseTypePanel.SetActive(true);
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(false);
-        ConnectPanel.SetActive(false);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
