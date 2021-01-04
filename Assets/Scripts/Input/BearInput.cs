@@ -23,6 +23,15 @@ public class BearInput : MonoBehaviour
     private Vector3 playerInput; //Guarda la info del input
     private Vector3 playerDirection; //Hacia donde se mueve el jugador
 
+    //CONTROL DE ANIMACIONES
+    Animator bear_animator;
+
+    private bool walking_animation = false;
+    private bool attacking_animation = false;
+    private bool running_animation = false;
+    private bool damage_animation = false;
+    private bool afk_animation = false;
+    
     //CONTROL DE LA CÁMARA
 
     //Gestión del movimiento del personaje respecto de la cámara
@@ -54,7 +63,7 @@ public class BearInput : MonoBehaviour
     private double _timeRunning;
 
     //Gestiona el ataque
-    private bool atacking = false;
+    private bool attacking = false;
     private double _timeAtacking;
 
     //Gestiona el power up
@@ -78,8 +87,51 @@ public class BearInput : MonoBehaviour
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>(); //identifica el rigidbdy del oso
+        bear_animator = GetComponent<Animator>();
         //BearHUD.SetActive(true);
         //PenguinHUD.SetActive(false);
+    }
+
+    void Update()
+    {
+
+        //ANIMACIÓN ANDAR
+        bear_animator.SetBool("walking", walking_animation);
+
+        //ANIMACIÓN ATACAR
+        if (attacking == false)
+        {
+            attacking_animation = false;
+        }
+        else
+        {
+            attacking_animation = true;
+        }
+
+        bear_animator.SetBool("attacking", attacking_animation);
+
+        //ANIMACIÓN CORRER
+        if (isRunning == true)
+        {
+            running_animation = true;
+        }
+        else
+        {
+            running_animation = false;
+        }
+
+        bear_animator.SetBool("running", running_animation);
+
+        // ANIMACIÓN DAÑO
+        if (damaged == true)
+        {
+            damage_animation = true;
+        }
+        else
+        {
+            damage_animation = false;
+        }
+        bear_animator.SetBool("damaged", damage_animation);
     }
 
     private void FixedUpdate()
@@ -152,7 +204,7 @@ public class BearInput : MonoBehaviour
 
         if (collision.gameObject.tag == "Penguin")
         {
-            if (atacking == true)
+            if (attacking == true)
             {
                 GameObject pengu = collision.gameObject;
 
@@ -199,7 +251,7 @@ public class BearInput : MonoBehaviour
     {
         //CAMBIAR ANIMACIÓN
         //AÑADIR LO Q SEA PARA EL ZARPAZO
-        atacking = true;
+        attacking = true;
         _timeAtacking = Time.fixedTime + 1;
     }
 
@@ -267,6 +319,15 @@ public class BearInput : MonoBehaviour
     {
         //Debug.Log(context.control.device.displayName);
         _horizontaldirection = context.ReadValue<Vector2>();
+
+        if (context.control.IsPressed() == true)
+        {
+            walking_animation = true;
+        }
+        else
+        {
+            walking_animation = false;
+        }
     }
 
     public void GetCameraMove(InputAction.CallbackContext context)
@@ -339,7 +400,7 @@ public class BearInput : MonoBehaviour
     {
         if (deltaTime > _timeAtacking)
         {
-            atacking = false;
+            attacking = false;
         }
     }
 
