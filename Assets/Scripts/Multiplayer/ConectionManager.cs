@@ -17,6 +17,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public GameObject ChooseTypePanel;
     public GameObject OnlineOfflinePanel;
     public GameObject CreateRoomPanel;
+    public GameObject RoomValuesPanel;
+    public GameObject PlayersValuesPanel;
 
     // PRIVADAS
     HashSet<int> roomCodes = new HashSet<int>();
@@ -440,6 +442,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         CreateRoomPanel.SetActive(true);
     }
 
+    public void ChooseGameModeButton()
+    {     
+        CreateRoomPanel.SetActive(false); 
+        RoomValuesPanel.SetActive(true);
+    }
+
     public void BackMultiplayerButton()
     {     
         OnlineOfflinePanel.SetActive(true); 
@@ -456,6 +464,18 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {     
         ChooseTypePanel.SetActive(true); 
         CreateRoomPanel.SetActive(false);
+    }
+
+    public void BackCreateRoom()
+    {     
+        CreateRoomPanel.SetActive(true); 
+        RoomValuesPanel.SetActive(false);
+    }
+
+    public void BackGameMode()
+    {
+        RoomValuesPanel.SetActive(true); 
+        PlayersValuesPanel.SetActive(false);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

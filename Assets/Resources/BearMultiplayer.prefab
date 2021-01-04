@@ -219,8 +219,12 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   movementCamera: {x: 0, y: 0}
   Stamina: {fileID: 0}
-  visionMaterial: {fileID: 0}
-  normalMaterial: {fileID: 0}
+  visionMaterial1: {fileID: 0}
+  visionMaterial2: {fileID: 0}
+  visionMaterial3: {fileID: 0}
+  normalMaterial1: {fileID: 0}
+  normalMaterial2: {fileID: 0}
+  normalMaterial3: {fileID: 0}
   ownerActorNumber: 0
 --- !u!114 &488222940191732667
 MonoBehaviour:
