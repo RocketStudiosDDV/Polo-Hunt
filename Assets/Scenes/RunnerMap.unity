@@ -8572,12 +8572,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: runfinalDoble
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 010aab57073b401469ae926e7da30793,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
     - target: {fileID: 3867088128146089108, guid: 010aab57073b401469ae926e7da30793,
         type: 3}
       propertyPath: m_Name
       value: izq
       objectReference: {fileID: 0}
     - target: {fileID: 3867088128146089108, guid: 010aab57073b401469ae926e7da30793,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4033519211594049651, guid: 010aab57073b401469ae926e7da30793,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5615130041090302899, guid: 010aab57073b401469ae926e7da30793,
         type: 3}
       propertyPath: m_TagString
       value: Floor
@@ -8601,6 +8616,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -194
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633753981917499485, guid: 010aab57073b401469ae926e7da30793,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188602687802243523, guid: 010aab57073b401469ae926e7da30793,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 010aab57073b401469ae926e7da30793, type: 3}
