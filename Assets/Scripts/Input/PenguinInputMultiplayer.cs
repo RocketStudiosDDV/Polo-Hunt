@@ -20,7 +20,6 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
     private PlayerControls _controls;
     private Rigidbody _playerRB; //Rigid body del pingu
-    private GameObject penguinBody;
 
     private Vector2 _horizontaldirection;
     private Vector3 playerInput; //guarda la info del input
@@ -80,6 +79,9 @@ public class PenguinInputMultiplayer : MonoBehaviour
     public int ownerActorNumber;
     private bool isDead = false;
 
+    //CONTROL TECLADO
+    public int keysPressed = 0; //control del movimiento por teclado para que no se acaben las animacione spor soltar una tecla al estar pulsando dos
+
     #endregion
 
     #region UNITY CALLBACKS
@@ -87,6 +89,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     private void Awake()
     {
         _controls = new PlayerControls();
+
         if (GetComponent<PhotonView>().IsMine || !PhotonNetwork.IsConnected)  // Si es nuestro pingüino, seguirlo con la cámara
         {
             mainCamera = Object.FindObjectOfType<Camera>();
@@ -101,7 +104,6 @@ public class PenguinInputMultiplayer : MonoBehaviour
         //BearHUD.SetActive(false);
         //PenguinHUD.SetActive(true);
         _playerRB = GetComponent<Rigidbody>();
-        penguinBody = GetComponent<GameObject>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
 
         penguin_animator = GetComponent<Animator>();
@@ -110,6 +112,16 @@ public class PenguinInputMultiplayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ANIMACIÓN ANDAR
+        if (keysPressed > 0)
+        {
+            walking_animation = true;
+        }
+        else
+        {
+            walking_animation = false;
+        }
+
         if (penguin_animator != null)
         {
             penguin_animator.SetBool("walking", walking_animation);
@@ -131,26 +143,30 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             penguin_animator.SetBool("hit", hit_animation);
         }
-            
+
         //ANIMACIÓN DESLIZARSE
-        if (isRunning == true)
-        {
-            sliding_animation = true;
-        }
-        else
-        {
-            sliding_animation = false;
-        }
+        
 
         if (penguin_animator != null)
         {
-            penguin_animator.SetBool("sliding", sliding_animation);
+            if (isRunning == true)
+            {
+                Debug.Log("running true true true");
+                penguin_animator.SetBool("sliding", true);
+            }
+            else
+            {
+                penguin_animator.SetBool("sliding", false);
+            }
         }
 
         //Caerse
         if (penguin_animator != null)
         {
-            penguin_animator.SetBool("sliding", toFall);
+            if (toFall == true)
+            {
+                penguin_animator.SetBool("sliding", true);
+            }
         }
 
     }
@@ -163,13 +179,6 @@ public class PenguinInputMultiplayer : MonoBehaviour
         }
         playerInput = new Vector3(_horizontaldirection.x, 0, _horizontaldirection.y);
         playerInput = Vector3.ClampMagnitude(playerInput, 1); //para poder normalizar la distancia. 1 es el valor max, va de 0 a 1      
-
-
-        //Para que no supere una velocidad:
-        /*if(_playerRB.velocity.magnitude > maxSpeed)
-        {
-            _playerRB.velocity = _playerRB.velocity.normalized * maxSpeed;
-        }*/
 
         playerDirection = playerInput.x * camRight + playerInput.z * camFordward; //Almacena la direccion hacia la que se esta moviendo el player
 
@@ -205,9 +214,6 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
         if (isRunning == false)
         {
-            //Debug.Log("direccion z " + playerDirection.z);
-            //Debug.Log("direccion x " + playerDirection.x);
-            //Debug.Log("VELOCIDAD " + _playerRB.velocity.magnitude);
             int lastPressed = 1;
             float indexBig = 0.3f;
 
@@ -215,42 +221,25 @@ public class PenguinInputMultiplayer : MonoBehaviour
             {
                 _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
 
-                /*if (_playerRB.velocity.magnitude > 3)
-                {
-                    speed = speed / 2;
-                }*/
-                
                 if (playerDirection.z > 0)
                 {
                     _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.forward * - 0.5f * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
                     lastPressed = 0;
 
                 }
                 else if (playerDirection.z < 0)
                 {
                     _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.forward * - 0.25f * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.right * 0.25f * speed, ForceMode.Impulse);
                     lastPressed = 1;
                 }
                 else if(playerDirection.x > 0)
                 {
                     _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.left * 0.5f * speed, ForceMode.Impulse);
-                    // _playerRB.AddForce(Vector3.left * 0.25f * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.forward * -0.25f * speed, ForceMode.Impulse);
                     lastPressed = 2;
                 }
                 else if (playerDirection.x < 0)
                 {
                     _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.right * 0.5f * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
-                    //_playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
                     lastPressed = 3;
                 }
                 else
@@ -258,32 +247,21 @@ public class PenguinInputMultiplayer : MonoBehaviour
                     if(lastPressed == 0)
                     {
                         _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
-                        //_playerRB.AddForce(Vector3.forward * 0.5f * speed, ForceMode.Impulse);
-                        //_playerRB.AddForce(Vector3.right * 0.25f * speed, ForceMode.Impulse);
                     }
                     else if (lastPressed == 1)
                     {
                         _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
-                        //_playerRB.AddForce(Vector3.forward * -0.5f * speed, ForceMode.Impulse);
-                        //_playerRB.AddForce(Vector3.right * -0.25f * speed, ForceMode.Impulse);
                     }
                     else if (lastPressed == 2)
                     {
                         _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
-                        //_playerRB.AddForce(Vector3.forward * 0.25f * speed, ForceMode.Impulse);
-                        //_playerRB.AddForce(Vector3.right * 0.5f * speed, ForceMode.Impulse);
                     }
                     else if (lastPressed == 3)
                     {
                         _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
-                        //_playerRB.AddForce(Vector3.forward * -0.25f * speed, ForceMode.Impulse);
-                        //_playerRB.AddForce(Vector3.right * -0.5f * speed, ForceMode.Impulse);
                     }
-
                 }
 
-                //_playerRB.AddForce(Vector3.forward * - 0.25f * speed, ForceMode.Impulse);
-                //Debug.Log("HIELO");
                 isRunning = false;
             }
             else //movimiento normal
@@ -307,13 +285,11 @@ public class PenguinInputMultiplayer : MonoBehaviour
             fishEaten = true;
             speed = 4;
             _timeFish = Time.fixedTime + 5;
-            //.Log("COLAS");
         }
 
         if (collision.gameObject.tag == "IceDashPlat") //Si choca con un pescao
         {
             InIceDashPlat = true;
-            //Debug.Log("HIELO");
 
             if (isRunning == true) //Si esta corriendo deja de correr
             {
@@ -325,9 +301,6 @@ public class PenguinInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Floor") //Si choca con un pescao
         {
 
-            //Debug.Log("SUELO");
-            //_playerRB.AddForce(Vector3.forward * 0, ForceMode.Impulse);
-            //_playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
             speed = 3;
             InIceDashPlat = false;
         }
@@ -336,10 +309,6 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             if (isAttacking == true) //si estas dando colleja
             {
-                //_timeFall = Time.fixedTime + 3;
-                //Rigidbody enemy = collision.gameObject.GetComponent<Rigidbody>(); //le tiras
-                //enemy.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-
                 //LE MANDAS AL OTRO A CAERSE -> EJECUTAR TO FALL
                 isAttacking = false;
             }
@@ -394,34 +363,28 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
         if (context.control.IsPressed() == true)
         {
-            walking_animation = true;
+            keysPressed++;
         }
         else
         {
-            walking_animation = false;
+            keysPressed--;
         }
-
     }
 
     public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
     {
-        //Debug.Log("BOFETÓN");
-        //CAMBIAR ANIMACIÓN
-        //AÑADIR LO Q SEA PARA LA BOFETADA
-        //tirar = true;
         isAttacking = true;
         _timeAttacking = Time.fixedTime + 2;
     }
 
     public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
     {
-        //Debug.Log("DESLIZA");
-        forceDirection = _playerRB.transform.forward;
+        forceDirection = _playerRB.transform.forward; //direccion en la que se va a deslizar
         isRunning = true;
         speed = 10;
-        _timeRunning = Time.fixedTime + 6;
-        //Debug.Log("vel " + speed);
-        //CAMBIAR ANIMACIÓN
+        _timeRunning = Time.fixedTime + 3;
+        _controls.Player.Run.Disable();
+        _controls.Player.Movement.Disable();
     }
 
     public void PowerUp(InputAction.CallbackContext context) //Soltar cepo -L1 - space
@@ -453,13 +416,20 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y, _playerRB.transform.position.z - 1), Quaternion.identity);
             }
 
-            timeAwait = Time.fixedTime + 10; //tiempo que tarada en voilver a tener aviable el cpeo
+            timeAwait = Time.fixedTime + 5; //tiempo que tarada en voilver a tener aviable el cpeo
         }
     }
 
     public void GetCameraMove(InputAction.CallbackContext context)
     {
-        movementCamera = context.ReadValue<Vector2>();
+        if (isRunning == true)
+        {
+            movementCamera = context.ReadValue<Vector2>() / 2; //ralentiza el movimiento de la camara site estas deslizando
+        }
+        else
+        {
+            movementCamera = context.ReadValue<Vector2>();
+        }
     }
 
     #endregion
@@ -473,57 +443,36 @@ public class PenguinInputMultiplayer : MonoBehaviour
     {
         if (isRunning == true)
         {
-           //Debug.Log("a correr");
-           // Debug.Log("delta time " + deltaTime);
-            //Debug.Log("tiempo a correr " + _timeRunning);
-            //_controls.Player.Movement.Disable();
-            //playerInput = new Vector3(playerInput.x, 0, playerInput.z);
-            //_playerRB.velocity = new Vector3(playerInput.x * 0.5f * speed, _playerRB.velocity.y, playerDirection.z * 0.5f * speed);
-            //_playerRB.AddForce(forceDirection * 10, ForceMode.Acceleration);
-            //_playerRB.AddForce(playerInput * 0.25f, ForceMode.Impulse);
-
-            //Debug.Log("velocidad" + _playerRB.velocity.magnitude);
-
-            if ((deltaTime > _timeRunning - 3) && (deltaTime < _timeRunning - 2))
+            /*if ((deltaTime > _timeRunning - 3) && (deltaTime < _timeRunning - 2))
             {
                 _playerRB.AddForce(forceDirection * 7, ForceMode.Acceleration);
                 //Debug.Log("3 segs");
             }
-            else if ((deltaTime > _timeRunning - 2) && (deltaTime < _timeRunning - 1))
+            else */if ((deltaTime > _timeRunning - 2) && (deltaTime < _timeRunning - 1))
             {
-                _playerRB.AddForce(forceDirection * 4, ForceMode.Acceleration);
-                //Debug.Log("2 segs");
+                _playerRB.AddForce(forceDirection * 5, ForceMode.Acceleration);
             }
             else if ((deltaTime > _timeRunning - 1) && (deltaTime < _timeRunning))
             {
-                _playerRB.AddForce(forceDirection * 1.5f, ForceMode.Acceleration);
-                //Debug.Log("1 segs");
+                _playerRB.AddForce(forceDirection * 2, ForceMode.Acceleration);
             }
             else
             {
                 _playerRB.AddForce(forceDirection * 10, ForceMode.Acceleration);
-                //Debug.Log("0 segs");
             }
 
             //FORMAS DE PARARSE
             if (_playerRB.velocity.magnitude < 1)
             {
                 speed = 3;
-                //Debug.Log("delta time " + Time.deltaTime);
-                //Debug.Log("tiempo pasado " + _timeRunning);
-                //Debug.Log("ESTOY");
                 _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
-                //_controls.Player.Movement.Enable();
                 isRunning = false;
-            } else if (deltaTime > _timeRunning)
+            } 
+            else if (deltaTime > _timeRunning)
             {
                 speed = 3;
                 _controls.Player.Movement.Disable();
-                //Debug.Log("delta time " + Time.deltaTime);
-                //Debug.Log("tiempo pasado " + _timeRunning);
-                //Debug.Log("ESTOY");
                 _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
-                //_controls.Player.Movement.Enable();
                 isRunning = false;
             }
         }
@@ -531,9 +480,12 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             if (deltaTime > _timeRunning + 3)
             {
-                //Debug.Log("AWAKE");
-                //speed = 3;
-                _controls.Player.Movement.Enable();
+                speed = 3;
+                if (enableControlsAfterFallen == true)
+                {
+                    _controls.Player.Movement.Enable();
+                    _controls.Player.Run.Enable();
+                }
             }
         }
     }
@@ -543,42 +495,26 @@ public class PenguinInputMultiplayer : MonoBehaviour
     {
         if (fishEaten == true)
         {
-            //Debug.Log("a correr");
-            //Debug.Log("delta time " + deltaTime);
-            //Debug.Log("tiempo pasado " + _timeFish);
-
             if ((deltaTime > _timeFish - 4) && (deltaTime < _timeFish - 3))
             {
                 speed = 6;
-                //Debug.Log("speed 6 " + speed);
             }
             else if ((deltaTime > _timeFish - 3) && (deltaTime < _timeFish - 2))
             {
                 speed = 8;
-                //Debug.Log("speed 8 " + speed);
-
             }
             else if ((deltaTime > _timeFish - 2) && (deltaTime < _timeFish - 1))
             {
                 speed = 10;
-                //Debug.Log("speed 10 " + speed);
             }
             else if ((deltaTime > _timeFish - 1) && (deltaTime < _timeFish))
             {
                 speed = 6;
-                //Debug.Log("speed 10 " + speed);
-            }/*
-            else
-            {
-                speed = 4;
-                Debug.Log("speed 6 " + speed);
-            }*/
+            }
 
             if (deltaTime > _timeFish)
             {
                 speed = 3;
-                //Debug.Log("delta time " + Time.deltaTime);
-                //Debug.Log("tiempo pasado " + _timeFish);
                 fishEaten = false;
             }
 
@@ -612,13 +548,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
     //Caerse
     public void ToFall()
     {
-        Debug.Log("Me escoño");
         _controls.Player.Movement.Disable();
         _controls.Player.Run.Disable();
         speed = 0;
         _timeFall = Time.fixedTime + 2;
-        //_playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-        //sliding_animation = true;      
         enableControlsAfterFallen = false;
         toFall = true;
     }

@@ -81,7 +81,7 @@ public class BearInput : MonoBehaviour
     public Material normalMaterial2;
     public Material normalMaterial3;
 
-
+    public int keysPressed = 0; //control del movimiento por teclado para que no se acaben las animacione spor soltar una tecla al estar pulsando dos
 
     #endregion
 
@@ -104,6 +104,14 @@ public class BearInput : MonoBehaviour
     {
 
         //ANIMACIÓN ANDAR
+        if (keysPressed > 0)
+        {
+            walking_animation = true;
+        }
+        else
+        {
+            walking_animation = false;
+        }
         bear_animator.SetBool("walking", walking_animation);
 
         //ANIMACIÓN ATACAR
@@ -343,11 +351,11 @@ public class BearInput : MonoBehaviour
 
         if (context.control.IsPressed() == true)
         {
-            walking_animation = true;
+            keysPressed++;
         }
         else
         {
-            walking_animation = false;
+            keysPressed--;
         }
     }
 

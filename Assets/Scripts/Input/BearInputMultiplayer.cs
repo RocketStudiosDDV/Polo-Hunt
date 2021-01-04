@@ -43,6 +43,8 @@ public class BearInputMultiplayer : MonoBehaviour
 
     //CONTROL MOVIMIENTOS
 
+    public int keysPressed = 0;
+
     //Gestiona daño por caida al agua y cepo del oso
     private double _timeDamage;
     private bool damaged = false;
@@ -120,11 +122,23 @@ public class BearInputMultiplayer : MonoBehaviour
 
     void Update()
     {
-
         //ANIMACIÓN ANDAR
-        if (bear_animator != null)
-            bear_animator.SetBool("walking", walking_animation);
 
+        if (keysPressed > 0)
+        {
+            walking_animation = true;
+        }
+        else
+        {
+            walking_animation = false;
+
+        }
+        
+        if (bear_animator != null)
+        {
+            bear_animator.SetBool("walking", walking_animation);
+        }
+            
         //ANIMACIÓN ATACAR
         if (attacking == false)
         {
@@ -362,6 +376,15 @@ public class BearInputMultiplayer : MonoBehaviour
     {
         //Debug.Log(context.control.device.displayName);
         _horizontaldirection = context.ReadValue<Vector2>();
+
+        if (context.control.IsPressed() == true)
+        {
+            keysPressed++;
+        }
+        else
+        {
+            keysPressed--;
+        }
     }
 
     public void GetCameraMove(InputAction.CallbackContext context)
