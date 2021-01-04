@@ -122,7 +122,8 @@ public class BearInputMultiplayer : MonoBehaviour
     {
 
         //ANIMACIÓN ANDAR
-        bear_animator.SetBool("walking", walking_animation);
+        if (bear_animator != null)
+            bear_animator.SetBool("walking", walking_animation);
 
         //ANIMACIÓN ATACAR
         if (attacking == false)
@@ -134,7 +135,8 @@ public class BearInputMultiplayer : MonoBehaviour
             attacking_animation = true;
         }
 
-        bear_animator.SetBool("attacking", attacking_animation);
+        if (bear_animator != null)
+            bear_animator.SetBool("attacking", attacking_animation);
 
         //ANIMACIÓN CORRER
         if (isRunning == true)
@@ -146,7 +148,8 @@ public class BearInputMultiplayer : MonoBehaviour
             running_animation = false;
         }
 
-        bear_animator.SetBool("running", running_animation);
+        if (bear_animator != null)
+            bear_animator.SetBool("running", running_animation);
 
         // ANIMACIÓN DAÑO
         if (damaged == true)
@@ -158,7 +161,8 @@ public class BearInputMultiplayer : MonoBehaviour
             damage_animation = false;
         }
 
-        bear_animator.SetBool("damaged", damage_animation);
+        if (bear_animator != null)
+            bear_animator.SetBool("damaged", damage_animation);
     }
 
     private void FixedUpdate()
