@@ -9,6 +9,7 @@ public class MatchManager : MonoBehaviourPun
 {
     #region VARIABLES
     public List<Transform> startPositions;
+    public List<Transform> fishPositions;
     public GameObject penguinPrefab;
     public GameObject bearPrefab;
 
@@ -18,12 +19,17 @@ public class MatchManager : MonoBehaviourPun
 
 
     #region UNITY CALLBACKS
-    void Start()
+
+    private void Awake()
     {
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate(this.matchInfoPrefab.name, Vector3.zero, Quaternion.identity);
         }
+    }
+    void Start()
+    {
+        matchInfo = FindObjectOfType<MatchInfo>();
     }
 
     // Update is called once per frame

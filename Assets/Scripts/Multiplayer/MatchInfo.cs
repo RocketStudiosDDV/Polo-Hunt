@@ -19,7 +19,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public int bearsConnected; //osos conectados
     public int penguinsConnected; //pinguinos conectados
 
-    private double matchLength = 20; //tiempo que dura la partida
+    private double matchLength = 600; //tiempo que dura la partida
     private double matchTime;
 
     public List<Player> playersList;    // lista de jugadores
@@ -52,6 +52,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         playersList = new List<Player>();
         playersReady = new List<bool>();
         matchManager = FindObjectOfType<MatchManager>();
+        fishPositions = matchManager.fishPositions;
         matchManager.matchInfo = this;
         matchFinished = false;
         matchStarted = false;

@@ -282,7 +282,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 275314497}
-        m_MethodName: SetNumberOfBearsTest
+        m_MethodName: ChangeGameModeTest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -219,6 +219,11 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
             newCustomRoomProperties["gameMode"] = gameMode;
             PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
+
+            if (gameMode == GameMode.Race)
+            {
+                SetNumberOfBears(0);
+            }
         }       
     }
 
@@ -246,7 +251,19 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.LoadLevel("MultiplayerGameplayTestScene");
+                object customProperty;
+                int modeSelected = 0;
+                if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gameMode", out customProperty))
+                    modeSelected = (int)customProperty;
+                switch(modeSelected)
+                {
+                    case 0:
+                        PhotonNetwork.LoadLevel("HuntMap");
+                        break;
+                    case 1:
+                        PhotonNetwork.LoadLevel("RaceMap");
+                        break;
+                }
             }
         }
     }
@@ -323,6 +340,11 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public void SetNumberOfBearsTest()
     {
         SetNumberOfBears(2);
+    }
+
+    public void ChangeGameModeTest()
+    {
+        SetGameMode(GameMode.Race);
     }
 
     /// <summary>
