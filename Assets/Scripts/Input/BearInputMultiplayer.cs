@@ -41,11 +41,13 @@ public class BearInputMultiplayer : MonoBehaviour
     private float moveY;
     private float m_LookSense = 1.0f;
 
-    //Daño por caida al agua del oso
+    //CONTROL MOVIMIENTOS
+
+    //Gestiona daño por caida al agua y cepo del oso
     private double _timeDamage;
     private bool damaged = false;
 
-    //Gestión de la stamina
+    //Gestiona la stamina
     private double finalStamina;
     private float stamina = 600;
     public Image Stamina;
@@ -56,16 +58,35 @@ public class BearInputMultiplayer : MonoBehaviour
     private double _timeRunning;
 
     //Gestiona el ataque
-    private bool atacking = false;
+    private bool attacking = false;
     private double _timeAtacking;
 
     //Gestiona el power up
     private bool powerUpOn = false;
     private double _timePowerUp;
 
-    public Material visionMaterial;
-    public Material normalMaterial;
+    //Materiales que controlan la vuision berserker
 
+    //public Material visionMaterial;
+    //public Material normalMaterial;
+
+    public Material visionMaterial1;
+    public Material visionMaterial2;
+    public Material visionMaterial3;
+
+    public Material normalMaterial1;
+    public Material normalMaterial2;
+    public Material normalMaterial3;
+
+    //CONTROL DE ANIMACIONES
+    Animator bear_animator;
+
+    private bool walking_animation = false;
+    private bool attacking_animation = false;
+    private bool running_animation = false;
+    private bool damage_animation = false;
+
+    private bool afk_animation = false;
     // ONLINE
     public int ownerActorNumber;
     
@@ -77,6 +98,7 @@ public class BearInputMultiplayer : MonoBehaviour
     private void Awake()
     {
         _controls = new PlayerControls(); //Recoge los controles
+
         if (GetComponent<PhotonView>().IsMine || !PhotonNetwork.IsConnected)  // Si es nuestro pingüino, seguirlo con la cámara
         {
             mainCamera = Object.FindObjectOfType<Camera>();
@@ -88,10 +110,55 @@ public class BearInputMultiplayer : MonoBehaviour
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>(); //identifica el rigidbdy del oso
+
         if (BearHUD != null)
             BearHUD.SetActive(true);
+
         if (PenguinHUD != null)
             PenguinHUD.SetActive(false);
+    }
+
+    void Update()
+    {
+
+        //ANIMACIÓN ANDAR
+        bear_animator.SetBool("walking", walking_animation);
+
+        //ANIMACIÓN ATACAR
+        if (attacking == false)
+        {
+            attacking_animation = false;
+        }
+        else
+        {
+            attacking_animation = true;
+        }
+
+        bear_animator.SetBool("attacking", attacking_animation);
+
+        //ANIMACIÓN CORRER
+        if (isRunning == true)
+        {
+            running_animation = true;
+        }
+        else
+        {
+            running_animation = false;
+        }
+
+        bear_animator.SetBool("running", running_animation);
+
+        // ANIMACIÓN DAÑO
+        if (damaged == true)
+        {
+            damage_animation = true;
+        }
+        else
+        {
+            damage_animation = false;
+        }
+
+        bear_animator.SetBool("damaged", damage_animation);
     }
 
     private void FixedUpdate()
@@ -111,7 +178,6 @@ public class BearInputMultiplayer : MonoBehaviour
         }*/
 
         playerDirection = playerInput.x * camRight + playerInput.z * camFordward; //Almacena la direccion hacia la que se esta moviendo el player
-
         _playerRB.transform.LookAt(_playerRB.transform.position + playerDirection); //Hace que el jugador mire al frente
 
         //Funciones de control de cámara
@@ -155,18 +221,7 @@ public class BearInputMultiplayer : MonoBehaviour
         if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
         {
             return;
-        }
-
-        if (collision.gameObject.tag == "Stocks") //Si choca con un cepo
-        {
-            //Hacer daño o lo q sea
-            _timeDamage = Time.fixedTime + 10;
-            Debug.Log("DAÑO");
-            speed = 0;
-            _controls.Player.Movement.Disable();
-            _controls.Player.CameraControl.Disable();
-            damaged = true;
-        }
+        }        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -184,13 +239,14 @@ public class BearInputMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Penguin")  // Si colisiona con pinguino
         {
-            if (atacking == true)   // Si está atacando
+            if (attacking == true)   // Si está atacando
             {
                 GameObject pengu = collision.gameObject;
                 if (!PhotonNetwork.IsConnected) // Si es offline, lo elimina
                 {
                     Destroy(pengu);
-                } else  // Si es online, le pide que se muera y le pasa información para comprobar que no hubo lag
+                } 
+                else  // Si es online, le pide que se muera y le pasa información para comprobar que no hubo lag
                 {
                     object[] objectArray = new object[2];
                     objectArray[0] = pengu.transform.position;
@@ -198,6 +254,17 @@ public class BearInputMultiplayer : MonoBehaviour
                     pengu.GetComponent<PhotonView>().RPC("ToDie", pengu.GetComponent<PhotonView>().Owner, objectArray as object);
                 }
             }
+        }
+
+        if (collision.gameObject.tag == "Stocks") //Si choca con un cepo
+        {
+            //Hacer daño o lo q sea
+            _timeDamage = Time.fixedTime + 10;
+            Debug.Log("DAÑO");
+            speed = 0;
+            _controls.Player.Movement.Disable();
+            _controls.Player.CameraControl.Disable();
+            damaged = true;
         }
     }
 
@@ -237,17 +304,12 @@ public class BearInputMultiplayer : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
     {
-        //CAMBIAR ANIMACIÓN
-        //AÑADIR LO Q SEA PARA EL ZARPAZO
-        atacking = true;
+        attacking = true;
         _timeAtacking = Time.fixedTime + 1;
     }
 
     public void Run(InputAction.CallbackContext context) //De momento va a ser saltar
     {
-        //CAMBIAR ANIMACIÓN
-        //AÑADIR VELOCIDAD
-
         if (firstTime == true)
         {
             stamina += Time.fixedTime;
@@ -276,17 +338,21 @@ public class BearInputMultiplayer : MonoBehaviour
     public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         //ACTIVAR VISIÓN
-        GameObject [] penguins = GameObject.FindGameObjectsWithTag("Penguin");
+        GameObject[] penguins = GameObject.FindGameObjectsWithTag("Penguin");
+        Material[] visionMaterials = new Material[3];
+        visionMaterials[0] = visionMaterial1;
+        visionMaterials[1] = visionMaterial2;
+        visionMaterials[2] = visionMaterial3;
 
         for (int i = 0; i < penguins.Length; i++)
         {
-            Renderer rend = penguins[i].GetComponent<Renderer>();
-            rend.material = visionMaterial;
+            Renderer rend = penguins[i].GetComponentInChildren<Renderer>();
+            rend.materials = visionMaterials;
         }
 
         powerUpOn = true;
         _timePowerUp = Time.fixedTime + 2;
-}
+    }
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -343,12 +409,21 @@ public class BearInputMultiplayer : MonoBehaviour
 
     #endregion
 
+    #region BASIC ACTIONS MANAGEMENT
+    //Hacer daño
     public void Stun()
     {
-        //Hacer daño o lo q sea
+        //Si está corriendo, para
+        if (isRunning == true)
+        {
+            isRunning = false;
+        }
+
+        //Consecuencias del daño
         _timeDamage = Time.fixedTime + 10;
         Debug.Log("DAÑO");
         speed = 0;
+        _controls.Player.Run.Disable();
         _controls.Player.Movement.Disable();
         _controls.Player.CameraControl.Disable();
         damaged = true;
@@ -362,6 +437,7 @@ public class BearInputMultiplayer : MonoBehaviour
             if (deltaTime > _timeDamage)
             {
                 speed = 3;
+                _controls.Player.Run.Enable();
                 _controls.Player.Movement.Enable();
                 _controls.Player.CameraControl.Enable();
                 damaged = false;
@@ -375,7 +451,7 @@ public class BearInputMultiplayer : MonoBehaviour
     {
         if (deltaTime > _timeAtacking)
         {
-            atacking = false;
+            attacking = false;
         }
     }
 
@@ -384,14 +460,19 @@ public class BearInputMultiplayer : MonoBehaviour
     {
         if (powerUpOn == true)
         {
-            if(deltaTime > _timePowerUp)
+            if (deltaTime > _timePowerUp)
             {
                 GameObject[] penguins = GameObject.FindGameObjectsWithTag("Penguin");
+                Material[] normalMaterials = new Material[3];
+                normalMaterials[0] = normalMaterial1;
+                normalMaterials[1] = normalMaterial2;
+                normalMaterials[2] = normalMaterial3;
 
                 for (int i = 0; i < penguins.Length; i++)
                 {
-                    Renderer rend = penguins[i].GetComponent<Renderer>();
-                    rend.material = normalMaterial;
+                    Renderer rend = penguins[i].GetComponentInChildren<Renderer>();
+                    rend.materials = normalMaterials;
+                    //rend.material = normalMaterial;
                 }
 
                 powerUpOn = false;
@@ -435,7 +516,10 @@ public class BearInputMultiplayer : MonoBehaviour
         }
         else
         {
-            speed = 3;
+            if (damaged == false)
+            {
+                speed = 3;
+            }
 
             if (stamina < deltaTime + 600)
             {
@@ -444,6 +528,8 @@ public class BearInputMultiplayer : MonoBehaviour
 
         }
     }
+
+    #endregion
 
 }
 

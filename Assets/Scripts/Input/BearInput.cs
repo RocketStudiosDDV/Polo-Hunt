@@ -70,10 +70,18 @@ public class BearInput : MonoBehaviour
     private bool powerUpOn = false;
     private double _timePowerUp;
 
+    //Vision berserker
     public Material visionMaterial;
-    public Material normalMaterial;
 
-    
+    public Material visionMaterial1;
+    public Material visionMaterial2;
+    public Material visionMaterial3;
+
+    public Material normalMaterial1;
+    public Material normalMaterial2;
+    public Material normalMaterial3;
+
+
 
     #endregion
 
@@ -169,6 +177,7 @@ public class BearInput : MonoBehaviour
             _playerRB.MovePosition(new Vector3(_playerRB.transform.position.x + 3.0f, 3.0f, _playerRB.transform.position.z));
         }
 
+        Debug.Log("velocidad " + speed);
         //Debug.Log(_playerRB.velocity.magnitude);
     }
 
@@ -182,16 +191,7 @@ public class BearInput : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Stocks") //Si choca con un cepo
-        {
-            //Hacer daño o lo q sea
-            _timeDamage = Time.fixedTime + 10;
-            Debug.Log("DAÑO");
-            speed = 0;
-            _controls.Player.Movement.Disable();
-            _controls.Player.CameraControl.Disable();
-            damaged = true;
-        }
+        
 
     }
     private void OnCollisionEnter(Collision collision)
@@ -210,6 +210,23 @@ public class BearInput : MonoBehaviour
 
                 Destroy(pengu);
             }
+        }
+
+        if (collision.gameObject.tag == "Stocks") //Si choca con un cepo
+        {
+            //Hacer daño o lo q sea
+            if (isRunning == true)
+        {
+            isRunning = false;
+        }
+            speed = 0;
+            _timeDamage = Time.fixedTime + 10;
+            Debug.Log("DAÑO");
+            
+            _controls.Player.Movement.Disable();
+            _controls.Player.CameraControl.Disable();
+            _controls.Player.Run.Disable();           
+            damaged = true;
         }
     }
 
@@ -300,15 +317,19 @@ public class BearInput : MonoBehaviour
         //Stamina += /*10 */ Time.deltaTime; /// 1000;
         //Debug.Log("Stamina " + Stamina);
     }
-    public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
+    public void PowerUp(InputAction.CallbackContext context) //Vision Berserker
     {
         //ACTIVAR VISIÓN
         GameObject [] penguins = GameObject.FindGameObjectsWithTag("Penguin");
+        Material[] visionMaterials = new Material[3];
+        visionMaterials[0] = visionMaterial1;
+        visionMaterials[1] = visionMaterial2;
+        visionMaterials[2] = visionMaterial3;
 
         for (int i = 0; i < penguins.Length; i++)
         {
-            Renderer rend = penguins[i].GetComponent<Renderer>();
-            rend.material = visionMaterial;
+            Renderer rend = penguins[i].GetComponentInChildren<Renderer>();
+            rend.materials = visionMaterials;
         }
 
         powerUpOn = true;
@@ -389,6 +410,7 @@ public class BearInput : MonoBehaviour
                 speed = 3;
                 _controls.Player.Movement.Enable();
                 _controls.Player.CameraControl.Enable();
+                _controls.Player.Run.Enable();
                 damaged = false;
                 Debug.Log("Ya estoy bien :)");
             }
@@ -412,11 +434,16 @@ public class BearInput : MonoBehaviour
             if(deltaTime > _timePowerUp)
             {
                 GameObject[] penguins = GameObject.FindGameObjectsWithTag("Penguin");
+                Material[] normalMaterials = new Material[3];
+                normalMaterials[0] = normalMaterial1;
+                normalMaterials[1] = normalMaterial2;
+                normalMaterials[2] = normalMaterial3;
 
                 for (int i = 0; i < penguins.Length; i++)
                 {
-                    Renderer rend = penguins[i].GetComponent<Renderer>();
-                    rend.material = normalMaterial;
+                    Renderer rend = penguins[i].GetComponentInChildren<Renderer>();
+                    rend.materials = normalMaterials;
+                    //rend.material = normalMaterial;
                 }
 
                 powerUpOn = false;
@@ -443,8 +470,11 @@ public class BearInput : MonoBehaviour
         }
         else
         {
-            speed = 3;
-
+            if (damaged == false)
+            {
+                speed = 3;
+            }
+            
             if (stamina < deltaTime + 600)
             {
                 stamina++;
