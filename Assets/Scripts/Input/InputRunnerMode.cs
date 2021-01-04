@@ -64,8 +64,8 @@ public class InputRunnerMode : MonoBehaviour
     private bool fenceTriggered = false;
     private double _timeFence;
 
-    private bool stopped = false;
-    private double _timeStopped = 0;
+    private bool obstacle = false;
+    private double _timeSlow = 0;
 
     private MatchInfo matchInfo;
 
@@ -187,8 +187,16 @@ public class InputRunnerMode : MonoBehaviour
             }
         }
 
+        if (obstacle == true)
+        {
+            if (Time.fixedTime > _timeSlow)
+            {
+                speed = 25;
+                obstacle = false;
+            }
+        }
         //comrpobar si esta atascado
-        if (_playerRB.velocity.magnitude < 0.1)
+        /*if (_playerRB.velocity.magnitude < 0.1)
         {
             Debug.Log("me atasque");
             //stopped = true;
@@ -206,8 +214,8 @@ public class InputRunnerMode : MonoBehaviour
             Debug.Log("no mas tiempo atacaado");
             _timeStopped = 0;
         }
-
-        Debug.Log("velocidad " + _playerRB.velocity);
+        */
+        //Debug.Log("velocidad " + _playerRB.velocity);
               
     }
 
@@ -306,6 +314,22 @@ public class InputRunnerMode : MonoBehaviour
             //_playerRB.AddForce(Vector3.up * -force/2, ForceMode.Impulse);
             //_playerRB.AddForce(Vector3.up * -500, ForceMode.Force);
             //_playerRB.AddForce(Vector3.right * 10000, ForceMode.Force);
+        }
+
+        if(collision.gameObject.tag == "BigMountain")
+        {
+            Debug.Log("vaya montaña loko");
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 15, _playerRB.position.y + 10, _playerRB.position.z - 5));
+            obstacle = true;
+            _timeSlow = 2;
+        }
+
+        if (collision.gameObject.tag == "Cave")
+        {
+            Debug.Log("vaya montaña loko");
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 3, _playerRB.position.z - 10));
+            obstacle = true;
+            _timeSlow = 2;
         }
     }
 
@@ -457,7 +481,7 @@ public class InputRunnerMode : MonoBehaviour
         moveY += movementCamera.y * m_LookSense;
 
         //limitar movimiento y entre -50 y 70
-        moveY = Mathf.Clamp(moveY, -50.0f, 70.0f);
+        moveY = Mathf.Clamp(moveY, -30.0f, 20.0f);
 
         //pivot sigue a player
         Vector3 follow = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 3f);

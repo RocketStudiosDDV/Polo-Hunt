@@ -1714,7 +1714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4737254940718496, guid: 2519664c96b5d514cb93ce3291cc0455, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 23.95
+      value: 23.881
       objectReference: {fileID: 0}
     - target: {fileID: 4737254940718496, guid: 2519664c96b5d514cb93ce3291cc0455, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4424,6 +4424,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cuevamultiple 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816094005235251740, guid: 07df95ff94c6b9144b5f5d4116875911,
+        type: 3}
+      propertyPath: m_TagString
+      value: Cave
       objectReference: {fileID: 0}
     - target: {fileID: 6182307516255832605, guid: 07df95ff94c6b9144b5f5d4116875911,
         type: 3}
@@ -7694,7 +7699,7 @@ GameObject:
   - component: {fileID: 1057063465}
   m_Layer: 0
   m_Name: "TerrenoMonta\xF1oso2"
-  m_TagString: Untagged
+  m_TagString: BigMountain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7965,7 +7970,7 @@ GameObject:
   - component: {fileID: 1072201826}
   m_Layer: 0
   m_Name: "TerrenoMonta\xF1oso"
-  m_TagString: Untagged
+  m_TagString: BigMountain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -8892,7 +8897,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 22f1e73f88af85f4cb2d01b4fbc8d3e0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2475.16
+      value: 2475.509
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 22f1e73f88af85f4cb2d01b4fbc8d3e0,
         type: 3}
@@ -9651,6 +9656,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cuevamultiple 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816094005235251740, guid: 07df95ff94c6b9144b5f5d4116875911,
+        type: 3}
+      propertyPath: m_TagString
+      value: Cave
       objectReference: {fileID: 0}
     - target: {fileID: 6182307516255832605, guid: 07df95ff94c6b9144b5f5d4116875911,
         type: 3}
@@ -10694,7 +10704,7 @@ GameObject:
   - component: {fileID: 1463924856}
   m_Layer: 0
   m_Name: Terrain_0_0
-  m_TagString: Untagged
+  m_TagString: BigMountain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -15383,6 +15393,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cuevamultiple 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816094005235251740, guid: 07df95ff94c6b9144b5f5d4116875911,
+        type: 3}
+      propertyPath: m_TagString
+      value: Cave
       objectReference: {fileID: 0}
     - target: {fileID: 6182307516255832605, guid: 07df95ff94c6b9144b5f5d4116875911,
         type: 3}

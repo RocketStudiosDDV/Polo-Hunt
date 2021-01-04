@@ -180,6 +180,7 @@ MonoBehaviour:
   lookingAt: {x: 0, y: 0, z: 0}
   cepo: {fileID: 6193383704093716309, guid: 957a1810af608a241b637da49f56cd6e, type: 3}
   _timeAttacking: 0
+  keysPressed: 0
 --- !u!54 &19173729
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -195,7 +196,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!95 &19173730
 Animator:
   serializedVersion: 3
@@ -1354,6 +1355,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1426,6 +1428,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 14.882001, y: 0, z: 0}
+--- !u!65 &963194229
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1041026805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,7 +1641,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 22f1e73f88af85f4cb2d01b4fbc8d3e0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8531922981982924401, guid: 22f1e73f88af85f4cb2d01b4fbc8d3e0,
         type: 3}
@@ -2087,7 +2102,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f8174d4a9df06f745a7939974830df8e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2112767406598184797, guid: f8174d4a9df06f745a7939974830df8e,
         type: 3}
@@ -2179,6 +2194,7 @@ MonoBehaviour:
   normalMaterial1: {fileID: 2100000, guid: 8b8b1fbe7b1308d478e2beec3f5c7336, type: 2}
   normalMaterial2: {fileID: 2100000, guid: aa6906464e25bca4086ff30892b90700, type: 2}
   normalMaterial3: {fileID: 2100000, guid: 3b55148877bf7114e8518a3b674f0c63, type: 2}
+  keysPressed: 0
 --- !u!95 &1486107745
 Animator:
   serializedVersion: 3
@@ -3196,6 +3212,7 @@ MonoBehaviour:
   normalMaterial1: {fileID: 0}
   normalMaterial2: {fileID: 0}
   normalMaterial3: {fileID: 0}
+  keysPressed: 0
 --- !u!143 &2134349464
 CharacterController:
   m_ObjectHideFlags: 0
