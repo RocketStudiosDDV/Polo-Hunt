@@ -233,12 +233,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     
     public void SetGameMode(int gameMode)
     {
-        GameMode a;
         if (gameMode == 0)
-            a = new GameMode();
+            SetGameMode(GameMode.Race);
         else
-            a = new GameMode();
-        SetGameMode(a);
+            SetGameMode(GameMode.Hunt);
     }
 
     /// <summary>
