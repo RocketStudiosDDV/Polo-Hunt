@@ -45,7 +45,7 @@
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
 
-            fixed4 s = (_SnowColor * IN.worldNormal.y) * _SnowLevel;
+            fixed4 s = (_SnowColor * -IN.worldNormal.y) * _SnowLevel;
 
 
             // Albedo comes from a texture tinted by color

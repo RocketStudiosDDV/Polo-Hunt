@@ -402,11 +402,6 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         base.OnConnectedToMaster();
         if (logWriter != null)
             logWriter.Write("Conectado al servidor" + PhotonNetwork.ServerAddress);
-
-        ChooseTypePanel.SetActive(true);
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(false);
-        ConnectPanel.SetActive(false);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -414,20 +409,11 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         base.OnDisconnected(cause);
         if (logWriter != null)
             logWriter.Write("Se ha desconectado por la causa: " + cause.ToString());
-
-        ChooseTypePanel.SetActive(false);
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(false);
-        ConnectPanel.SetActive(true);
     }
 
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-        ChooseTypePanel.SetActive(false);
-        LobbyPanel.SetActive(true);
-        RoomPanel.SetActive(false);
-        ConnectPanel.SetActive(false);
         if (logWriter != null)
             logWriter.Write("Se ha unido al lobby");
     }
@@ -435,10 +421,6 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnLeftLobby()
     {        
         base.OnLeftLobby();
-        ChooseTypePanel.SetActive(true);
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(false);
-        ConnectPanel.SetActive(false);
         if (logWriter != null)
             logWriter.Write("Se ha marchado del lobby");
     }
@@ -447,6 +429,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {     
         OnlineOfflinePanel.SetActive(false); 
         ConnectPanel.SetActive(true);
+    }
+
+    public void ConnectButton()
+    {     
+        ConnectPanel.SetActive(false); 
+        ChooseTypePanel.SetActive(true);
     }
 
     public void JoinRoomButton()
@@ -500,6 +488,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         FinalRoomPanel.SetActive(true); 
         RoomValuesPanel.SetActive(false);
+        LobbyPanel.SetActive(false);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -522,19 +511,11 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         base.OnCreatedRoom();
         if (logWriter != null)
             logWriter.Write("Sala creada");
-        ChooseTypePanel.SetActive(false);
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(true);
-        ConnectPanel.SetActive(false);
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(true);
-        ConnectPanel.SetActive(false);
     }
 
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        FinalRoom();
         if (logWriter != null)
             logWriter.Write("Unido a la sala " + GetRoomName() + " - nº players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers);
         
