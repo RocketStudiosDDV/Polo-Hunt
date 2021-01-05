@@ -6,11 +6,11 @@ using UnityEngine;
 public class FishMultiplayer : MonoBehaviour
 {
     public int id;  // Identificador para sincronización online
-    public MatchManager matchManager; // Referencia a MatchInfo para eliminarse en los otros clientes
+    public MatchInfo matchInfo; // Referencia a MatchInfo para eliminarse en los otros clientes
 
     private void Awake()
     {
-        matchManager = FindObjectOfType<MatchManager>();   
+        matchInfo = FindObjectOfType<MatchInfo>();   
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -18,9 +18,10 @@ public class FishMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Bear")
         {
-            if (matchManager != null)
+            if (matchInfo != null)
             {
-                matchManager.EatFish(id);
+                object parameter = id;
+                matchInfo.GetComponent<PhotonView>().RPC("DestroyFish", RpcTarget.All, parameter);
             }
             if (!PhotonNetwork.IsConnected)
             {
@@ -30,9 +31,10 @@ public class FishMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Penguin")
         {
-            if (matchManager != null)
+            if (matchInfo != null)
             {
-                matchManager.EatFish(id);
+                object parameter = id;
+                matchInfo.GetComponent<PhotonView>().RPC("DestroyFish", RpcTarget.All, parameter);
             }
             if (!PhotonNetwork.IsConnected)
             {

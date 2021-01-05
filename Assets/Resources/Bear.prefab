@@ -73,7 +73,6 @@ GameObject:
   - component: {fileID: 54306725786465371}
   - component: {fileID: 5773370585409021653}
   - component: {fileID: 6469383076155475668}
-  - component: {fileID: 221321713518533780}
   - component: {fileID: -5117179737914878138}
   - component: {fileID: 1163549210934612369}
   - component: {fileID: -8656978586907857685}
@@ -137,33 +136,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &221321713518533780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831827831617679073}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fef8c892df141b4184b52d7924f706d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  mainCamera: {fileID: 0}
-  target: {fileID: 0}
-  pivot: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  movementCamera: {x: 0, y: 0}
-  Stamina: {fileID: 0}
-  visionMaterial: {fileID: 2100000, guid: 9f51abd81961ab6468bc3bb39fe8a4f2, type: 2}
-  visionMaterial1: {fileID: 2100000, guid: 4d4ee97eb809c3c4a9d725313c1cd7e9, type: 2}
-  visionMaterial2: {fileID: 2100000, guid: 2a0e32bd2b8ec6a4a9bf7f687e0dcc46, type: 2}
-  visionMaterial3: {fileID: 2100000, guid: 30c5e24b3f05cd943bb692a3d1203842, type: 2}
-  normalMaterial1: {fileID: 2100000, guid: 8b8b1fbe7b1308d478e2beec3f5c7336, type: 2}
-  normalMaterial2: {fileID: 2100000, guid: aa6906464e25bca4086ff30892b90700, type: 2}
-  normalMaterial3: {fileID: 2100000, guid: 3b55148877bf7114e8518a3b674f0c63, type: 2}
-  keysPressed: 0
 --- !u!114 &-5117179737914878138
 MonoBehaviour:
   m_ObjectHideFlags: 0

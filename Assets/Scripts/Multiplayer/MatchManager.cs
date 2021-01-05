@@ -4,59 +4,67 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//Sincronizacion info ataques, muertes y eso
+/// <summary>
+/// Clase presente en la escena, almacena StartPositions y FishPositions
+/// </summary>
 public class MatchManager : MonoBehaviourPun
 {
     #region VARIABLES
-    public List<Transform> startPositions;
-    public List<Transform> fishPositions;
-    public GameObject penguinPrefab;
-    public GameObject bearPrefab;
+    // Ajustes para el inspector
+    public List<Transform> startPositions;  // Posiciones de inicio de los jugadores
+    public List<Transform> fishPositions;   // Posiciones para instanciar pescados
 
+    // Datos
+    public GameMode gameMode;  // Modo de juego
+
+    // Prefabs
+    public GameObject penguinPrefab;    // Prefab del pingüino modo caza
+    public GameObject penguinRacePrefab;    // Prefab del pingüino modo carrera
+    public GameObject bearPrefab;   // Prefab del oso
+    public MatchInfo matchInfoPrefab;   // Prefab matchInfo
+
+    // Referencias
     public MatchInfo matchInfo;
-    public MatchInfo matchInfoPrefab;
     #endregion
 
-
     #region UNITY CALLBACKS
-
+    /// <summary>
+    /// El MasterClient instancia un matchInfo para todos los jugadores que almacena la información de partida y administra los eventos
+    /// Todos los jugadores leen el modo de juego de las customProperties de la room
+    /// </summary>
     private void Awake()
     {
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate(this.matchInfoPrefab.name, Vector3.zero, Quaternion.identity);
         }
-    }
-    void Start()
-    {
-        matchInfo = FindObjectOfType<MatchInfo>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        
+        object customProperty;
+        int gameModeIndex = 0;
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gameMode", out customProperty))
+            gameModeIndex = (int)customProperty;
+        switch (gameModeIndex)
+        {
+            case 0:
+                gameMode = GameMode.Hunt;
+                break;
+            case 1:
+                gameMode = GameMode.Race;
+                break;
+        }
     }
     #endregion
 
-    //VER SI METERLO O NO
-    public void KillPenguin()
-    {
-
-    }
-
+    #region PUBLIC METHODS
     //MIRAR SI SE PUEDE SIONCRONIZAR SOLO CON LOS CAMBIOS PHOTOVIEW
     public void FallPlatform()
     {
 
     }
 
-    //que cuando un pinguino se come un pescado, desaparezca para todos los pinguinos
-    [PunRPC]
-    public void EatFish(int fishId)
-    {
-        matchInfo.DestroyFish(fishId);
-    }
-
+    /// <summary>
+    /// Instancia cada cliente su personaje dependiendo de si es pingüino u oso
+    /// </summary>
     public void InstantiatePlayers()
     {
         object isPenguin;
@@ -66,20 +74,26 @@ public class MatchManager : MonoBehaviourPun
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("playerId", out playerIdProperty);
         if (playerIdProperty != null)
             playerId = (int) playerIdProperty;
-        if (isPenguin == null)
+        if (gameMode == GameMode.Hunt)
         {
-            isPenguin = true;
-        }
-        if ((bool)isPenguin)
+            if (isPenguin == null)
+            {
+                isPenguin = true;
+            }
+            if ((bool)isPenguin)
+            {
+                GameObject myPenguin = PhotonNetwork.Instantiate(this.penguinPrefab.name, startPositions[playerId].position, Quaternion.identity, 0);
+                myPenguin.GetComponent<PenguinInputMultiplayer>().ownerActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+            }
+            else
+            {
+                GameObject myBear = PhotonNetwork.Instantiate(this.bearPrefab.name, startPositions[playerId].position, Quaternion.identity, 0);
+                myBear.GetComponent<BearInputMultiplayer>().ownerActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+            }
+        } else
         {
-            GameObject myPenguin = PhotonNetwork.Instantiate(this.penguinPrefab.name, startPositions[playerId].position, Quaternion.identity, 0);
-            myPenguin.GetComponent<PenguinInputMultiplayer>().ownerActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-        }
-        else
-        {
-            GameObject myBear = PhotonNetwork.Instantiate(this.bearPrefab.name, startPositions[playerId].position, Quaternion.identity, 0);
-            myBear.GetComponent<BearInputMultiplayer>().ownerActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-        }
+            GameObject myPenguin = PhotonNetwork.Instantiate(this.penguinRacePrefab.name, startPositions[playerId].position, Quaternion.identity, 0);
+        }    
     }
-
+    #endregion
 }

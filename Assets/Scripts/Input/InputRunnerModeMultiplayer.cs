@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -69,6 +70,8 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
     private MatchInfo matchInfo;
 
+    // ONLINE
+    public GameObject pivotPrefab;
     #endregion
 
     #region UNITY CALLBACKS
@@ -76,6 +79,13 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     private void Awake()
     {
         _controls = new PlayerControls();
+
+        if (GetComponent<PhotonView>().IsMine || !PhotonNetwork.IsConnected)  // Si es nuestro pingüino, seguirlo con la cámara
+        {
+            mainCamera = FindObjectOfType<Camera>();
+            pivot = Instantiate(pivotPrefab).transform;
+            target = pivot.GetChild(0).transform;
+        }
     }
 
     // Start is called before the first frame update
@@ -106,6 +116,11 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
+
         playerInput = new Vector3(_horizontaldirection.x, 0, 1);
         playerInput = Vector3.ClampMagnitude(playerInput, 1); //para poder normalizar la distancia. 1 es el valor max, va de 0 a 1      
 
@@ -213,6 +228,10 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
 
         if (collision.gameObject.tag == "RightSky") //Si esta en el mapa
         {
@@ -270,6 +289,11 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
+
         if (collision.gameObject.tag == "Fish") //Si choca con un pescao
         {
             fishEaten = true;

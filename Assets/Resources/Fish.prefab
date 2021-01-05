@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 6815334182929791196}
   - component: {fileID: 2680855349889462480}
   - component: {fileID: 7889180787403130773}
-  - component: {fileID: 4978816401713433997}
+  - component: {fileID: -8432614683035678500}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Fish
@@ -275,7 +275,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.36
   m_Center: {x: 0, y: -0.11, z: 0.22}
---- !u!114 &4978816401713433997
+--- !u!114 &-8432614683035678500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

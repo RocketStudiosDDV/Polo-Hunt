@@ -19,6 +19,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private double matchLength = 600; //tiempo que dura la partida
 
     // Información de partida
+    private GameMode gameMode;  // Modo de juego
     public int penguinsAlive; //pinguinos restantes
     public int bearsConnected; //osos conectados
     public int penguinsConnected; //pinguinos conectados
@@ -43,6 +44,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     // TESTEO
     private LogWriter logWriter;
     #endregion
+
     #region UNITY CALLBACKS
     /// <summary>
     /// Inicializa variables (todos), instancia pescados (todos), asigna el rol de cada jugador (sólo el MasterClient)
@@ -65,6 +67,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         object customPropertyBears;
         if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("numberOfBears", out customPropertyBears))   // nº de osos
             numberOfBears = (int)customPropertyBears;
+        object customPropertyGameMode;
+        gameMode = matchManager.gameMode;
 
 
         // Instanciamos los pescados
@@ -73,6 +77,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             Vector3 position = fishPositions[i].position;
             fishList[i] = Instantiate(fishPrefab, position, Quaternion.identity).GetComponent<FishMultiplayer>();
+            //fishList[i].id = i;
         }
 
 
@@ -141,7 +146,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// </summary>
     void Update()
     {
-        if (!matchFinished && matchStarted)
+        if (!matchFinished && matchStarted && gameMode == GameMode.Hunt)
         {
             endTime(Time.deltaTime);
         }
@@ -149,7 +154,21 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     }
     #endregion
 
-    #region PUBLIC METHODS
+    #region RPCs
+    /// <summary>
+    /// Destruye el pescado con el identificador fishId
+    /// </summary>
+    /// <param name="fishId"></param>
+    [PunRPC]
+    public void DestroyFish(object parameter)
+    {
+        int fishId = (int) parameter;
+        if (fishList[fishId] != null)
+        {
+            Destroy(fishList[fishId]);
+        }
+    }
+
     /// <summary>
     /// Actualiza el número de pinguinos vivos para todos los jugadores (thread-safe)
     /// Si no quedan vivos, termina la partida
@@ -157,7 +176,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     [PunRPC]
     public void ActualizeNumPenguins()
     {
-        lock(infoLock)
+        lock (infoLock)
         {
             penguinsAlive--;
             Debug.Log("penguins alive = " + penguinsAlive);
@@ -173,7 +192,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     [PunRPC]
     public void ActualizeNumPenguinsConnected()
     {
-        lock(infoLock)
+        lock (infoLock)
         {
             penguinsConnected--;
             penguinsAlive--;
@@ -204,9 +223,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     [PunRPC]
     public void SetNumberOfPlayers(object[] objectArray)
     {
-        int numberOfPenguins = (int) objectArray[0];
+        int numberOfPenguins = (int)objectArray[0];
         int numberOfBears = (int)objectArray[1];
-        lock(infoLock)
+        lock (infoLock)
         {
             penguinsAlive = numberOfPenguins;
             penguinsConnected = numberOfPenguins;
@@ -214,7 +233,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
         matchStarted = true;
     }
+    #endregion
 
+    #region PUBLIC METHODS    
     //modo espectador -> aunque haya game over que puedas seguir la camañar de la persona que te ha matado
     //le sigues y encima se ve un game over y a la dcha boton de espectar o salir
     //si le das a espectar se quita el game over y si le das a salir vas a main menu
@@ -247,7 +268,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         //Paula / tomas
         if (logWriter != null)
             logWriter.Write("SE ACABO LA PARTIDA");
-        if (bearsConnected == 0)
+        if (bearsConnected == 0 && gameMode == GameMode.Hunt)
         {
             if (logWriter != null)
                 logWriter.Write("se fueron todos los osos");
@@ -283,18 +304,6 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             ShowResults();
         }
     }
-
-    /// <summary>
-    /// Destruye el pescado con el identificador fishId
-    /// </summary>
-    /// <param name="fishId"></param>
-    public void DestroyFish(int fishId)
-    {
-        if (fishList[fishId] != null)
-        {
-            Destroy(fishList[fishId]);
-        }
-    }
     #endregion
 
     #region PUN CALLBACKS
@@ -320,7 +329,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             if ((bool)wasPenguin)
             {
                 GetComponent<PhotonView>().RPC("ActualizeNumPenguinsConnected", RpcTarget.All);
-            } else
+            } else if (gameMode == GameMode.Hunt)
             {
                 GetComponent<PhotonView>().RPC("ActualizeNumBearsConnected", RpcTarget.All);
             }

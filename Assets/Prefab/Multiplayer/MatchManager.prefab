@@ -45,10 +45,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositions: []
   fishPositions: []
+  gameMode: 0
   penguinPrefab: {fileID: 7246395623112196607, guid: 528a795a532be50438b318a3dcb50d73,
+    type: 3}
+  penguinRacePrefab: {fileID: 2243592415725833194, guid: 1f7a8dbc7b44e3b4d94cfceef65796af,
     type: 3}
   bearPrefab: {fileID: 831827831617679073, guid: 24a0682d9d20ba441a8eb75805090021,
     type: 3}
-  matchInfo: {fileID: 0}
   matchInfoPrefab: {fileID: 1993143252994167033, guid: b4e1beff8543ed64cbaf5fb3c879217d,
     type: 3}
+  matchInfo: {fileID: 0}
