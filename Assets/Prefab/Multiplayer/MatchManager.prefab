@@ -47,7 +47,7 @@ MonoBehaviour:
   fishPositions: []
   penguinPrefab: {fileID: 7246395623112196607, guid: 528a795a532be50438b318a3dcb50d73,
     type: 3}
-  bearPrefab: {fileID: 621551584260340872, guid: b89fc2b9d4a75a4498741903b933ade3,
+  bearPrefab: {fileID: 831827831617679073, guid: 24a0682d9d20ba441a8eb75805090021,
     type: 3}
   matchInfo: {fileID: 0}
   matchInfoPrefab: {fileID: 1993143252994167033, guid: b4e1beff8543ed64cbaf5fb3c879217d,

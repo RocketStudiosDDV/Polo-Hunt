@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 879369920374087951}
   - component: {fileID: 879369920374087944}
   - component: {fileID: 2682138438256605418}
-  - component: {fileID: 879369920374087988}
   - component: {fileID: 7199837195669275907}
   - component: {fileID: 6845617389219712972}
   - component: {fileID: -5706299110820098744}
@@ -115,29 +114,7 @@ MonoBehaviour:
   cepo: {fileID: 6193383704093716309, guid: 9a3a2bc4dafc50242af489f3788b3eb0, type: 3}
   _timeAttacking: 0
   ownerActorNumber: 0
---- !u!114 &879369920374087988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 69048888687589988}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fedc18f44bd188b48a37ce34c0b1df88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpForce: 10
-  speed: 3
-  maxSpeed: 10
-  mainCamera: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  movementCamera: {x: 0, y: 0}
-  target: {fileID: 0}
-  pivot: {fileID: 0}
-  lookingAt: {x: 0, y: 0, z: 0}
-  cepo: {fileID: 6193383704093716309, guid: 957a1810af608a241b637da49f56cd6e, type: 3}
-  _timeAttacking: 0
+  keysPressed: 0
 --- !u!114 &7199837195669275907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,25 +171,25 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: walking
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: sliding
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: hit
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: get_hit
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: stand_up
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: afk
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 0
 --- !u!1 &96130789225483812
 GameObject:

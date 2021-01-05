@@ -100,7 +100,7 @@ public class BearInputMultiplayer : MonoBehaviour
     private void Awake()
     {
         _controls = new PlayerControls(); //Recoge los controles
-
+        bear_animator = GetComponent<Animator>();
         if (GetComponent<PhotonView>().IsMine || !PhotonNetwork.IsConnected)  // Si es nuestro pingüino, seguirlo con la cámara
         {
             mainCamera = Object.FindObjectOfType<Camera>();

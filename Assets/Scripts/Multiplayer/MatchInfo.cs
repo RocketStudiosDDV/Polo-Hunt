@@ -68,7 +68,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         for (int i = 0; i < fishPositions.Count; i++)
         {
             Vector3 position = fishPositions[i].position;
-            fishList[i] = (FishMultiplayer) Instantiate(fishPrefab, position, Quaternion.identity).GetComponent<FishMultiplayer>();
+            fishList[i] = Instantiate(fishPrefab, position, Quaternion.identity).GetComponent<FishMultiplayer>();
         }
 
         // Obtenemos los jugadores
@@ -87,7 +87,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             int penguinsToAssign = playersList.Count - numberOfBears;
             penguinsConnected = penguinsToAssign;
             penguinsAlive = penguinsConnected;
-            Debug.Log("Players= " + playersList.Count + " - Bears= " + bearsToAssign + " - Pingus=" + penguinsToAssign);
+            int playerId = 0;
             foreach (Player player in playersList)
             {
                 ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
@@ -119,7 +119,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                     }
                 }
                 hashtable.Add("isPenguin", isPenguin);
+                hashtable.Add("playerId", playerId);
                 player.SetCustomProperties(hashtable);
+                playerId++;
             }
             object[] objectArray = new object[2];
             objectArray[0] = penguinsConnected;
