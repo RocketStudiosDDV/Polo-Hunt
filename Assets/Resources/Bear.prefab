@@ -179,7 +179,7 @@ MonoBehaviour:
   BearHUD: {fileID: 0}
   PenguinHUD: {fileID: 0}
   speed: 3
-  pivotPrefab: {fileID: 6485101767921433565, guid: 70176c182a9af6c4d979e03e02992298,
+  pivotPrefab: {fileID: 6883935323586812418, guid: 818d0de7235c57146b5f70717d932b5b,
     type: 3}
   mainCamera: {fileID: 0}
   target: {fileID: 0}

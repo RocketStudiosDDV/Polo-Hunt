@@ -5,47 +5,48 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Almacena la información de partida.
-/// Crea los pescados del mapa.
+/// Almacena la información de partida. Contiene los eventos de inicio y fin de partida.
+/// La información que es necesaria para llamar a dichos eventos está sincronizada entre jugadores.
+/// La lógica que sólo debe ser ejecutada una vez la ejecuta únicamente el MasterClient
 /// Decide quién es oso y quien es pinguino, y pide a MatchManager comenzar la partida cuando esten los jugadores listos.
+/// Crea los pescados del mapa.
 /// </summary>
 public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 {
     #region VARIABLES
-    // Información de partida
-    private int numberOfBears = 0;   // nº de osos de la partida
+    // Configuración de partida
+    private int numberOfBears = 0;   // nº de osos de la partida (leído de customPreferences)
+    private double matchLength = 600; //tiempo que dura la partida
 
+    // Información de partida
     public int penguinsAlive; //pinguinos restantes
     public int bearsConnected; //osos conectados
     public int penguinsConnected; //pinguinos conectados
-
-    private double matchLength = 600; //tiempo que dura la partida
-    private double matchTime;
-
-    public List<Player> playersList;    // lista de jugadores
-
+    private double matchTime;   // momento actual de la partida
+    public List<Player> playersList;    // Lista de jugadores
     private bool matchFinished;     // Se acabo la partida?
     private bool matchStarted;  // Se empezó la partida?
-    private bool hostLeft;
+    private bool hostLeft;  // Se ha marchado el host?
 
     // Información de sincronización
     public List<bool> playersReady; // lista de jugadores listos
-    private object infoLock = new object();
+    private object infoLock = new object(); // lock para actualizaciones que necesiten ser thread-safe
 
     // Información de creación y sincronización de pescados
-    public GameObject fishPrefab;
-    private FishMultiplayer[] fishList;
-    public List<Transform> fishPositions;
+    public GameObject fishPrefab;   // Prefab a instanciar
+    public List<Transform> fishPositions;   // Posiciones de los pescados (configurar en el inspector)
+    private FishMultiplayer[] fishList; // Lista de pescados
 
     // Referencias
     private MatchManager matchManager;
 
     // TESTEO
     private LogWriter logWriter;
-
     #endregion
     #region UNITY CALLBACKS
-
+    /// <summary>
+    /// Inicializa variables (todos), instancia pescados (todos), asigna el rol de cada jugador (sólo el MasterClient)
+    /// </summary>
     private void Awake()
     {
         // Inicializamos variables necesarias
@@ -58,8 +59,11 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         matchStarted = false;
         hostLeft = false;
         logWriter = FindObjectOfType<LogWriter>();
+
+        
+        // Leemos ajustes de partida de las CustomProperties de la Room
         object customPropertyBears;
-        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("numberOfBears", out customPropertyBears))
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("numberOfBears", out customPropertyBears))   // nº de osos
             numberOfBears = (int)customPropertyBears;
 
 
@@ -71,6 +75,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             fishList[i] = Instantiate(fishPrefab, position, Quaternion.identity).GetComponent<FishMultiplayer>();
         }
 
+
         // Obtenemos los jugadores
         IEnumerator<Player> playerEnumerator = PhotonNetwork.CurrentRoom.Players.Values.GetEnumerator();
         while (playerEnumerator.MoveNext())
@@ -78,6 +83,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             playersList.Add(playerEnumerator.Current);
             playersReady.Add(false);
         }
+
 
         // Decidimos el rol de cada uno y se lo anotamos en customProperties al jugador
         if (PhotonNetwork.IsMasterClient)
@@ -126,32 +132,27 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             object[] objectArray = new object[2];
             objectArray[0] = penguinsConnected;
             objectArray[1] = bearsConnected;
-            Debug.Log("enviando info pinguinos = " + (int)objectArray[0] + " osos = " + (int)objectArray[1]);
             GetComponent<PhotonView>().RPC("SetNumberOfPlayers", RpcTarget.All, objectArray as object);
         }
-        Debug.Log("Awake Finished \n\n\n\n\n\n\n\n\n");
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Mientras esté la partida en marcha, comprueba los eventos
+    /// </summary>
     void Update()
     {
         if (!matchFinished && matchStarted)
         {
             endTime(Time.deltaTime);
-            endGame();
         }
         
     }
-
-    #endregion
-    #region PRIVATE METHODS
-    
     #endregion
 
     #region PUBLIC METHODS
-
     /// <summary>
-    /// Actualiza el número de pinguinos vivos (thread-safe)
+    /// Actualiza el número de pinguinos vivos para todos los jugadores (thread-safe)
+    /// Si no quedan vivos, termina la partida
     /// </summary>
     [PunRPC]
     public void ActualizeNumPenguins()
@@ -165,6 +166,10 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
     }
 
+    /// <summary>
+    /// Actualiza el número de pingüinos vivos y conectados para todos los jugadores (thread-safe)
+    /// Si no quedan vivos o conectados, termina la partida
+    /// </summary>
     [PunRPC]
     public void ActualizeNumPenguinsConnected()
     {
@@ -172,18 +177,30 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             penguinsConnected--;
             penguinsAlive--;
+            if (penguinsConnected == 0 || penguinsAlive == 0)
+                ShowResults();
         }
     }
 
+    /// <summary>
+    /// Actualiza el número de osos conectados (thread-safe)
+    /// Si no quedan conectados, termina la partida
+    /// </summary>
     [PunRPC]
     public void ActualizeNumBearsConnected()
     {
         lock (infoLock)
         {
             bearsConnected--;
+            if (bearsConnected == 0)
+                ShowResults();
         }
     }
 
+    /// <summary>
+    /// Sincroniza la información de nº de jugadores conectados y roles e inicia la partida
+    /// </summary>
+    /// <param name="objectArray"></param>
     [PunRPC]
     public void SetNumberOfPlayers(object[] objectArray)
     {
@@ -195,7 +212,6 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             penguinsConnected = numberOfPenguins;
             bearsConnected = numberOfBears;
         }
-        Debug.Log(" pinguinos = " + penguinsConnected + " - osos = " + bearsConnected);
         matchStarted = true;
     }
 
@@ -216,6 +232,12 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         Debug.Log("MODO ESPECTADOR");
     }
 
+    // Lo mismo que el anterior pero para los que entran en mitad de partida (no tienen pinguino ni oso que les haya matado)
+    public void SpectatorMode()
+    {
+        Debug.Log("MODO ESPECTADOR");
+    }
+
 
     //método que se llamará cuando el juego decida que se acabara la partida y se muestra a quien siga dntro de la partida
     //debe bloquear el input a todos los jugadores y enseñarles la pantalla de resultados, inferida de penguinsAlive y bearsConnected
@@ -223,73 +245,49 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         matchFinished = true;
         //Paula / tomas
-        logWriter.Write("SE ACABO LA PARTIDA");
+        if (logWriter != null)
+            logWriter.Write("SE ACABO LA PARTIDA");
         if (bearsConnected == 0)
         {
-            logWriter.Write("se fueron todos los osos");
+            if (logWriter != null)
+                logWriter.Write("se fueron todos los osos");
         } else if (penguinsConnected == 0)
         {
-            logWriter.Write("se fueron todos los pinguinos");
+            if (logWriter != null)
+                logWriter.Write("se fueron todos los pinguinos");
         } else if (penguinsAlive == 0)
         {
-            logWriter.Write("todos los pinguinos han sido cazados");
+            if (logWriter != null)
+                logWriter.Write("todos los pinguinos han sido cazados");
         } else if (hostLeft == true)
         {
-            logWriter.Write("el host se fue");
+            if (logWriter != null)
+                logWriter.Write("el host se fue");
         } else
         {
-            logWriter.Write("se acabo el tiempo");
+            if (logWriter != null)
+                logWriter.Write("se acabo el tiempo");
         }
     }
 
-    //inicia la partida
-    public void StartGame()
-    {
-                                       //inicializar posiciones de los pinguinos y cosas del mapa (pescados y así)
-
-        //MANU
-    }
-
-    //Que ubique los requisitos de fin de partida
-        //tiempo restante -> se acaba
-        //Solo qudan pinguinos
-    //El master avisa a todos de endMatch en caso de que el tiempo se haya acabado
-    public void endGame()
-    {
-
-        //MANU 
-
-        if (penguinsAlive == 0)
-        {
-            //se acaba Y SE LLAMARA A LA PUNTUACION - SHOW REUSLTS
-            ShowResults();
-        }
-
-        if (penguinsConnected == 0)
-        {
-            //se acaba
-            ShowResults();
-        }
-
-        if (bearsConnected == 0)
-        {
-            //se acaba
-            ShowResults();
-        }
-    }
-    //cuando se acaba el tiempo
+    /// <summary>
+    /// Comprueba si se ha terminado el tiempo de partida
+    /// Si se da el caso, termina la partida
+    /// </summary>
+    /// <param name="deltaTime"></param>
     public void endTime(double deltaTime)
     {
-
-        //MANU
         matchTime += deltaTime;
         if (matchTime > matchLength)
         {
-            //se acaba la partoida
             ShowResults();
         }
     }
 
+    /// <summary>
+    /// Destruye el pescado con el identificador fishId
+    /// </summary>
+    /// <param name="fishId"></param>
     public void DestroyFish(int fishId)
     {
         if (fishList[fishId] != null)
@@ -297,12 +295,22 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             Destroy(fishList[fishId]);
         }
     }
+    #endregion
 
+    #region PUN CALLBACKS
+    /// <summary>
+    /// Si un jugador entra en mitad de partida, ponerlo en modo espectador
+    /// </summary>
+    /// <param name="newPlayer"></param>
     public void OnPlayerEnteredRoom(Player newPlayer)
     {
-        throw new System.NotImplementedException();
+        SpectatorMode();
     }
 
+    /// <summary>
+    /// Si un jugador sale de la partida, actualiza el nº de jugadores
+    /// </summary>
+    /// <param name="otherPlayer"></param>
     public void OnPlayerLeftRoom(Player otherPlayer)
     {
         if (PhotonNetwork.IsMasterClient)
@@ -324,10 +332,14 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         //throw new System.NotImplementedException();
     }
 
+    /// <summary>
+    /// Recibe cada vez que se le asigna el rol a cada jugador y lo marca como listo.
+    /// Una vez estén todos listos, comunica a todos que empiecen la partida
+    /// </summary>
+    /// <param name="targetPlayer"></param>
+    /// <param name="changedProps"></param>
     public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        Debug.Log("Player Property update");
-        // Ponemos como listo al jugador que ha recibido el cambio de customProperties
         for(int i = 0; i < playersList.Count; i++)
         {
             Player player = playersList[i];
@@ -348,14 +360,18 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
         if (allReady)
         {
-            Debug.Log("Starting match..");
             matchManager.InstantiatePlayers();
         }
     }
 
+    /// <summary>
+    /// Si se va el host, termina la partida
+    /// </summary>
+    /// <param name="newMasterClient"></param>
     public void OnMasterClientSwitched(Player newMasterClient)
     {
-        logWriter.Write("el host se fue");
+        if (logWriter != null)
+            logWriter.Write("el host se fue");
         hostLeft = true;
         ShowResults();
     }
