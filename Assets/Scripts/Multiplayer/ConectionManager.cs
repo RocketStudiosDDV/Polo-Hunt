@@ -398,6 +398,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
+        ConnectButton();
         if (logWriter != null)
             logWriter.Write("Conectado al servidor" + PhotonNetwork.ServerAddress);
     }
@@ -405,6 +406,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
+        ConnectPanel.SetActive(true);
+        ChooseTypePanel.SetActive(false); 
+        LobbyPanel.SetActive(false);
+        CreateRoomPanel.SetActive(false); 
+        RoomValuesPanel.SetActive(false);
+        RoomPanel.SetActive(false);
         if (logWriter != null)
             logWriter.Write("Se ha desconectado por la causa: " + cause.ToString());
     }
@@ -412,6 +419,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
+        ConnectButton();
         if (logWriter != null)
             logWriter.Write("Se ha unido al lobby");
     }
@@ -470,6 +478,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         CreateRoomPanel.SetActive(false);
     }
 
+    public void BackJoinRoom()
+    {     
+        ChooseTypePanel.SetActive(true); 
+        LobbyPanel.SetActive(false);
+    }
+
     public void BackCreateRoom()
     {     
         CreateRoomPanel.SetActive(true); 
@@ -485,6 +499,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public void FinalRoom()
     {
         FinalRoomPanel.SetActive(true); 
+        CreateRoomPanel.SetActive(false);
         RoomValuesPanel.SetActive(false);
         LobbyPanel.SetActive(false);
     }
@@ -507,6 +522,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
+        FinalRoom();
         if (logWriter != null)
             logWriter.Write("Sala creada");
     }
@@ -514,6 +530,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        FinalRoom();
         if (logWriter != null)
             logWriter.Write("Unido a la sala " + GetRoomName() + " - nº players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers);
         
@@ -550,9 +567,13 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
+        ChooseTypePanel.SetActive(true);
+        LobbyPanel.SetActive(false);
+        RoomPanel.SetActive(false);
+        ConnectPanel.SetActive(false);
         if (logWriter != null)
             logWriter.Write("Sala abandonada");
     }
     #endregion
-
+    
 }
