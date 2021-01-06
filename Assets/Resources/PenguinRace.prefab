@@ -607,9 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd59846a7d1ad34aa8a59bbcccb44e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10
   speed: 12
-  force: 50
   mainCamera: {fileID: 0}
   offset: {x: 0, y: 0, z: 0}
   movementCamera: {x: 0, y: 0}

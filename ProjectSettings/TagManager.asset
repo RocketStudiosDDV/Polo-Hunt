@@ -26,6 +26,10 @@ TagManager:
   - Fence
   - BigMountain
   - Cave
+  - Bullet
+  - caca
+  - Ramp
+  - BigRamp
   layers:
   - Default
   - TransparentFX

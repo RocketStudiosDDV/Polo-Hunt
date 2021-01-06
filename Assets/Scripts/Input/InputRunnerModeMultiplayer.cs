@@ -9,9 +9,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     #region VARIABLES
 
     //CONTROL DEL PLAYER
-    [SerializeField] float jumpForce = 10;
-    [SerializeField] float speed = 12;
-    [SerializeField] float force = 50;
+    //[SerializeField] float jumpForce = 10;
+    [SerializeField] float speed = 25;
+    //[SerializeField] float force = 50;
     
 
     private PlayerControls _controls;
@@ -65,8 +65,11 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     private bool fenceTriggered = false;
     private double _timeFence;
 
-    private bool stopped = false;
-    private double _timeStopped = 0;
+    private bool obstacle = false;
+    private double _timeSlow = 0;
+
+    private bool onRamp = false;
+    //private double _timeStopped = 0;
 
     private MatchInfo matchInfo;
 
@@ -176,7 +179,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         {
             if ((Time.fixedTime > _timeSnowman - 3) && (Time.fixedTime < _timeSnowman - 2))
             {
-                speed = 7;
+                speed = 10;
             }
 
             if ((Time.fixedTime > _timeSnowman - 2) && (Time.fixedTime < _timeSnowman - 1))
@@ -202,8 +205,18 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             }
         }
 
+        //choque con cosas del mapa
+        if (obstacle == true)
+        {
+            if (Time.fixedTime > _timeSlow)
+            {
+                speed = 25;
+                obstacle = false;
+            }
+        }
+
         //comrpobar si esta atascado
-        if (_playerRB.velocity.magnitude < 0.1)
+        /*if (_playerRB.velocity.magnitude < 0.1)
         {
             Debug.Log("me atasque");
             //stopped = true;
@@ -223,7 +236,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         }
 
         Debug.Log("velocidad " + _playerRB.velocity);
-              
+              */
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -273,6 +286,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Start") //Si choca con el lado dch de un pingu
         {
             walking_animation = false;
+            speed = 25;
             sliding_animation = true;
             _timeStart = Time.fixedTime + 1.5;
             toStart = true;
@@ -312,6 +326,11 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         {
 
             Debug.Log("SUELO");
+
+            if (onRamp == true)
+            {
+                speed = 25;
+            }
             //_playerRB.AddForce(Vector3.left * 10, ForceMode.Acceleration);
             //_playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerInput.z * speed);
             inFloor = true;
@@ -320,7 +339,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Snowman") //Si choca con el lado dch de un pingu
         {
-            speed = 3;
+            speed = 8;
             snowmanCollided = true;
             _timeSnowman = Time.fixedTime + 5;
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 5f, _playerRB.position.y, _playerRB.position.z));
@@ -330,6 +349,34 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             //_playerRB.AddForce(Vector3.up * -force/2, ForceMode.Impulse);
             //_playerRB.AddForce(Vector3.up * -500, ForceMode.Force);
             //_playerRB.AddForce(Vector3.right * 10000, ForceMode.Force);
+        }
+
+        if (collision.gameObject.tag == "BigMountain")
+        {
+            Debug.Log("vaya montaña loko");
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 15, _playerRB.position.y + 10, _playerRB.position.z - 5));
+            obstacle = true;
+            _timeSlow = 2;
+        }
+
+        if (collision.gameObject.tag == "Cave")
+        {
+            Debug.Log("vaya montaña loko");
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 3, _playerRB.position.z - 10));
+            obstacle = true;
+            _timeSlow = 2;
+        }
+
+        if (collision.gameObject.tag == "Ramp")
+        {
+            onRamp = true;
+            speed = 30;
+        }
+
+        if (collision.gameObject.tag == "BigRamp")
+        {
+            onRamp = true;
+            speed = 35;
         }
     }
 
@@ -481,7 +528,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         moveY += movementCamera.y * m_LookSense;
 
         //limitar movimiento y entre -50 y 70
-        moveY = Mathf.Clamp(moveY, -50.0f, 70.0f);
+        moveY = Mathf.Clamp(moveY, -20.0f, 20.0f);
 
         //pivot sigue a player
         Vector3 follow = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 3f);

@@ -273,7 +273,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
                         PhotonNetwork.LoadLevel("HuntMap");
                         break;
                     case 1:
-                        PhotonNetwork.LoadLevel("RaceMap");
+                        PhotonNetwork.LoadLevel("RunnerMap");
                         break;
                 }
             }
