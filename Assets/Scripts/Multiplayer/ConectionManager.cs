@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks, ILobbyCallbacks, IMatchmakingCallbacks
 {
@@ -529,7 +530,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     }
     #endregion
 
-    
+    public void CompruebaUser()
+    {
+        
+    }
 
     public void MultiplayerButton()
     {     
