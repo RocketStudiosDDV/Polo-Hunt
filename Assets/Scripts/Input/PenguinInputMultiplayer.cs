@@ -364,6 +364,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
             if (isAttacking == true) //si estas dando colleja
             {
                 //LE MANDAS AL OTRO A CAERSE -> EJECUTAR TO FALL
+                collision.gameObject.GetComponent<PhotonView>().RPC("ToFall", collision.gameObject.GetComponent<PhotonView>().Owner);
                 isAttacking = false;
             }
         }
@@ -598,6 +599,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
 
     //Caerse
+    [PunRPC]
     public void ToFall()
     {
         _controls.Player.Movement.Disable();
