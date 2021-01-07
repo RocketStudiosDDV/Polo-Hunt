@@ -95,5 +95,10 @@ public class MatchManager : MonoBehaviourPun
             GameObject myPenguin = PhotonNetwork.Instantiate(this.penguinRacePrefab.name, startPositions[playerId].position, Quaternion.identity, 0);
         }    
     }
+
+    public void ReturnToGameSelectionMenu()
+    {
+        FindObjectOfType<ConectionManagerInGame>().ReturnToGameSelectionMenu();
+    }
     #endregion
 }

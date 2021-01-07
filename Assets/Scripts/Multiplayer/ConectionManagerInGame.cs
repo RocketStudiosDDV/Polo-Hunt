@@ -105,6 +105,18 @@ public class ConectionManagerInGame : MonoBehaviourPunCallbacks, IConnectionCall
             }
         }
     }
+
+    /// <summary>
+    /// Vuelven todos los clientes a la sala de espera pre-partida
+    /// </summary>
+    /// <param name="cause"></param>
+    public void ReturnToGameSelectionMenu()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("MultiplayerTestScene");
+        }
+    }
     #endregion
 
     #region PUN CALLBACKS
@@ -137,7 +149,7 @@ public class ConectionManagerInGame : MonoBehaviourPunCallbacks, IConnectionCall
         base.OnLeftRoom();
         if (logWriter != null)
             logWriter.Write("Sala abandonada");
-        SceneManager.LoadScene("MultiplayerMatchmakingTestScene");
+        SceneManager.LoadScene("MultiplayerTestScene");
         /*
         ChooseTypePanel.SetActive(true);
         LobbyPanel.SetActive(false);
