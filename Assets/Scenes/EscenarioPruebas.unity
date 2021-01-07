@@ -711,7 +711,12 @@ PrefabInstance:
     - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
         type: 3}
       propertyPath: fishPositions.Array.size
-      value: 30
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: startPositions.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
         type: 3}
@@ -858,6 +863,11 @@ PrefabInstance:
       propertyPath: fishPositions.Array.data[28]
       value: 
       objectReference: {fileID: 887674578}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: startPositions.Array.data[0]
+      value: 
+      objectReference: {fileID: 1698850178}
     - target: {fileID: 4502031446558974751, guid: b75c4b06d67fe5343bf822e77491f5e3,
         type: 3}
       propertyPath: m_Name
@@ -4393,6 +4403,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MatchInfo
       objectReference: {fileID: 0}
+    - target: {fileID: 5851546192335753924, guid: b4e1beff8543ed64cbaf5fb3c879217d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6826170326982329397, guid: b4e1beff8543ed64cbaf5fb3c879217d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4610,7 +4625,7 @@ PrefabInstance:
     - target: {fileID: 3495274311379260191, guid: 2e9bb595666761d42b39c83cc9c1ca2d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3495274312201704858, guid: 2e9bb595666761d42b39c83cc9c1ca2d,
         type: 3}
@@ -7098,6 +7113,36 @@ Transform:
   m_Father: {fileID: 1433409975}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 162, z: 0}
+--- !u!1 &1698850177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1698850178}
+  m_Layer: 0
+  m_Name: PenguinPos1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1698850178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698850177}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 79.16088, y: 150.9, z: 168.91617}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1800190976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7574,6 +7619,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pivot
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883935323586812418, guid: 818d0de7235c57146b5f70717d932b5b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6883935323586812445, guid: 818d0de7235c57146b5f70717d932b5b,
         type: 3}

@@ -270,7 +270,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
                 switch(modeSelected)
                 {
                     case 0:
-                        PhotonNetwork.LoadLevel("HuntMap");
+                        PhotonNetwork.LoadLevel("EscenarioPruebas");
                         break;
                     case 1:
                         PhotonNetwork.LoadLevel("RunnerMap");
