@@ -15,7 +15,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
     //CONTROL DEL PLAYER
     [SerializeField] float jumpForce = 10;
-    [SerializeField] float speed = 3;
+    [SerializeField] float speed = 5;
     [SerializeField] float maxSpeed = 10;
 
     private PlayerControls _controls;
@@ -287,7 +287,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Corner1")
         {
-            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 20, _playerRB.position.z - 10));
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 15, _playerRB.position.y + 20, _playerRB.position.z - 15));
         }
 
         if (collision.gameObject.tag == "Corner2")
@@ -436,7 +436,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     {
         forceDirection = _playerRB.transform.forward; //direccion en la que se va a deslizar
         isRunning = true;
-        speed = 10;
+        speed = 20;
         _timeRunning = Time.fixedTime + 3;
         _controls.Player.Run.Disable();
         _controls.Player.Movement.Disable();
@@ -533,7 +533,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             if (deltaTime > _timeRunning + 3)
             {
-                speed = 3;
+                speed = 5;
                 if (enableControlsAfterFallen == true)
                 {
                     _controls.Player.Movement.Enable();
@@ -605,7 +605,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         _controls.Player.Movement.Disable();
         _controls.Player.Run.Disable();
         speed = 0;
-        _timeFall = Time.fixedTime + 2;
+        _timeFall = Time.fixedTime + 42;
         enableControlsAfterFallen = false;
         toFall = true;
     }

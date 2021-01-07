@@ -125,7 +125,7 @@ public class BearInputMultiplayer : MonoBehaviour
     {
         //ANIMACIÓN ANDAR
 
-        if (keysPressed > 0)
+        if ((keysPressed > 0) && (isRunning == false))
         {
             walking_animation = true;
         }
@@ -249,42 +249,82 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Corner1")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 20, _playerRB.position.z - 10));
+
+            if (isRunning == true)
+            {
+                isRunning = false;
+            }
         }
 
         if (collision.gameObject.tag == "Corner2")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 20, _playerRB.position.z - 10));
+
+            if (isRunning == true)
+            {
+                isRunning = false;
+            }
         }
 
         if (collision.gameObject.tag == "Corner3")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 20, _playerRB.position.z + 10));
+
+            if (isRunning == true)
+            {
+                isRunning = false;
+            }
         }
 
         if (collision.gameObject.tag == "Corner4")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 20, _playerRB.position.z + 10));
+
+            if (isRunning == true)
+            {
+                isRunning = false;
+            }
         }
 
 
         if (collision.gameObject.tag == "Side1")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x, _playerRB.position.y + 25, _playerRB.position.z - 10));
+
+            if (isRunning == true)
+            {
+                isRunning = false;
+            }
         }
 
         if (collision.gameObject.tag == "Side2")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x, _playerRB.position.y + 25, _playerRB.position.z + 10));
+
+            if (isRunning == true)
+            {
+                isRunning = false;
+            }
         }
 
         if (collision.gameObject.tag == "Side3")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 25, _playerRB.position.z));
+
+            if (isRunning == true)
+            {
+                isRunning = false;
+            }
         }
 
         if (collision.gameObject.tag == "Side4")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 25, _playerRB.position.z));
+
+            if (isRunning == true)
+            {
+                isRunning = false;
+            }
         }
     }
 
