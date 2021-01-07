@@ -20,6 +20,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public GameObject RoomValuesPanel;
     public GameObject PlayersValuesPanel;
     public GameObject FinalRoomPanel;
+    public GameObject FinalRoomPanel2;
 
     // PRIVADAS
     HashSet<int> roomCodes = new HashSet<int>();
@@ -399,6 +400,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
+        FinalRoom(0);
         if (propertiesThatChanged.ContainsKey("gameMode"))
         {
             if (logWriter != null)
@@ -472,7 +474,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         if (logWriter != null)
             logWriter.Write("Sala creada");
 
-        FinalRoom();
+        FinalRoom(0);
     }
 
     public override void OnJoinedRoom()
@@ -481,8 +483,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         if (logWriter != null)
             logWriter.Write("Unido a la sala " + GetRoomName() + " - nº players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers);
 
-        FinalRoom();
-
+        FinalRoom(PhotonNetwork.CurrentRoom.PlayerCount-1);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -527,6 +528,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         ConnectPanel.SetActive(false);
     }
     #endregion
+
+    
 
     public void MultiplayerButton()
     {     
@@ -591,13 +594,17 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         ChooseTypePanel.SetActive(true); 
         FinalRoomPanel.SetActive(false);
+        FinalRoomPanel2.SetActive(false);
     }
 
-    public void FinalRoom()
+    public void FinalRoom(int i)
     {
-        FinalRoomPanel.SetActive(true); 
+        if (i == 0)
+            FinalRoomPanel.SetActive(true);
+        else
+            FinalRoomPanel2.SetActive(true);
         CreateRoomPanel.SetActive(false);
         RoomValuesPanel.SetActive(false);
         LobbyPanel.SetActive(false);
-    }    
+    }
 }
