@@ -185,12 +185,17 @@ public class PenguinInputMultiplayer : MonoBehaviour
         _playerRB.transform.LookAt(_playerRB.transform.position + playerDirection);
         lookingAt = _playerRB.transform.forward;
 
-        if (isRunning == false)
+        if ((isRunning == false) && (_playerRB.transform.position.y > 133))
         {
             CameraDirection();
         }
 
         ThirdCamera();
+
+        if (_playerRB.transform.position.y > 133)
+        {
+            ThirdCamera(); //control cámara tercera persona
+        }
 
 
         target.transform.LookAt(pivot);
@@ -271,6 +276,55 @@ public class PenguinInputMultiplayer : MonoBehaviour
             }
         }
         
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
+
+        if (collision.gameObject.tag == "Corner1")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 20, _playerRB.position.z - 10));
+        }
+
+        if (collision.gameObject.tag == "Corner2")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 20, _playerRB.position.z - 10));
+        }
+
+        if (collision.gameObject.tag == "Corner3")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 20, _playerRB.position.z + 10));
+        }
+
+        if (collision.gameObject.tag == "Corner4")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 20, _playerRB.position.z + 10));
+        }
+
+
+        if (collision.gameObject.tag == "Side1")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x, _playerRB.position.y + 25, _playerRB.position.z - 10));
+        }
+
+        if (collision.gameObject.tag == "Side2")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x, _playerRB.position.y + 25, _playerRB.position.z + 10));
+        }
+
+        if (collision.gameObject.tag == "Side3")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 25, _playerRB.position.z));
+        }
+
+        if (collision.gameObject.tag == "Side4")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 25, _playerRB.position.z));
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -641,7 +695,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         moveY += movementCamera.y * m_LookSense;
 
         //limitar movimiento y entre -50 y 70
-        moveY = Mathf.Clamp(moveY, -50.0f, 70.0f);
+        moveY = Mathf.Clamp(moveY, -30.0f, 25.0f);
 
         //pivot sigue a player
         Vector3 follow = new Vector3(this.transform.position.x, this.transform.position.y /*- 1.0f*/, this.transform.position.z);

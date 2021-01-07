@@ -67,6 +67,7 @@ public class BearInputMultiplayer : MonoBehaviour
     private bool powerUpOn = false;
     private double _timePowerUp;
 
+    private bool outOfMap = false;
     //Materiales que controlan la vuision berserker
 
     //public Material visionMaterial;
@@ -199,8 +200,12 @@ public class BearInputMultiplayer : MonoBehaviour
         _playerRB.transform.LookAt(_playerRB.transform.position + playerDirection); //Hace que el jugador mire al frente
 
         //Funciones de control de cámara
-        CameraDirection(); //movimiento respecto de la camara
-        ThirdCamera(); //control cámara tercera persona
+
+        if (_playerRB.transform.position.y > 133)
+        {
+            CameraDirection(); //movimiento respecto de la camara
+            ThirdCamera(); //control cámara tercera persona
+        }        
 
         target.transform.LookAt(pivot);
 
@@ -239,7 +244,48 @@ public class BearInputMultiplayer : MonoBehaviour
         if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
         {
             return;
-        }        
+        }    
+        
+        if (collision.gameObject.tag == "Corner1")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 20, _playerRB.position.z - 10));
+        }
+
+        if (collision.gameObject.tag == "Corner2")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 20, _playerRB.position.z - 10));
+        }
+
+        if (collision.gameObject.tag == "Corner3")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 20, _playerRB.position.z + 10));
+        }
+
+        if (collision.gameObject.tag == "Corner4")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 20, _playerRB.position.z + 10));
+        }
+
+
+        if (collision.gameObject.tag == "Side1")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x, _playerRB.position.y + 25, _playerRB.position.z - 10));
+        }
+
+        if (collision.gameObject.tag == "Side2")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x, _playerRB.position.y + 25, _playerRB.position.z + 10));
+        }
+
+        if (collision.gameObject.tag == "Side3")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 25, _playerRB.position.z));
+        }
+
+        if (collision.gameObject.tag == "Side4")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 25, _playerRB.position.z));
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -422,7 +468,7 @@ public class BearInputMultiplayer : MonoBehaviour
         moveY += movementCamera.y * m_LookSense;
 
         //limitar movimiento y entre -50 y 70
-        moveY = Mathf.Clamp(moveY, -50.0f, 70.0f);
+        moveY = Mathf.Clamp(moveY, -30.0f, 25.0f);
 
         //pivot sigue a player
         Vector3 follow = new Vector3(this.transform.position.x, this.transform.position.y /*- 1.0f*/, this.transform.position.z);

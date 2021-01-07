@@ -30,6 +30,14 @@ TagManager:
   - caca
   - Ramp
   - BigRamp
+  - Corner1
+  - Corner2
+  - Corner3
+  - Corner4
+  - Side1
+  - Side2
+  - Side3
+  - Side4
   layers:
   - Default
   - TransparentFX
