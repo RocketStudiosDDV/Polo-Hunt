@@ -1193,6 +1193,12 @@ PrefabInstance:
       propertyPath: startPositions.Array.data[5]
       value: 
       objectReference: {fileID: 1391690692}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinPrefab
+      value: 
+      objectReference: {fileID: 69048888687589988, guid: 1f6b99508ffaed04a93153ca51feb9fd,
+        type: 3}
     - target: {fileID: 4502031446558974751, guid: b75c4b06d67fe5343bf822e77491f5e3,
         type: 3}
       propertyPath: m_Name
