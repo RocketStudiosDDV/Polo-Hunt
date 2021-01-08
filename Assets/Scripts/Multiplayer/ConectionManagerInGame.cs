@@ -114,6 +114,9 @@ public class ConectionManagerInGame : MonoBehaviourPunCallbacks, IConnectionCall
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+            newCustomRoomProperties["hasStarted"] = false;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
             PhotonNetwork.LoadLevel("MultiplayerTestScene");
         }
     }

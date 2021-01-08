@@ -146,7 +146,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
         ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable();   // Valor por defecto de sala (modo caza)
         customRoomProperties["gameMode"] = GameMode.Hunt;
-        
+        customRoomProperties["hasStarted"] = false;
+
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayers, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties, BroadcastPropsChangeToAll = true });
     }
 
@@ -169,6 +170,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
         ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable();   // Valor por defecto de sala (modo caza)
         customRoomProperties["gameMode"] = GameMode.Hunt;
+        customRoomProperties["hasStarted"] = false;
 
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 10, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties, IsVisible = false });
     }
@@ -279,6 +281,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     /// <summary>
     /// Inicia la partida (cambia la escena al nivel de juego). 
+    /// Settea la propiedad hasStarted a true
     /// Sólo lo puede llamar el MasterClient (host)
     /// </summary>
     public void StartMatch()
@@ -287,6 +290,9 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         {
             if (PhotonNetwork.IsMasterClient)
             {
+                ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+                newCustomRoomProperties["hasStarted"] = true;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
                 object customProperty;
                 int modeSelected = 0;
                 if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gameMode", out customProperty))
@@ -349,7 +355,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     /// <returns></returns>
     private string[] GetCustomRoomPropertiesForLobby()
     {
-        string[] customRoomPropertiesForLobby = { "gameMode" };
+        string[] customRoomPropertiesForLobby = { "gameMode", "hasStarted" };
         return customRoomPropertiesForLobby;
     }
     #endregion
@@ -395,6 +401,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable();
         customRoomProperties["gameMode"] = GameMode.Hunt;   // Valor por defecto de sala (modo caza)
         customRoomProperties["numberOfBears"] = 1;  // Valor por defecto de sala (1 oso)
+        customRoomProperties["hasStarted"] = false;
 
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayers, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties });
     }
@@ -487,7 +494,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             foreach (RoomInfo roomInfo in roomList)
             {
                 if (roomInfo != null)
-                    logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString());
+                    logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString() + ", Started: " + roomInfo.CustomProperties["hasStarted"].ToString());
             }
             logWriter.Write("--ROOMS UPDATE END--");
         }
