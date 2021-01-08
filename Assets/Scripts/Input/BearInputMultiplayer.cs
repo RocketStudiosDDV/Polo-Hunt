@@ -390,6 +390,10 @@ public class BearInputMultiplayer : MonoBehaviour
         _controls.Player.CameraControl.performed += GetCameraMove;//Movimiento de camara
 
         //Habilita el evento
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
         _controls.Player.Enable();
     }
 

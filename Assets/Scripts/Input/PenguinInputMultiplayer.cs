@@ -396,6 +396,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
         _controls.Player.PowerUp.performed += PowerUp; //Evento power up
         _controls.Player.CameraControl.performed += GetCameraMove;//Movimiento de camara
 
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
         //Habilita el evento
         _controls.Player.Enable();
     }
