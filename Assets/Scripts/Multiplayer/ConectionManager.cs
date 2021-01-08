@@ -23,6 +23,16 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public GameObject FinalRoomPanel;
     public GameObject FinalRoomPanel2;
 
+    public string name1;
+
+    public string psw1;
+
+    public class Player1
+    {
+        public string name;
+        public string psw;
+    }
+
     // PRIVADAS
     HashSet<int> roomCodes = new HashSet<int>();
 
@@ -65,6 +75,16 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public void SetNickName(string nickName)
     {
         PhotonNetwork.NickName = nickName;
+        name1 = nickName;
+    }
+
+    /// <summary>
+    /// Settea la password del cliente
+    /// </summary>
+    /// <param name="psw"></param>
+    public void SetPassword(string psw)
+    {
+        psw1 = psw;
     }
 
     /// <summary>
@@ -534,9 +554,31 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     }
     #endregion
 
-    public void CompruebaUser()
+    public void Insc()
     {
-        
+       StartCoroutine(InscribeUser());
+    }
+
+    public IEnumerator InscribeUser()
+    {
+        Player1 p = new Player1();
+        p.name = name1;
+        p.psw = psw1;
+
+        string data = JsonUtility.ToJson(p);
+
+        UnityWebRequest www = UnityWebRequest.Post("http://polo-hunt.ddns.net:8800/", data);
+        www.SetRequestHeader("Content-Type", "application/json");
+        yield return www.SendWebRequest();
+
+        if(www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log("www.error");
+        }
+        else
+        {
+            Debug.Log("Guardado nombre de usuario");
+        }
     }
 
     public void MultiplayerButton()
