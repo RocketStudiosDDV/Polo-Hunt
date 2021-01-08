@@ -4907,6 +4907,11 @@ PrefabInstance:
       propertyPath: fishPositions.Array.data[0]
       value: 
       objectReference: {fileID: 678557924}
+    - target: {fileID: 1993143252994167033, guid: b4e1beff8543ed64cbaf5fb3c879217d,
+        type: 3}
+      propertyPath: textpenguinsalive
+      value: 
+      objectReference: {fileID: 1404222980}
     - target: {fileID: 2670719676722973066, guid: b4e1beff8543ed64cbaf5fb3c879217d,
         type: 3}
       propertyPath: viewIdField

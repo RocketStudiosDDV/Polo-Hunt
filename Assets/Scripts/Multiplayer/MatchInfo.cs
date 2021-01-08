@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Almacena la información de partida. Contiene los eventos de inicio y fin de partida.
@@ -21,6 +22,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     // Información de partida
     private GameMode gameMode;  // Modo de juego
     public int penguinsAlive; //pinguinos restantes
+
+    public Text textpenguinsalive;
     public int bearsConnected; //osos conectados
     public int penguinsConnected; //pinguinos conectados
     private double matchTime;   // momento actual de la partida
@@ -150,7 +153,6 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             endTime(Time.deltaTime);
         }
-        
     }
     #endregion
 
@@ -179,6 +181,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         lock (infoLock)
         {
             penguinsAlive--;
+            textpenguinsalive.text = "" + penguinsAlive;
             Debug.Log("penguins alive = " + penguinsAlive);
             if (penguinsAlive == 0)
                 ShowResults();
