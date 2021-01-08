@@ -409,8 +409,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             // EL MODO DE JUEGO HA SIDO SETEADO
         } else if (propertiesThatChanged.ContainsKey("numberOfBears"))
         {
-            if (logWriter != null)
-                logWriter.Write("Nº osos cambiado");
+            if (logWriter != null) {
+                object numBearsChanged;
+                propertiesThatChanged.TryGetValue("numberOfBears", out numBearsChanged);
+                logWriter.Write("Nº osos cambiado: " + numBearsChanged.ToString());
+            }
+
             // EL Nº DE OSOS HA SIDO SETEADO
         }
     }
