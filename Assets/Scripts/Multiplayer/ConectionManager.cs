@@ -24,7 +24,6 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public GameObject FinalRoomPanel2;
 
     public string name1;
-
     public string psw1;
 
     public class Player1
@@ -566,6 +565,11 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
        StartCoroutine(InscribeUser());
     }
 
+    public void Rec()
+    {
+       StartCoroutine(SeeUser());
+    }
+
     public IEnumerator InscribeUser()
     {
         Player1 p = new Player1();
@@ -585,6 +589,30 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         else
         {
             Debug.Log("Guardado nombre de usuario");
+        }
+    }
+
+    public IEnumerator SeeUser()
+    {
+        Player1 p = new Player1();
+        p.name = name1;
+        p.psw = psw1;
+
+        string data = JsonUtility.ToJson(p);
+
+        UnityWebRequest www = UnityWebRequest.Post("http://polo-hunt.ddns.net:8800/login",data);
+        www.SetRequestHeader("Content-Type", "application/json");
+        yield return www.SendWebRequest();
+
+        if(www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log("www.error");
+        }
+        else
+        {
+            Debug.Log("Nombre de usuario correcto");
+            Connect();
+            JoinLobby();
         }
     }
 
