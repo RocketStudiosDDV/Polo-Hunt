@@ -532,7 +532,6 @@ GameObject:
   - component: {fileID: 7280849463176182878}
   - component: {fileID: 6324997627388699652}
   - component: {fileID: 1974901241190226171}
-  - component: {fileID: 160122868143343027}
   - component: {fileID: 3631333369185828697}
   - component: {fileID: 3450490862330428166}
   - component: {fileID: 7954010011780254983}
@@ -617,28 +616,6 @@ MonoBehaviour:
   inFloor: 1
   pivotPrefab: {fileID: 6883935323586812418, guid: 818d0de7235c57146b5f70717d932b5b,
     type: 3}
---- !u!114 &160122868143343027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2243592415725833194}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce4b5f49c52308c44af0453843e85d7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpForce: 10
-  speed: 25
-  force: 50
-  mainCamera: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  movementCamera: {x: 0, y: 0}
-  target: {fileID: 0}
-  pivot: {fileID: 0}
-  penguinPos: {x: 0, y: 0, z: 0}
-  inFloor: 1
 --- !u!114 &3631333369185828697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,10 +656,10 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: sliding
   m_SynchronizeLayers:
-  - SynchronizeType: 2
+  - SynchronizeType: 1
     LayerIndex: 0
 --- !u!114 &7954010011780254983
 MonoBehaviour:

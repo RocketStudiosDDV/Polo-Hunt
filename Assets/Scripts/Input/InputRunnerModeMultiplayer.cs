@@ -106,6 +106,11 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(GetComponent<Rigidbody>().velocity);
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
         if (walking_animation == true)
         {
             Debug.Log("A andar");

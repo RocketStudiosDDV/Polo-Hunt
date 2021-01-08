@@ -65,13 +65,13 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         matchStarted = false;
         hostLeft = false;
         logWriter = FindObjectOfType<LogWriter>();
-        foreach(Text text in FindObjectsOfType<Text>())
+        foreach (Text text in FindObjectsOfType<Text>())
         {
             if (text.CompareTag("hudPenguinsAlive"))
                 textpenguinsalive = text;
         }
 
-        
+
         // Leemos ajustes de partida de las CustomProperties de la Room
         object customPropertyBears;
         if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("numberOfBears", out customPropertyBears))   // nº de osos
@@ -171,7 +171,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     [PunRPC]
     public void DestroyFish(object parameter)
     {
-        int fishId = (int) parameter;
+        int fishId = (int)parameter;
         if (fishList[fishId] != null)
         {
             Destroy(fishList[fishId]);
@@ -188,7 +188,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         lock (infoLock)
         {
             penguinsAlive--;
-            textpenguinsalive.text = "" + penguinsAlive;
+            if (textpenguinsalive != null)
+                textpenguinsalive.text = "" + penguinsAlive;
             Debug.Log("penguins alive = " + penguinsAlive);
             if (penguinsAlive == 0)
                 ShowResults();
@@ -241,7 +242,17 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             bearsConnected = numberOfBears;
         }
         matchStarted = true;
-        textpenguinsalive.text = "" + penguinsAlive;
+        if (textpenguinsalive != null)
+            textpenguinsalive.text = "" + penguinsAlive;
+    }
+
+    /// <summary>
+    /// Instancia cada uno su jugador
+    /// </summary>
+    [PunRPC]
+    public void InstantiatePlayers()
+    {
+        matchManager.InstantiatePlayers();
     }
     #endregion
 
@@ -316,6 +327,16 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     }
     #endregion
 
+    #region PRIVATE METHODS
+    /// <summary>
+    /// Wrapper para método RPC para poder invocarlo con delay
+    /// </summary>
+    private void InstantiatePlayersWrapper()
+    {
+        GetComponent<PhotonView>().RPC("InstantiatePlayers", RpcTarget.All);
+    }
+    #endregion
+
     #region PUN CALLBACKS
     /// <summary>
     /// Si un jugador entra en mitad de partida, ponerlo en modo espectador
@@ -341,7 +362,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 GetComponent<PhotonView>().RPC("ActualizeNumPenguinsConnected", RpcTarget.All);
                 object wasAlive = false;
                 otherPlayer.CustomProperties.TryGetValue("alive", out wasAlive);
-                if ((bool) wasAlive)
+                if ((bool)wasAlive)
                     GetComponent<PhotonView>().RPC("ActualizeNumPenguins", RpcTarget.All);
             } else if (gameMode == GameMode.Hunt)
             {
@@ -365,7 +386,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         object property = true;
         changedProps.TryGetValue("alive", out property);
-        if ((bool) property)
+        if ((bool)property)
         {
             for (int i = 0; i < playersList.Count; i++)
             {
@@ -384,12 +405,14 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                     allReady = false;
                 }
             }
-
-            if (allReady)
+            if (PhotonNetwork.IsMasterClient)
             {
-                matchManager.InstantiatePlayers();
+                if (allReady)
+                {
+                    Invoke("InstantiatePlayersWrapper", 3f);
+                }
             }
-        }        
+        }
     }
 
     /// <summary>
