@@ -38,6 +38,7 @@ TagManager:
   - Side2
   - Side3
   - Side4
+  - hudPenguinsAlive
   layers:
   - Default
   - TransparentFX

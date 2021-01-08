@@ -613,7 +613,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         _controls.Player.Movement.Disable();
         _controls.Player.Run.Disable();
         speed = 0;
-        _timeFall = Time.fixedTime + 42;
+        _timeFall = Time.fixedTime + 5;
         enableControlsAfterFallen = false;
         toFall = true;
     }
@@ -637,6 +637,9 @@ public class PenguinInputMultiplayer : MonoBehaviour
             int bearActorNumber = (int)objectArray[1];
             if (Vector3.Distance(positionCheck, transform.position) < maxDistanceToKill)
             {
+                ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
+                hashtable.Add("alive", false);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
                 GameObject killerBear = null;
                 foreach(BearInputMultiplayer bear in FindObjectsOfType<BearInputMultiplayer>())
                 {

@@ -21,7 +21,7 @@ public class MatchManager : MonoBehaviourPun
     public GameObject penguinPrefab;    // Prefab del pingüino modo caza
     public GameObject penguinRacePrefab;    // Prefab del pingüino modo carrera
     public GameObject bearPrefab;   // Prefab del oso
-    public MatchInfo matchInfoPrefab;   // Prefab matchInfo
+    public GameObject matchInfoPrefab;   // Prefab matchInfo
 
     // Referencias
     public MatchInfo matchInfo;

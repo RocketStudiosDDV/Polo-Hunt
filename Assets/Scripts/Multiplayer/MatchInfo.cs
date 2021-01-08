@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -64,6 +65,11 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         matchStarted = false;
         hostLeft = false;
         logWriter = FindObjectOfType<LogWriter>();
+        foreach(Text text in FindObjectsOfType<Text>())
+        {
+            if (text.CompareTag("hudPenguinsAlive"))
+                textpenguinsalive = text;
+        }
 
         
         // Leemos ajustes de partida de las CustomProperties de la Room
@@ -134,6 +140,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 }
                 hashtable.Add("isPenguin", isPenguin);
                 hashtable.Add("playerId", playerId);
+                hashtable.Add("alive", true);
                 player.SetCustomProperties(hashtable);
                 playerId++;
             }
@@ -198,7 +205,6 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         lock (infoLock)
         {
             penguinsConnected--;
-            penguinsAlive--;
             if (penguinsConnected == 0 || penguinsAlive == 0)
                 ShowResults();
         }
@@ -235,6 +241,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             bearsConnected = numberOfBears;
         }
         matchStarted = true;
+        textpenguinsalive.text = "" + penguinsAlive;
     }
     #endregion
 
@@ -316,11 +323,11 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// <param name="newPlayer"></param>
     public void OnPlayerEnteredRoom(Player newPlayer)
     {
-        SpectatorMode();
     }
 
     /// <summary>
-    /// Si un jugador sale de la partida, actualiza el nº de jugadores
+    /// Si un jugador sale de la partida, actualiza el nº de jugadores conectados
+    /// Si estaba vivo, actualiza el nº de pingüinos vivo
     /// </summary>
     /// <param name="otherPlayer"></param>
     public void OnPlayerLeftRoom(Player otherPlayer)
@@ -332,6 +339,10 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             if ((bool)wasPenguin)
             {
                 GetComponent<PhotonView>().RPC("ActualizeNumPenguinsConnected", RpcTarget.All);
+                object wasAlive = false;
+                otherPlayer.CustomProperties.TryGetValue("alive", out wasAlive);
+                if ((bool) wasAlive)
+                    GetComponent<PhotonView>().RPC("ActualizeNumPenguins", RpcTarget.All);
             } else if (gameMode == GameMode.Hunt)
             {
                 GetComponent<PhotonView>().RPC("ActualizeNumBearsConnected", RpcTarget.All);
@@ -352,28 +363,33 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// <param name="changedProps"></param>
     public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        for(int i = 0; i < playersList.Count; i++)
+        object property = true;
+        changedProps.TryGetValue("alive", out property);
+        if ((bool) property)
         {
-            Player player = playersList[i];
-            if (targetPlayer.ActorNumber == player.ActorNumber)
+            for (int i = 0; i < playersList.Count; i++)
             {
-                playersReady[i] = true;
+                Player player = playersList[i];
+                if (targetPlayer.ActorNumber == player.ActorNumber)
+                {
+                    playersReady[i] = true;
+                }
             }
-        }
 
-        bool allReady = true;
-        foreach(bool ready in playersReady)
-        {
-            if (ready == false)
+            bool allReady = true;
+            foreach (bool ready in playersReady)
             {
-                allReady = false;
+                if (ready == false)
+                {
+                    allReady = false;
+                }
             }
-        }
 
-        if (allReady)
-        {
-            matchManager.InstantiatePlayers();
-        }
+            if (allReady)
+            {
+                matchManager.InstantiatePlayers();
+            }
+        }        
     }
 
     /// <summary>
@@ -384,6 +400,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         if (logWriter != null)
             logWriter.Write("el host se fue");
+        SceneManager.LoadScene("MultiplayerTestScene");
         hostLeft = true;
         ShowResults();
     }
