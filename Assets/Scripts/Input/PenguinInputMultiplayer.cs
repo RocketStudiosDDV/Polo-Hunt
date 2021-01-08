@@ -112,6 +112,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
         //ANIMACIÓN ANDAR
         if (keysPressed > 0)
         {

@@ -123,6 +123,10 @@ public class BearInputMultiplayer : MonoBehaviour
 
     void Update()
     {
+        if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
         //ANIMACIÓN ANDAR
 
         if ((keysPressed > 0) && (isRunning == false))

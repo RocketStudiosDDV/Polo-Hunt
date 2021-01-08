@@ -223,22 +223,22 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: afk
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: walking
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: running
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: attacking
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: damaged
   m_SynchronizeLayers:
-  - SynchronizeType: 2
+  - SynchronizeType: 1
     LayerIndex: 0
 --- !u!1 &1119160352635884369
 GameObject:
