@@ -86,7 +86,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             Vector3 position = fishPositions[i].position;
             fishList[i] = Instantiate(fishPrefab, position, Quaternion.identity).GetComponent<FishMultiplayer>();
-            //fishList[i].id = i;
+            fishList[i].id = i;
         }
 
 
@@ -173,8 +173,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         int fishId = (int)parameter;
         if (fishList[fishId] != null)
-        {
-            Destroy(fishList[fishId]);
+        {            
+            Destroy(fishList[fishId].gameObject);
         }
     }
 

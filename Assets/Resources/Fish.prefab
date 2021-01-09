@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 6815334182929791196}
   - component: {fileID: 2680855349889462480}
   - component: {fileID: 7889180787403130773}
-  - component: {fileID: -8432614683035678500}
+  - component: {fileID: -1347463231917817875}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Fish
@@ -275,7 +275,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.36
   m_Center: {x: 0, y: -0.11, z: 0.22}
---- !u!114 &-8432614683035678500
+--- !u!114 &-1347463231917817875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -284,6 +284,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5013652233979746569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f79100edfde294a4fac586aa365abc98, type: 3}
+  m_Script: {fileID: 11500000, guid: 41c0842a819c46c4e9e97a1f08438af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
+  matchInfo: {fileID: 0}

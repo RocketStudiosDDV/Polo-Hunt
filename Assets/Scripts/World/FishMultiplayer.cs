@@ -20,6 +20,7 @@ public class FishMultiplayer : MonoBehaviour
         {
             if (matchInfo != null)
             {
+                Destroy(gameObject);
                 object parameter = id;
                 matchInfo.GetComponent<PhotonView>().RPC("DestroyFish", RpcTarget.All, parameter);
             }
@@ -33,6 +34,7 @@ public class FishMultiplayer : MonoBehaviour
         {
             if (matchInfo != null)
             {
+                Destroy(gameObject);
                 object parameter = id;
                 matchInfo.GetComponent<PhotonView>().RPC("DestroyFish", RpcTarget.All, parameter);
             }
