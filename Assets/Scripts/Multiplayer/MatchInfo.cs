@@ -84,11 +84,26 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
 
         // Instanciamos los pescados
+        Quaternion angleFish;
+        Vector3 sizeFish;
+
         fishList = new FishMultiplayer[fishPositions.Count];
+        if (gameMode == GameMode.Hunt)
+        {
+            angleFish = Quaternion.Euler(-90f, 0f, 0f);
+            sizeFish = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            angleFish = Quaternion.Euler(0f, 0f, 0f);
+            sizeFish = new Vector3(0.7f, 0.7f, 0.7f);
+        }
+
         for (int i = 0; i < fishPositions.Count; i++)
         {
             Vector3 position = fishPositions[i].position;
-            fishList[i] = Instantiate(fishPrefab, position, Quaternion.identity).GetComponent<FishMultiplayer>();
+            fishList[i] = Instantiate(fishPrefab, position, angleFish).GetComponent<FishMultiplayer>();
+            fishList[i].transform.localScale = sizeFish;
             fishList[i].id = i;
         }
 

@@ -345,7 +345,7 @@ public class BearInputMultiplayer : MonoBehaviour
 
         if(collision.gameObject.tag == "IceFall")
         {
-            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 5, _playerRB.position.y + 25, _playerRB.position.z - 5));
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 5, _playerRB.position.y + 8, _playerRB.position.z - 5));
         }
     }
 
