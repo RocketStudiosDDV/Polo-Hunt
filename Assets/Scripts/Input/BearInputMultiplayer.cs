@@ -128,8 +128,8 @@ public class BearInputMultiplayer : MonoBehaviour
             return;
         }
         //ANIMACIÓN ANDAR
-
-        if ((keysPressed > 0) && (isRunning == false))
+        // && (isRunning == false)
+        if ((keysPressed > 0))
         {
             walking_animation = true;
         }
