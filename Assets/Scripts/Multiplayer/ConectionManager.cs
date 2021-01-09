@@ -19,9 +19,11 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public GameObject OnlineOfflinePanel;
     public GameObject CreateRoomPanel;
     public GameObject RoomValuesPanel;
-    public GameObject PlayersValuesPanel;
     public GameObject FinalRoomPanel;
     public GameObject FinalRoomPanel2;
+
+    public Transform RoomPrefab;
+    public Transform RoomPrefabContainer;
 
     public string name1;
     public string psw1;
@@ -317,9 +319,17 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         List<string> playersList = new List<string>();
         Dictionary<int, Player> players = PhotonNetwork.CurrentRoom.Players;
+        int i = 0;
+        int high = 100;
         foreach(Player player in players.Values)
         {
             playersList.Add(player.NickName);
+            Transform entryTransform = Instantiate(RoomPrefab, RoomPrefabContainer);
+            RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+            entryRectTransform.anchoredPosition = new Vector3(0,-high * i, 0);
+            entryTransform.gameObject.SetActive(true);
+            entryTransform.Find("Text").GetComponent<Text>().text = player.NickName;
+            i++;
         }
         return playersList;
     }
@@ -420,6 +430,11 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+
+        //RoomPrefabContainer = transform.Find("RoomPrefabContainer");
+        //RoomPrefab = RoomPrefabContainer.Find("RoomPrefab");
+
+        RoomPrefab.gameObject.SetActive(false);
     }
     #endregion
 
@@ -453,6 +468,19 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
         ConnectButton();
     }
+
+	public override void OnPlayerEnteredRoom(Player newPlayer)
+	{
+		base.OnPlayerEnteredRoom(newPlayer);
+        GetPlayersList();
+	}
+
+	public override void OnPlayerLeftRoom(Player otherPlayer)
+	{
+		base.OnPlayerLeftRoom(otherPlayer);
+        GetPlayersList();
+	}
+
 
     public override void OnDisconnected(DisconnectCause cause)
     {
@@ -647,7 +675,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     public void ChooseGameModeButton()
     {     
-        CreateRoomPanel.SetActive(false); 
+        FinalRoomPanel.SetActive(false);
         RoomValuesPanel.SetActive(true);
     }
 
@@ -676,8 +704,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     }
 
     public void BackCreateRoom()
-    {     
-        CreateRoomPanel.SetActive(true); 
+    {
+        FinalRoomPanel.SetActive(true);
         RoomValuesPanel.SetActive(false);
     }
 
@@ -690,6 +718,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     public void FinalRoom(int i)
     {
+        GetPlayersList();
         if (i == 0)
             FinalRoomPanel.SetActive(true);
         else
