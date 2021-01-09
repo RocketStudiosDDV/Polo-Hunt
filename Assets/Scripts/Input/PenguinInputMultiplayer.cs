@@ -445,7 +445,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     {
         forceDirection = _playerRB.transform.forward; //direccion en la que se va a deslizar
         isRunning = true;
-        speed = 20;
+        speed = 30;
         _timeRunning = Time.fixedTime + 3;
         _controls.Player.Run.Disable();
         _controls.Player.Movement.Disable();
