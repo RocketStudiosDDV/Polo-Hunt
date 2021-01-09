@@ -24,6 +24,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     public Transform RoomPrefab;
     public Transform RoomPrefabContainer;
+    public List<Transform> RoomPrefabList;
 
     public string name1;
     public string psw1;
@@ -329,6 +330,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             entryRectTransform.anchoredPosition = new Vector3(0,-high * i, 0);
             entryTransform.gameObject.SetActive(true);
             entryTransform.Find("Text").GetComponent<Text>().text = player.NickName;
+            RoomPrefabList.Add(entryTransform);
             i++;
         }
         return playersList;
@@ -472,12 +474,14 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 	public override void OnPlayerEnteredRoom(Player newPlayer)
 	{
 		base.OnPlayerEnteredRoom(newPlayer);
+        PlayerListZero();
         GetPlayersList();
 	}
 
 	public override void OnPlayerLeftRoom(Player otherPlayer)
 	{
 		base.OnPlayerLeftRoom(otherPlayer);
+        PlayerListZero();
         GetPlayersList();
 	}
 
@@ -714,6 +718,17 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         ChooseTypePanel.SetActive(true); 
         FinalRoomPanel.SetActive(false);
         FinalRoomPanel2.SetActive(false);
+        PlayerListZero();
+    }
+
+    public void PlayerListZero()
+    {
+        foreach(Transform t in RoomPrefabList)
+        {
+            t.gameObject.SetActive(false);
+            Destroy(t.gameObject);
+        }
+        RoomPrefabList.Clear();
     }
 
     public void FinalRoom(int i)
