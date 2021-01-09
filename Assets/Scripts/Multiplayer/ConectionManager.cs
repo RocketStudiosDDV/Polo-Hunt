@@ -26,6 +26,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public Transform RoomPrefabContainer;
     public List<Transform> RoomPrefabList;
 
+    public Transform ListRoomPrefab;
+    public Transform ListRoomContainer;
+    public List<Transform> ListRoomPrefabList;
+
     public string name1;
     public string psw1;
 
@@ -437,6 +441,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         //RoomPrefab = RoomPrefabContainer.Find("RoomPrefab");
 
         RoomPrefab.gameObject.SetActive(false);
+        ListRoomPrefab.gameObject.SetActive(false);
     }
     #endregion
 
@@ -522,8 +527,19 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         if (logWriter != null)
         {
             logWriter.Write("--ROOMS UPDATE START--");
+            int i=0;
+            int high = 100;
             foreach (RoomInfo roomInfo in roomList)
             {
+                Transform entryTransform = Instantiate(ListRoomPrefab, ListRoomContainer);
+                RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+                entryRectTransform.anchoredPosition = new Vector3(0,-high * i, 0);
+                entryTransform.gameObject.SetActive(true);
+                entryTransform.Find("RoomText").GetComponent<Text>().text = roomInfo.Name;
+                entryTransform.Find("PlayersText").GetComponent<Text>().text = ""+roomInfo.PlayerCount;
+                entryTransform.Find("ModeText").GetComponent<Text>().text = roomInfo.CustomProperties["gameMode"].ToString();
+                ListRoomPrefabList.Add(entryTransform);
+                i++;
                 if (roomInfo != null)
                     logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString() + ", Started: " + roomInfo.CustomProperties["hasStarted"].ToString());
             }
@@ -618,16 +634,22 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
         UnityWebRequest www = UnityWebRequest.Post("http://polo-hunt.ddns.net:8800/", data);
         www.SetRequestHeader("Content-Type", "application/json");
-        yield return www.SendWebRequest();
 
+        yield return www.SendWebRequest();
+        
         if(www.isNetworkError || www.isHttpError)
         {
             Debug.Log("www.error");
         }
+        else if(www.downloadHandler.text == "f")
+        {
+            Debug.Log("Guardado nombre de usuario"+www.downloadHandler.text.ToString());
+        }
         else
         {
-            Debug.Log("Guardado nombre de usuario");
+            Debug.Log("Ese usuario ya existe"+www.downloadHandler.text.ToString());
         }
+        
     }
 
     public IEnumerator SeeUser()
@@ -638,7 +660,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
         string data = JsonUtility.ToJson(p);
 
-        UnityWebRequest www = UnityWebRequest.Post("http://polo-hunt.ddns.net:8800/login",data);
+        UnityWebRequest www = UnityWebRequest.Post("http://polo-hunt.ddns.net:8800/login/",data);
         www.SetRequestHeader("Content-Type", "application/json");
         yield return www.SendWebRequest();
 
@@ -667,8 +689,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     }
 
     public void JoinRoomButton()
-    {     
-        ChooseTypePanel.SetActive(false); 
+    {   
+        ChooseTypePanel.SetActive(false);
         LobbyPanel.SetActive(true);
     }
     public void CreateRoomButton()
@@ -703,7 +725,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     public void BackJoinRoom()
     {     
-        ChooseTypePanel.SetActive(true); 
+        ChooseTypePanel.SetActive(true);
+        RoomListZero();
         LobbyPanel.SetActive(false);
     }
 
@@ -728,7 +751,17 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             t.gameObject.SetActive(false);
             Destroy(t.gameObject);
         }
-        RoomPrefabList.Clear();
+        RoomPrefabList.Clear() ;
+    }
+
+    public void RoomListZero()
+    {
+        foreach(Transform t in ListRoomPrefabList)
+        {
+            t.gameObject.SetActive(false);
+            Destroy(t.gameObject);
+        }
+        ListRoomPrefabList.Clear() ;
     }
 
     public void FinalRoom(int i)
