@@ -4594,7 +4594,7 @@ Transform:
   - {fileID: 34239613}
   - {fileID: 1391690692}
   m_Father: {fileID: 1367447543}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &438337432
 GameObject:
@@ -5428,6 +5428,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &512002926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 512002927}
+  - component: {fileID: 512002928}
+  m_Layer: 0
+  m_Name: IceFall
+  m_TagString: IceFall
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &512002927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512002926}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -99.01333, y: 7.9976196, z: 4.235031}
+  m_LocalScale: {x: 5.82, y: 1, z: 5.28}
+  m_Children: []
+  m_Father: {fileID: 1367447543}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &512002928
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512002926}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &516274961
 GameObject:
   m_ObjectHideFlags: 0
@@ -14336,6 +14381,7 @@ Transform:
   - {fileID: 2012347650}
   - {fileID: 1433409975}
   - {fileID: 1419711442}
+  - {fileID: 512002927}
   - {fileID: 434357402}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -15263,7 +15309,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433409974}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 38.89869, y: -17.17559, z: -83.28691}
+  m_LocalPosition: {x: 38.89869, y: -12.6, z: -83.28691}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 728563293}
