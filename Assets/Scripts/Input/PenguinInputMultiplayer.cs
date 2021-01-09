@@ -234,26 +234,26 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
                 if (playerDirection.z > 0)
                 {
-                    _playerRB.AddForce(lookingAt * -2 * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * 1.5f * speed, ForceMode.Impulse);
                     lastPressed = 0;
                     _timeTillPressed = Time.deltaTime + 2;
 
                 }
                 else if (playerDirection.z < 0)
                 {
-                    _playerRB.AddForce(lookingAt * -2 * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * 1.5f * speed, ForceMode.Impulse);
                     lastPressed = 1;
                     _timeTillPressed = Time.deltaTime + 2;
                 }
                 else if(playerDirection.x > 0)
                 {
-                    _playerRB.AddForce(lookingAt * -2 * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * 1.5f * speed, ForceMode.Impulse);
                     lastPressed = 2;
                     _timeTillPressed = Time.deltaTime + 2;
                 }
                 else if (playerDirection.x < 0)
                 {
-                    _playerRB.AddForce(lookingAt * -2 * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * 1.5f * speed, ForceMode.Impulse);
                     lastPressed = 3;
                     _timeTillPressed = Time.deltaTime + 2;
                 }
