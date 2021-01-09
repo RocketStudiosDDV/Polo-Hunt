@@ -56,12 +56,6 @@ public class MatchManager : MonoBehaviourPun
     #endregion
 
     #region PUBLIC METHODS
-    //MIRAR SI SE PUEDE SIONCRONIZAR SOLO CON LOS CAMBIOS PHOTOVIEW
-    public void FallPlatform()
-    {
-
-    }
-
     /// <summary>
     /// Instancia cada cliente su personaje dependiendo de si es pingüino u oso
     /// </summary>

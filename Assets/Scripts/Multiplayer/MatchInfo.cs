@@ -42,6 +42,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public List<Transform> fishPositions;   // Posiciones de los pescados (configurar en el inspector)
     private FishMultiplayer[] fishList; // Lista de pescados
 
+    // Información de plataformas de hielo
+    private List<IcePlatform> platformsList;    // Lista de plataformas de hielo
+
     // Referencias
     private MatchManager matchManager;
 
@@ -87,6 +90,13 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             Vector3 position = fishPositions[i].position;
             fishList[i] = Instantiate(fishPrefab, position, Quaternion.identity).GetComponent<FishMultiplayer>();
             fishList[i].id = i;
+        }
+
+        // Obtenemos las plataformas de hielo
+        platformsList = new List<IcePlatform>();
+        foreach(IcePlatform platform in FindObjectsOfType<IcePlatform>())
+        {
+            platformsList.Add(platform);
         }
 
 
@@ -175,6 +185,30 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         if (fishList[fishId] != null)
         {            
             Destroy(fishList[fishId].gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Destruye la plataforma con el identificador platformId
+    /// </summary>
+    /// <param name="parameter"></param>
+    [PunRPC]
+    public void DestroyPlatform(object parameter)
+    {
+        Debug.Log("destruye plat" + (int)parameter);
+        int platformId = (int)parameter;
+        IcePlatform platformToDestroy = null;
+        foreach(IcePlatform platform in platformsList)
+        {
+            if (platform.platformId == platformId)
+            {
+                platformToDestroy = platform;
+            }
+        }
+        if (platformToDestroy != null)
+        {
+            platformsList.Remove(platformToDestroy);
+            Destroy(platformToDestroy.gameObject);
         }
     }
 
