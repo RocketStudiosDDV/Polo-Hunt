@@ -160,6 +160,7 @@ MonoBehaviour:
   movementCamera: {x: 0, y: 0}
   keysPressed: 0
   Stamina: {fileID: 0}
+  keyboardRunning: 0
   visionMaterial1: {fileID: 2100000, guid: 4d4ee97eb809c3c4a9d725313c1cd7e9, type: 2}
   visionMaterial2: {fileID: 2100000, guid: 2a0e32bd2b8ec6a4a9bf7f687e0dcc46, type: 2}
   visionMaterial3: {fileID: 2100000, guid: 30c5e24b3f05cd943bb692a3d1203842, type: 2}

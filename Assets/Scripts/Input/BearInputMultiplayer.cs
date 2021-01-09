@@ -45,6 +45,7 @@ public class BearInputMultiplayer : MonoBehaviour
 
     public int keysPressed = 0;
 
+
     //Gestiona daño por caida al agua y cepo del oso
     private double _timeDamage;
     private bool damaged = false;
@@ -68,6 +69,7 @@ public class BearInputMultiplayer : MonoBehaviour
     private double _timePowerUp;
 
     private bool outOfMap = false;
+    public bool keyboardRunning = false;
     //Materiales que controlan la vuision berserker
 
     //public Material visionMaterial;
@@ -182,6 +184,16 @@ public class BearInputMultiplayer : MonoBehaviour
 
         if (bear_animator != null)
             bear_animator.SetBool("damaged", damage_animation);
+
+        //if (_controls.Player.Run.canceled)
+        //{
+        if ((Keyboard.current.shiftKey.isPressed == false) && (keyboardRunning == true))// || (Gamepad.current.rightTrigger.isPressed == false) || (Gamepad.current.leftTrigger.isPressed == false))
+        {
+            isRunning = false;
+            keyboardRunning = false;
+        }
+        
+        //}
     }
 
     private void FixedUpdate()
@@ -428,7 +440,11 @@ public class BearInputMultiplayer : MonoBehaviour
             firstTime = false;
         }
 
-        if (context.control.IsPressed() == true)
+        if (Keyboard.current.shiftKey.isPressed == true)
+        {
+            keyboardRunning = true;
+        }
+        if ((context.control.IsPressed() == true)) //(_controls.Player.Run != null)//((context.control.IsPressed(0) == true) || (context.control.IsPressed(1) == true)) 
         {
             Debug.Log("A correr");
             isRunning = true;
@@ -442,6 +458,26 @@ public class BearInputMultiplayer : MonoBehaviour
             Debug.Log("Dejo de correr");
         }
 
+        //if (context.ReadValueAsButton() == true)
+        //{
+           /* Debug.Log("A correr");
+            isRunning = true;
+            speed = 10;
+            _timeRunning = Time.fixedTime + 10;
+            finalStamina = Time.fixedTime;
+        //}
+       /* else
+        {
+            isRunning = false;
+            Debug.Log("Dejo de correr");
+        }*/
+        
+      /*  if (context.ReadValueAsButton())
+        {
+            isRunning = false;
+            Debug.Log("Dejo de correr");
+        }*/
+        
 
         //Stamina = 10/Time.deltaTime/1000;
         //Stamina += /*10 */ Time.deltaTime; /// 1000;
