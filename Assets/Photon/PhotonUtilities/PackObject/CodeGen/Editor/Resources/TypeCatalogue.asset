@@ -11,13 +11,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba72233eb7c169743b9be02337eb06d6, type: 3}
   m_Name: TypeCatalogue
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   catalogue:
     keys:
     - emotitron.TestPackObject
     vals:
     - hashcode: 1161234830446200393
       filepath: Assets\Photon\PhotonUtilities\PackObject\_GeneratedPackExtensions\Pack_TestPackObject.cs
-      codegenFileWriteTime: 637458182761613938
+      codegenFileWriteTime: 637458214374582495
       localFieldCount: 2
       totalFieldCount: 2

@@ -83,6 +83,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     //CONTROL TECLADO
     public int keysPressed = 0; //control del movimiento por teclado para que no se acaben las animacione spor soltar una tecla al estar pulsando dos
 
+    public double _timeTillPressed;
     #endregion
 
     #region UNITY CALLBACKS
@@ -233,42 +234,91 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
                 if (playerDirection.z > 0)
                 {
-                    _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * -2 * speed, ForceMode.Impulse);
                     lastPressed = 0;
+                    _timeTillPressed = Time.deltaTime + 2;
 
                 }
                 else if (playerDirection.z < 0)
                 {
-                    _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * -2 * speed, ForceMode.Impulse);
                     lastPressed = 1;
+                    _timeTillPressed = Time.deltaTime + 2;
                 }
                 else if(playerDirection.x > 0)
                 {
-                    _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * -2 * speed, ForceMode.Impulse);
                     lastPressed = 2;
+                    _timeTillPressed = Time.deltaTime + 2;
                 }
                 else if (playerDirection.x < 0)
                 {
-                    _playerRB.AddForce(lookingAt * -indexBig * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * -2 * speed, ForceMode.Impulse);
                     lastPressed = 3;
+                    _timeTillPressed = Time.deltaTime + 2;
                 }
                 else
                 {
                     if(lastPressed == 0)
-                    {
-                        _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
+                    {                       
+                        if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
+                        {
+                            _playerRB.AddForce(lookingAt * -0.2f * speed, ForceMode.Impulse);
+                        }
+                        else if (_timeTillPressed < Time.fixedTime + 1)
+                        {
+                            _playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
+                        }
+                        else
+                        {
+                            _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
+                        }
                     }
                     else if (lastPressed == 1)
-                    {
-                        _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
+                    {                       
+                        if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
+                        {
+                            _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
+                        }
+                        else if (_timeTillPressed < Time.fixedTime + 1)
+                        {
+                            _playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
+                        }
+                        else
+                        {
+                            _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
+                        }
                     }
                     else if (lastPressed == 2)
                     {
-                        _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
+                        if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
+                        {
+                            _playerRB.AddForce(lookingAt * -0.2f * speed, ForceMode.Impulse);
+                        }
+                        else if (_timeTillPressed < Time.fixedTime + 1)
+                        {
+                            _playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
+                        }
+                        else
+                        {
+                            _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
+
+                        }                        
                     }
                     else if (lastPressed == 3)
                     {
-                        _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
+                        if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
+                        {
+                            _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
+                        }
+                        else if (_timeTillPressed < Time.fixedTime + 1)
+                        {
+                            _playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
+                        }
+                        else
+                        {
+                            _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
+                        }                        
                     }
                 }
 
@@ -329,6 +379,11 @@ public class PenguinInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Side4")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 25, _playerRB.position.z));
+        }
+
+        if (collision.gameObject.tag == "IceFall")
+        {
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 5, _playerRB.position.y + 25, _playerRB.position.z - 5));
         }
     }
 
