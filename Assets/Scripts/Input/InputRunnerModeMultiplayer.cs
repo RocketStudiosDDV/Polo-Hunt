@@ -82,6 +82,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
     // ONLINE
     public GameObject pivotPrefab;
+    public List<string> clasification;
     #endregion
 
     #region UNITY CALLBACKS
@@ -89,6 +90,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     private void Awake()
     {
         _controls = new PlayerControls();
+        clasification = new List<string>();
 
         if (GetComponent<PhotonView>().IsMine || !PhotonNetwork.IsConnected)  // Si es nuestro pingüino, seguirlo con la cámara
         {
@@ -134,7 +136,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         }
         if (walking_animation == true)
         {
-            Debug.Log("A andar");
+            //Debug.Log("A andar");
             _playerRB.AddForce(Vector3.forward * 2.25f, ForceMode.Acceleration);
         }
 
@@ -304,6 +306,8 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             _timeTillStop = Time.fixedTime + numRand;
             timeRanking = Time.fixedTime + numRand + 2;
             toStop = true;
+            object parameters = PhotonNetwork.LocalPlayer.NickName;
+            matchInfo.GetComponent<PhotonView>().RPC("GoalReached", RpcTarget.MasterClient, parameters);
             Debug.Log("Oleee");
         }
 
@@ -492,10 +496,13 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     {
         //si todos han llegado
 
-        if(Time.fixedTime > timeRanking)
+        if (Time.fixedTime > timeRanking)
         {
             finalText.SetActive(false);
             tableRanking.SetActive(true);
+            HighscoreTable table = FindObjectOfType<HighscoreTable>();
+            table.SetPlayerNames(matchInfo.clasification);
+            table.ActualizeClasification();
         }
         
     }

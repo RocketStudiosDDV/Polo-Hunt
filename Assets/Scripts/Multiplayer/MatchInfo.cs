@@ -33,9 +33,12 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private bool matchStarted;  // Se empezó la partida?
     private bool hostLeft;  // Se ha marchado el host?
 
+    public List<string> clasification; // clasificación (modo race)
+
     // Información de sincronización
     public List<bool> playersReady; // lista de jugadores listos
     private object infoLock = new object(); // lock para actualizaciones que necesiten ser thread-safe
+    private object clasificationLock = new object();    // lock para decidir la clasificación en modo race
 
     // Información de creación y sincronización de pescados
     public GameObject fishPrefab;   // Prefab a instanciar
@@ -61,6 +64,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         // Inicializamos variables necesarias
         playersList = new List<Player>();
         playersReady = new List<bool>();
+        clasification = new List<string>();
         matchManager = FindObjectOfType<MatchManager>();
         fishPositions = matchManager.fishPositions;
         matchManager.matchInfo = this;
@@ -224,6 +228,37 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             platformsList.Remove(platformToDestroy);
             Destroy(platformToDestroy.gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Avisa al Master de que ha llegado a la meta
+    /// </summary>
+    [PunRPC]
+    public void GoalReached(object parameters)
+    {
+        string name = (string)parameters;
+        clasification.Add(name);
+        GetComponent<PhotonView>().RPC("UpdateClasification", RpcTarget.All, (object)clasification.ToArray());
+    }
+
+    /// <summary>
+    /// Avisa a todos los jugadores de que actualicen su pantalla de resultados
+    /// </summary>
+    /// <param name="parameters"></param>
+    [PunRPC]
+    public void UpdateClasification(object parameters)
+    {
+        clasification.Clear();
+        foreach (string str in (string[])parameters)
+        {
+            clasification.Add(str);
+        }
+        HighscoreTable table = FindObjectOfType<HighscoreTable>();
+        if (table != null)
+        {
+            table.SetPlayerNames(clasification);
+            table.ActualizeClasification();
         }
     }
 
