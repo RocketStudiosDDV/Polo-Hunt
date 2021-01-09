@@ -423,6 +423,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         if (logWriter != null)
             logWriter.Write("el host se fue");
+        PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene("MultiplayerTestScene");
         hostLeft = true;
         ShowResults();

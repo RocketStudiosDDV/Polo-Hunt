@@ -558,6 +558,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
     }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        base.OnMasterClientSwitched(newMasterClient);
+        LeaveRoom();
+    }
     #endregion
 
     public void Insc()
