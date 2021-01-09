@@ -11,6 +11,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     //CONTROL DEL PLAYER
     //[SerializeField] float jumpForce = 10;
     [SerializeField] float speed = 25;
+    //[SerializeField] Canvas finalRanking;
     //[SerializeField] float force = 50;
     
 
@@ -71,6 +72,12 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     private bool onRamp = false;
     //private double _timeStopped = 0;
 
+    private bool finished = false;
+    private double timeRanking;
+    public Canvas canvasHUD;
+    public GameObject tableRanking;
+    public GameObject finalText;
+
     private MatchInfo matchInfo;
 
     // ONLINE
@@ -88,15 +95,29 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             mainCamera = FindObjectOfType<Camera>();
             pivot = Instantiate(pivotPrefab).transform;
             target = pivot.GetChild(0).transform;
+            
         }
+
+        //canvasHUD = FindObjectOfType<Canvas>();
+        
+        //finalRanking.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
     void Start()
     {
+
+        //finalRanking.gameObject.SetActive(false);
+        //finalRanking = FindObjectOfType<Canvas>();//.tag("Ranking");
+        //finalRanking.enabled = true;
+        canvasHUD = FindObjectOfType<Canvas>();
+        tableRanking = canvasHUD.transform.Find("HighscoreTable").gameObject as GameObject;
+        finalText = canvasHUD.transform.Find("FinalText").gameObject as GameObject;
+
         _playerRB = GetComponent<Rigidbody>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
         penguin_animator = GetComponent<Animator>();
+        
 
         //correr y moverse deben estar unabled antes del inicio
         _controls.Player.Run.Disable();
@@ -173,8 +194,17 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("slide flase");
+                    Debug.Log("slide false");
                     sliding_animation = false;
+                    finished = true;
+
+                    finalText.SetActive(true);
+                    ShowRanking();
+
+                    if (Time.fixedTime > timeRanking)
+                    {
+                        //PASAR A LA SALA AGAIN
+                    }
                 }
             }
         }
@@ -272,6 +302,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             int numRand = Random.Range(2, 6);
             Debug.Log(numRand);
             _timeTillStop = Time.fixedTime + numRand;
+            timeRanking = Time.fixedTime + numRand + 2;
             toStop = true;
             Debug.Log("Oleee");
         }
@@ -290,6 +321,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Start") //Si choca con el lado dch de un pingu
         {
+            //finalRanking.gameObject.SetActive(true);
+            //finalRanking.enabled = true;
+            //ShowRanking();
             walking_animation = false;
             speed = 25;
             sliding_animation = true;
@@ -454,6 +488,17 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
     #region ACTIONS TIME
 
+    public void ShowRanking()
+    {
+        //si todos han llegado
+
+        if(Time.fixedTime > timeRanking)
+        {
+            finalText.SetActive(false);
+            tableRanking.SetActive(true);
+        }
+        
+    }
 
     //Tiempo que dura con la velocidad por el pez
     public void FishRun(double deltaTime)

@@ -39,6 +39,7 @@ TagManager:
   - Side3
   - Side4
   - hudPenguinsAlive
+  - Ranking
   layers:
   - Default
   - TransparentFX
