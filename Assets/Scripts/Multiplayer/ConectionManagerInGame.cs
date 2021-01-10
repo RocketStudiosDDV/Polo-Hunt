@@ -160,6 +160,19 @@ public class ConectionManagerInGame : MonoBehaviourPunCallbacks, IConnectionCall
         ConnectPanel.SetActive(false);
         */
     }
+
+    /// <summary>
+    /// Si se va el host, termina la partida
+    /// </summary>
+    /// <param name="newMasterClient"></param>
+    public void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if (logWriter != null)
+            logWriter.Write("el host se fue");
+        // TODO - mostrar aviso de que el host se fue y que se va a salir de la partida en timeToLeave segundos
+        float timeToLeave = 3f;
+        Invoke(nameof(LeaveRoom), timeToLeave);
+    }
     #endregion
 
     public void CompruebaUser()

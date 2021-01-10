@@ -31,7 +31,6 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public List<Player> playersList;    // Lista de jugadores
     private bool matchFinished;     // Se acabo la partida?
     private bool matchStarted;  // Se empezó la partida?
-    private bool hostLeft;  // Se ha marchado el host?
 
     public List<string> clasification; // clasificación (modo race)
 
@@ -47,6 +46,10 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     // Información de plataformas de hielo
     private List<IcePlatform> platformsList;    // Lista de plataformas de hielo
+
+    // Referencias a HUD
+    private GameObject hudTime;
+    private Text hudTimeTxt;
 
     // Referencias
     private MatchManager matchManager;
@@ -70,12 +73,16 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         matchManager.matchInfo = this;
         matchFinished = false;
         matchStarted = false;
-        hostLeft = false;
         logWriter = FindObjectOfType<LogWriter>();
-        foreach (Text text in FindObjectsOfType<Text>())
+        foreach (Text text in Resources.FindObjectsOfTypeAll<Text>())
         {
             if (text.CompareTag("hudPenguinsAlive"))
                 textpenguinsalive = text;
+            if (text.CompareTag("hudTimeTxt"))
+            {
+                hudTimeTxt = text;
+                hudTime = hudTimeTxt.transform.parent.gameObject;
+            }                            
         }
 
 
@@ -325,9 +332,6 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             penguinsConnected = numberOfPenguins;
             bearsConnected = numberOfBears;
         }
-        matchStarted = true;
-        if (textpenguinsalive != null)
-            textpenguinsalive.text = "" + penguinsAlive;
     }
 
     /// <summary>
@@ -336,6 +340,10 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     [PunRPC]
     public void InstantiatePlayers()
     {
+        matchStarted = true;
+        hudTime.SetActive(true);
+        if (textpenguinsalive != null)
+            textpenguinsalive.text = "" + penguinsAlive;
         matchManager.InstantiatePlayers();
     }
     #endregion
@@ -369,31 +377,42 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     //debe bloquear el input a todos los jugadores y enseñarles la pantalla de resultados, inferida de penguinsAlive y bearsConnected
     public void ShowResults()
     {
-        matchFinished = true;
-        //Paula / tomas
-        if (logWriter != null)
-            logWriter.Write("SE ACABO LA PARTIDA");
-        if (bearsConnected == 0 && gameMode == GameMode.Hunt)
+        if (matchFinished == false)
         {
+            hudTime.SetActive(false);
+            matchFinished = true;
+
             if (logWriter != null)
-                logWriter.Write("se fueron todos los osos");
-        } else if (penguinsConnected == 0)
-        {
-            if (logWriter != null)
-                logWriter.Write("se fueron todos los pinguinos");
-        } else if (penguinsAlive == 0)
-        {
-            if (logWriter != null)
-                logWriter.Write("todos los pinguinos han sido cazados");
-        } else if (hostLeft == true)
-        {
-            if (logWriter != null)
-                logWriter.Write("el host se fue");
-        } else
-        {
-            if (logWriter != null)
-                logWriter.Write("se acabo el tiempo");
-        }
+                logWriter.Write("SE ACABO LA PARTIDA");
+            if (bearsConnected == 0 && gameMode == GameMode.Hunt)
+            {
+                if (logWriter != null)
+                    logWriter.Write("se fueron todos los osos");
+                // TODO - decir victoria a los pingüinos vivos y mostrar la pantalla de fin de partida
+                // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
+            }
+            else if (penguinsConnected == 0)
+            {
+                if (logWriter != null)
+                    logWriter.Write("se fueron todos los pinguinos");
+                // TODO - decir victoria a los osos y mostrar la pantalla de fin de partida
+                // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
+            }
+            else if (penguinsAlive == 0)
+            {
+                if (logWriter != null)
+                    logWriter.Write("todos los pinguinos han sido cazados");
+                // TODO - decir victoria a los osos y mostrar pantalla de fin de partida
+                // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
+            }
+            else
+            {
+                if (logWriter != null)
+                    logWriter.Write("se acabo el tiempo");
+                // TODO - decir victoria a los pingüinos vivos y mostrar pantalla de fin de partida
+                // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
+            }
+        }       
     }
 
     /// <summary>
@@ -403,7 +422,14 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// <param name="deltaTime"></param>
     public void endTime(double deltaTime)
     {
-        matchTime += deltaTime;
+        if (matchStarted)
+        {
+            matchTime += deltaTime;
+        }
+        if (gameMode == GameMode.Hunt)
+        {
+            hudTimeTxt.text = ((int)(matchLength - matchTime) / 60).ToString() + ": " + ((int)(matchLength - matchTime) % 60).ToString();
+        }
         if (matchTime > matchLength)
         {
             ShowResults();
@@ -497,20 +523,6 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 }
             }
         }
-    }
-
-    /// <summary>
-    /// Si se va el host, termina la partida
-    /// </summary>
-    /// <param name="newMasterClient"></param>
-    public void OnMasterClientSwitched(Player newMasterClient)
-    {
-        if (logWriter != null)
-            logWriter.Write("el host se fue");
-        PhotonNetwork.LeaveRoom();
-        SceneManager.LoadScene("MultiplayerTestScene");
-        hostLeft = true;
-        ShowResults();
     }
     #endregion
 
