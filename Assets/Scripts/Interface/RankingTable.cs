@@ -74,9 +74,8 @@ public class RankingTable : MonoBehaviour
 
         //gameObject.GetComponent<InputRunnerModeMultiplayer>().
         for (int i = 0; i < penguins.Length; i++)
-        {
-            
-            if (myPenguin.transform.position == penguins[i].gameObject.transform.position)
+        {          
+            if (myPenguin.Equals( penguins[i]))
             {
                 Debug.Log("SOY YO!!!!!");
                 pos = (i + 1).ToString();
