@@ -44,5 +44,19 @@ public class FishMultiplayer : MonoBehaviour
             }
         }
 
+        if (collision.gameObject.tag == "RunnerCollider")
+        {
+            if (matchInfo != null)
+            {
+                Destroy(gameObject);
+                object parameter = id;
+                matchInfo.GetComponent<PhotonView>().RPC("DestroyFish", RpcTarget.All, parameter);
+            }
+            if (!PhotonNetwork.IsConnected)
+            {
+                Destroy(gameObject); //Se destruye dos segs después de la colisión
+            }
+        }
+
     }
 }
