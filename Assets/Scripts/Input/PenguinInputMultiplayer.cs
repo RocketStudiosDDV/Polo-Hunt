@@ -155,7 +155,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
         if (penguin_animator != null)
         {
-            if (isRunning == true)
+            if ((isRunning == true) || (InIceDashPlat== true))
             {
                 Debug.Log("running true true true");
                 penguin_animator.SetBool("sliding", true);
@@ -413,6 +413,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
             speed = 5;
             InIceDashPlat = false;
+
         }
 
         if (collision.gameObject.tag == "Penguin") //Si choca con un pinguino
