@@ -59,7 +59,7 @@ public class RankingTable : MonoBehaviour
         {
             for (int i = 0; i < penguins.Length-1; i++)
             {
-                for (int j = 0; j < penguins.Length-1-i; j++)
+                for (int j = 0; j < penguins.Length-1; j++)
                 {
                     if (penguins[j].gameObject.transform.position.z < penguins[j + 1].gameObject.transform.position.z)
                     {
