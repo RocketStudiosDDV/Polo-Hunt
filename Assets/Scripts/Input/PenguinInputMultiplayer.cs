@@ -75,7 +75,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     private MatchInfo matchInfo;
 
     // ONLINE
-    private float maxDistanceToKill = 1f; // Distancia máxima entre el pingüino de los dos clientes para considerar que hubo kill
+    private float maxDistanceToKill = 4f; // Distancia máxima entre el pingüino de los dos clientes para considerar que hubo kill
     private float maxPingToKill = 1000; // máximo ping para hacer la comprobación de distancia
     public int ownerActorNumber;
     private bool isDead = false;
