@@ -226,7 +226,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         if (isRunning == false)
         {
             int lastPressed = 1;
-            float indexBig = 0.3f;
+            //float indexBig = 0.3f;
 
             if (InIceDashPlat == true) //Movimientoi en el dash de la plat
             {
@@ -234,51 +234,35 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
                 if (playerDirection.z > 0)
                 {
-                    _playerRB.AddForce(lookingAt * /*1.2f */ speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * 0.7f * speed, ForceMode.Impulse);
                     lastPressed = 0;
-                    _timeTillPressed = Time.deltaTime + 2;
+                    //_timeTillPressed = Time.deltaTime + 2;
 
                 }
                 else if (playerDirection.z < 0)
                 {
-                    _playerRB.AddForce(lookingAt /* 1.2f */* speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * 0.7f * speed, ForceMode.Impulse);
                     lastPressed = 1;
-                    _timeTillPressed = Time.deltaTime + 2;
+                    //_timeTillPressed = Time.deltaTime + 2;
                 }
                 else if(playerDirection.x > 0)
                 {
-                    _playerRB.AddForce(lookingAt * /*1.2f */ speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * 0.7f * speed, ForceMode.Impulse);
                     lastPressed = 2;
-                    _timeTillPressed = Time.deltaTime + 2;
+                    //_timeTillPressed = Time.deltaTime + 2;
                 }
                 else if (playerDirection.x < 0)
                 {
-                    _playerRB.AddForce(lookingAt * /*1.2f */ speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * 0.7f * speed, ForceMode.Impulse);
                     lastPressed = 3;
-                    _timeTillPressed = Time.deltaTime + 2;
+                    //_timeTillPressed = Time.deltaTime + 2;
                 }
                 else
                 {
                     if(lastPressed == 0)
-                    {                       
-                        /*if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
-                        {
+                    {                                               
                             _playerRB.AddForce(lookingAt * -0.2f * speed, ForceMode.Impulse);
-                        }
-                        else if ((_timeTillPressed < Time.fixedTime + 1) && (_timeTillPressed > Time.fixedTime))
-                        {
-                            //_playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
-                        }
-                        else
-                        {
-                            _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
-                        }*/
-
-                        if ((_timeTillPressed > Time.fixedTime))
-                        {
-                            _playerRB.AddForce(lookingAt * -0.4f * speed, ForceMode.Impulse);
-                        }
-                    }
+                     }
                     else if (lastPressed == 1)
                     {
                         /*if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
@@ -293,10 +277,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
                         {
                             _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
                         }*/
-                        if ((_timeTillPressed > Time.fixedTime))
-                        {
-                            _playerRB.AddForce(lookingAt * 0.4f * speed, ForceMode.Impulse);
-                        }
+                        _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
                     }
                     else if (lastPressed == 2)
                     {
@@ -314,10 +295,8 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
                         } */
 
-                        if ((_timeTillPressed > Time.fixedTime))
-                        {
-                            _playerRB.AddForce(lookingAt * -0.4f * speed, ForceMode.Impulse);
-                        }
+                        _playerRB.AddForce(lookingAt * -0.2f * speed, ForceMode.Impulse);
+                        
                     }
                     else if (lastPressed == 3)
                     {
@@ -334,10 +313,8 @@ public class PenguinInputMultiplayer : MonoBehaviour
                             _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
                         }          */
 
-                        if ((_timeTillPressed > Time.fixedTime))
-                        {
-                            _playerRB.AddForce(lookingAt * 0.4f * speed, ForceMode.Impulse);
-                        }
+                        _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
+                        
                     }
                 }
 

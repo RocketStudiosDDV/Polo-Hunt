@@ -124,7 +124,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         else
         {
             angleFish = Quaternion.Euler(0f, 0f, 0f);
-            sizeFish = new Vector3(0.7f, 0.7f, 0.7f);
+            sizeFish = new Vector3(0.5f, 0.5f, 0.5f);
         }
 
         for (int i = 0; i < fishPositions.Count; i++)

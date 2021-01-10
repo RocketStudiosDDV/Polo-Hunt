@@ -41,6 +41,7 @@ TagManager:
   - hudPenguinsAlive
   - Ranking
   - IceFall
+  - Obstacle
   layers:
   - Default
   - TransparentFX

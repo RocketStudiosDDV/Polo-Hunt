@@ -51,8 +51,8 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     private double _timeStart;
 
     //empujon
-    private double _timeAttacking;
-    private bool isAttacking = false;
+    //private double _timeAttacking;
+    //private bool isAttacking = false;
 
     private bool toStop = false;
     private double _timeTillStop;
@@ -68,6 +68,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
     private bool obstacle = false;
     private double _timeSlow = 0;
+
+    private bool onObstacleMini = false;
+    private double _timeObstacle;
 
     private bool onRamp = false;
     //private double _timeStopped = 0;
@@ -252,28 +255,14 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             }
         }
 
-        //comrpobar si esta atascado
-        /*if (_playerRB.velocity.magnitude < 0.1)
+        if (onObstacleMini == true)
         {
-            Debug.Log("me atasque");
-            //stopped = true;
-            _timeStopped++;
-            Debug.Log("tiempo atascado " + _timeStopped);
-
-            if (_timeStopped > 10)
+            if (Time.fixedTime > _timeObstacle)
             {
-                _playerRB.MovePosition(new Vector3(penguinPos.x + 4, penguinPos.y + 10, penguinPos.z));
-                _timeStopped = 0;
+                speed = 25;
+                onObstacleMini = false;
             }
         }
-        else
-        {
-            Debug.Log("no mas tiempo atacaado");
-            _timeStopped = 0;
-        }
-
-        Debug.Log("velocidad " + _playerRB.velocity);
-              */
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -354,12 +343,12 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Fish") //Si choca con un pescao
         {
             fishEaten = true;
-            speed = 50;
-            _timeFish = Time.fixedTime + 5;
+            speed = 30;
+            _timeFish = Time.fixedTime + 3;
             Debug.Log("COLAS");
         }
 
-        if (collision.gameObject.tag == "RestZone") //Si choca con un pescao
+        if (collision.gameObject.tag == "RestZone") //Si llega al descanso
         {
             Debug.Log("DESCANSO");
                       
@@ -399,7 +388,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             Debug.Log("vaya montaña loko");
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 15, _playerRB.position.y + 10, _playerRB.position.z - 5));
             obstacle = true;
-            _timeSlow = 2;
+            _timeSlow = Time.fixedTime + 2;
         }
 
         if (collision.gameObject.tag == "Cave")
@@ -407,7 +396,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             Debug.Log("vaya montaña loko");
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 3, _playerRB.position.z - 10));
             obstacle = true;
-            _timeSlow = 2;
+            _timeSlow = Time.fixedTime + 2;
         }
 
         if (collision.gameObject.tag == "Ramp")
@@ -420,6 +409,14 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         {
             onRamp = true;
             speed = 35;
+        }
+
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            onObstacleMini = true;
+            _timeObstacle = Time.fixedTime + 3;
+            speed = 15;
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 3, _playerRB.position.y, _playerRB.position.z ));
         }
     }
 
@@ -465,8 +462,8 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         Debug.Log("BOFETÓN");
         //tiene que impulsar a otro pingu
         //CAMBIAR ANIMACIÓN
-        isAttacking = true;
-        _timeAttacking = Time.fixedTime; //tiempo que estará activo el ataque
+        //isAttacking = true;
+        //_timeAttacking = Time.fixedTime; //tiempo que estará activo el ataque
     }
 
     public void Jump(InputAction.CallbackContext context) //De momento va a ser saltar
@@ -512,13 +509,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     {
         if (fishEaten == true)
         {
-            Debug.Log("a correr");
-            Debug.Log("delta time " + deltaTime);
-            Debug.Log("tiempo pasado " + _timeFish);
-
             if (deltaTime > _timeFish)
             {
-                speed = 3;
+                speed = 25;
                 Debug.Log("delta time " + Time.deltaTime);
                 Debug.Log("tiempo pasado " + _timeFish);
                 fishEaten = false;
@@ -585,7 +578,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         moveY += movementCamera.y * m_LookSense;
 
         //limitar movimiento y entre -50 y 70
-        moveY = Mathf.Clamp(moveY, -20.0f, 20.0f);
+        moveY = Mathf.Clamp(moveY, -30.0f, 00.0f);
 
         //pivot sigue a player
         Vector3 follow = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 3f);
