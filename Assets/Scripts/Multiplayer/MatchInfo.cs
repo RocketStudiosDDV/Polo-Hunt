@@ -57,6 +57,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private GameObject hudReturn;
     private Text hudReturnTxt;
     private Text hudReturnCountdownTxt;
+    private GameObject hudAlert;
+    private Text hudAlertTxt;
     private int timeToReturn;
 
     // Referencias
@@ -90,25 +92,30 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 hudPenguinsTxt = text;
                 hudPenguins = hudPenguinsTxt.transform.parent.gameObject;
             }
-            if (text.CompareTag("hudTimeTxt"))
+            else if (text.CompareTag("hudTimeTxt"))
             {
                 hudTimeTxt = text;
                 hudTime = hudTimeTxt.transform.parent.gameObject;
-            }     
-            if (text.CompareTag("hudResultsTxt"))
+            }
+            else if (text.CompareTag("hudResultsTxt"))
             {
                 hudResultsTxt = text;
                 hudResults = hudResultsTxt.transform.parent.gameObject;
             }
-            if (text.CompareTag("hudResultsInfoTxt"))
+            else if (text.CompareTag("hudResultsInfoTxt"))
             {
                 hudResultsInfoTxt = text;
             }
-            if (text.CompareTag("hudReturnTxt"))
+            else if (text.CompareTag("hudReturnTxt"))
             {
                 hudReturnTxt = text;
                 hudReturn = hudReturnTxt.transform.parent.gameObject;
                 hudReturnCountdownTxt = hudReturnTxt.GetComponentsInChildren<Text>()[1];
+            }
+            else if(text.CompareTag("hudAlertTxt"))
+            {
+                hudAlertTxt = text;
+                hudAlert = hudAlertTxt.transform.parent.gameObject;
             }
         }
 
@@ -420,6 +427,27 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     }
 
     /// <summary>
+    /// Muestra el mensaje de alerta message durante el tiempo time
+    /// </summary>
+    /// <param name="time"></param>
+    /// <param name="message"></param>
+    public void ShowAlertHUD(int time, string message)
+    {
+        hudAlert.SetActive(true);
+        hudAlertTxt.text = message;
+        Invoke(nameof(HideAlertHUD), time);
+    }
+
+    /// <summary>
+    /// Oculta el mensaje de alerta
+    /// </summary>
+    public void HideAlertHUD()
+    {
+        hudAlert.SetActive(false);
+        hudAlertTxt.text = "";
+    }
+
+    /// <summary>
     /// Muestra el HUD de volver al menú y devuelve al menú en timeToReturn segundos
     /// </summary>
     /// <param name="countdown"></param>
@@ -575,6 +603,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// <param name="otherPlayer"></param>
     public void OnPlayerLeftRoom(Player otherPlayer)
     {
+        ShowAlertHUD(5, otherPlayer.NickName + " se fue de la sala.");
         if (PhotonNetwork.IsMasterClient)
         {
             object wasPenguin;

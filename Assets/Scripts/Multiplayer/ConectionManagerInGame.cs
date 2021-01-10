@@ -170,7 +170,12 @@ public class ConectionManagerInGame : MonoBehaviourPunCallbacks, IConnectionCall
         if (logWriter != null)
             logWriter.Write("el host se fue");
         // TODO - mostrar aviso de que el host se fue y que se va a salir de la partida en timeToLeave segundos
-        float timeToLeave = 3f;
+        MatchInfo matchInfo = FindObjectOfType<MatchInfo>();
+        if (matchInfo != null)
+        {
+            matchInfo.ShowAlertHUD(5, "El host se ha desconectado.\nSaliendo de partida...");
+        }
+        float timeToLeave = 5f;
         Invoke(nameof(LeaveRoom), timeToLeave);
     }
     #endregion

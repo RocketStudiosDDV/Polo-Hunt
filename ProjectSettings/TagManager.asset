@@ -48,6 +48,7 @@ TagManager:
   - hudTime
   - hudResultsInfoTxt
   - hudReturnTxt
+  - hudAlertTxt
   layers:
   - Default
   - TransparentFX
