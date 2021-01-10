@@ -54,6 +54,10 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private GameObject hudResults;
     private Text hudResultsTxt;
     private Text hudResultsInfoTxt;
+    private GameObject hudReturn;
+    private Text hudReturnTxt;
+    private Text hudReturnCountdownTxt;
+    private int timeToReturn;
 
     // Referencias
     private MatchManager matchManager;
@@ -99,6 +103,12 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             if (text.CompareTag("hudResultsInfoTxt"))
             {
                 hudResultsInfoTxt = text;
+            }
+            if (text.CompareTag("hudReturnTxt"))
+            {
+                hudReturnTxt = text;
+                hudReturn = hudReturnTxt.transform.parent.gameObject;
+                hudReturnCountdownTxt = hudReturnTxt.GetComponentsInChildren<Text>()[1];
             }
         }
 
@@ -409,6 +419,32 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         hudResults.SetActive(show);
     }
 
+    /// <summary>
+    /// Muestra el HUD de volver al menú y devuelve al menú en timeToReturn segundos
+    /// </summary>
+    /// <param name="countdown"></param>
+    public void ShowReturnHUD(int countdown)
+    {
+        hudReturn.SetActive(true);
+        hudReturnTxt.text = "Volviendo a la sala en...";
+        timeToReturn = countdown;
+        hudReturnCountdownTxt.text = timeToReturn.ToString();
+        Invoke(nameof(ActualizeCountdown), 1f);
+    }
+
+    private void ActualizeCountdown()
+    {
+        timeToReturn--;
+        if (timeToReturn <= 0)
+        {
+            FindObjectOfType<ConectionManagerInGame>().ReturnToGameSelectionMenu();
+        } else
+        {
+            Invoke(nameof(ActualizeCountdown), 1f);
+            hudReturnCountdownTxt.text = timeToReturn.ToString();
+        }
+    }
+
     //método que se llamará cuando el juego decida que se acabara la partida y se muestra a quien siga dntro de la partida
     //debe bloquear el input a todos los jugadores y enseñarles la pantalla de resultados, inferida de penguinsAlive y bearsConnected
     public void ShowResults()
@@ -417,6 +453,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             ShowInGameHUD(false);
             ShowResultsHUD(true);
+            ShowReturnHUD(10);
             matchFinished = true;
             if (logWriter != null)
                 logWriter.Write("SE ACABO LA PARTIDA");

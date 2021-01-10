@@ -42,6 +42,12 @@ TagManager:
   - Ranking
   - IceFall
   - Obstacle
+  - hudTimeTxt
+  - hudResultsTxt
+  - hudResults
+  - hudTime
+  - hudResultsInfoTxt
+  - hudReturnTxt
   layers:
   - Default
   - TransparentFX
