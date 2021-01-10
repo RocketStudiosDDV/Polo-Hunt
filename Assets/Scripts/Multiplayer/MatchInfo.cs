@@ -51,6 +51,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private Text hudTimeTxt;
     private GameObject hudPenguins;
     private Text hudPenguinsTxt;
+    private GameObject hudResults;
+    private Text hudResultsTxt;
+    private Text hudResultsInfoTxt;
 
     // Referencias
     private MatchManager matchManager;
@@ -75,6 +78,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         matchFinished = false;
         matchStarted = false;
         logWriter = FindObjectOfType<LogWriter>();
+        // Obtenemos las referencias al HUD
         foreach (Text text in Resources.FindObjectsOfTypeAll<Text>())
         {
             if (text.CompareTag("hudPenguinsAlive"))
@@ -86,7 +90,16 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             {
                 hudTimeTxt = text;
                 hudTime = hudTimeTxt.transform.parent.gameObject;
-            }                            
+            }     
+            if (text.CompareTag("hudResultsTxt"))
+            {
+                hudResultsTxt = text;
+                hudResults = hudResultsTxt.transform.parent.gameObject;
+            }
+            if (text.CompareTag("hudResultsInfoTxt"))
+            {
+                hudResultsInfoTxt = text;
+            }
         }
 
 
@@ -387,6 +400,15 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         hudPenguins.SetActive(show);
     }
 
+    /// <summary>
+    /// Muestra/oculta el HUD de los resultados
+    /// </summary>
+    /// <param name="show"></param>
+    public void ShowResultsHUD(bool show)
+    {
+        hudResults.SetActive(show);
+    }
+
     //método que se llamará cuando el juego decida que se acabara la partida y se muestra a quien siga dntro de la partida
     //debe bloquear el input a todos los jugadores y enseñarles la pantalla de resultados, inferida de penguinsAlive y bearsConnected
     public void ShowResults()
@@ -394,8 +416,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         if (matchFinished == false)
         {
             ShowInGameHUD(false);
+            ShowResultsHUD(true);
             matchFinished = true;
-
             if (logWriter != null)
                 logWriter.Write("SE ACABO LA PARTIDA");
             if (bearsConnected == 0 && gameMode == GameMode.Hunt)
@@ -403,6 +425,13 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 if (logWriter != null)
                     logWriter.Write("se fueron todos los osos");
                 // TODO - decir victoria a los pingüinos vivos y mostrar la pantalla de fin de partida
+                object isAlive = false;
+                PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("alive", out isAlive);
+                if ((bool)isAlive)
+                {
+                    hudResultsTxt.text = "VICTORIA";
+                    hudResultsInfoTxt.text = "Se han desconectado todos los osos";
+                }
                 // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
             }
             else if (penguinsConnected == 0)
@@ -410,6 +439,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 if (logWriter != null)
                     logWriter.Write("se fueron todos los pinguinos");
                 // TODO - decir victoria a los osos y mostrar la pantalla de fin de partida
+                hudResultsTxt.text = "VICTORIA";
+                hudResultsInfoTxt.text = "Se han desconectado todos los pingüinos";
                 // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
             }
             else if (penguinsAlive == 0)
@@ -418,6 +449,16 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                     logWriter.Write("todos los pinguinos han sido cazados");
                 // TODO - decir victoria a los osos y mostrar pantalla de fin de partida
                 // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
+                object isPenguin = false;
+                PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out isPenguin);
+                hudResultsInfoTxt.text = "Todos los pingüinos han sido cazados";
+                if ((bool)isPenguin)
+                {
+                    hudResultsTxt.text = "DERROTA";
+                } else
+                {
+                    hudResultsTxt.text = "VICTORIA";
+                }
             }
             else
             {
@@ -425,6 +466,26 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                     logWriter.Write("se acabo el tiempo");
                 // TODO - decir victoria a los pingüinos vivos y mostrar pantalla de fin de partida
                 // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
+                object isAlive = false;
+                object isPenguin = false;
+                PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isAlive", out isAlive);
+                PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out isPenguin);                
+                if ((bool)isPenguin)
+                {
+                    if ((bool)isAlive)
+                    {
+                        hudResultsTxt.text = "VICTORIA";
+                        hudResultsInfoTxt.text = "Has sobrevivido a la cacería";
+                    } else
+                    {
+                        hudResultsTxt.text = "DERROTA";
+                        hudResultsInfoTxt.text = "Has sido cazado";
+                    }
+                } else
+                {
+                    hudResultsTxt.text = "DERROTA";
+                    hudResultsInfoTxt.text = "No han sido cazados todos los pingüinos";
+                }
             }
         }       
     }

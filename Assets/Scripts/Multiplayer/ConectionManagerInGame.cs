@@ -165,7 +165,7 @@ public class ConectionManagerInGame : MonoBehaviourPunCallbacks, IConnectionCall
     /// Si se va el host, termina la partida
     /// </summary>
     /// <param name="newMasterClient"></param>
-    public void OnMasterClientSwitched(Player newMasterClient)
+    public override void OnMasterClientSwitched(Player newMasterClient)
     {
         if (logWriter != null)
             logWriter.Write("el host se fue");
