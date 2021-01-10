@@ -413,6 +413,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// <param name="show"></param>
     public void ShowInGameHUD(bool show)
     {
+        if (hudTime == null)
+            return;
         hudTime.SetActive(show);
         hudPenguins.SetActive(show);
     }
@@ -423,6 +425,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// <param name="show"></param>
     public void ShowResultsHUD(bool show)
     {
+        if (hudResults == null)
+            return;
         hudResults.SetActive(show);
     }
 
@@ -433,6 +437,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// <param name="message"></param>
     public void ShowAlertHUD(int time, string message)
     {
+        if (hudAlert == null)
+            return;
         hudAlert.SetActive(true);
         hudAlertTxt.text = message;
         Invoke(nameof(HideAlertHUD), time);
@@ -443,6 +449,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// </summary>
     public void HideAlertHUD()
     {
+        if (hudAlert == null)
+            return;
         hudAlert.SetActive(false);
         hudAlertTxt.text = "";
     }
@@ -453,6 +461,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// <param name="countdown"></param>
     public void ShowReturnHUD(int countdown)
     {
+        if (hudReturn == null)
+            return;
         hudReturn.SetActive(true);
         hudReturnTxt.text = "Volviendo a la sala en...";
         timeToReturn = countdown;
