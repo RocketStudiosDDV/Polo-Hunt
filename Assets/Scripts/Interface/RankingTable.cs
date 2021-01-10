@@ -41,6 +41,15 @@ public class RankingTable : MonoBehaviour
         penguins = FindObjectsOfType<InputRunnerModeMultiplayer>();
         myPenguin = FindObjectOfType<InputRunnerModeMultiplayer>();
 
+        InputRunnerModeMultiplayer myPingu;
+        foreach (InputRunnerModeMultiplayer pingu in FindObjectsOfType<InputRunnerModeMultiplayer>())
+        {
+            if (pingu.GetComponent<PhotonView>().IsMine)
+            {
+                myPingu = pingu;
+            }
+        }
+
 
         Debug.Log("num de pigus" + penguins.Length);
         string pos = "-1";
@@ -52,7 +61,6 @@ public class RankingTable : MonoBehaviour
             {
                 for (int j = 0; j < penguins.Length-1-i; j++)
                 {
-                    //positions[i] = penguins[i].gameObject.transform.position.z;
                     if (penguins[j].gameObject.transform.position.z < penguins[j + 1].gameObject.transform.position.z)
                     {
                         InputRunnerModeMultiplayer penguin = penguins[j];
@@ -74,11 +82,12 @@ public class RankingTable : MonoBehaviour
                 pos = (i + 1).ToString();
             }
         }
-        if (penguins.Length > 0)
+
+        /*if (penguins.Length > 0)
         {
             Debug.Log("Mi pos" + myPenguin.transform.position);
             Debug.Log("Tu pos " + penguins[0].transform.position);
-        }
+        }*/
 
         position.GetComponent<Text>().text = pos;
             
