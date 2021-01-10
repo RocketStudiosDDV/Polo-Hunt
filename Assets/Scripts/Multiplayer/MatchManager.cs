@@ -87,6 +87,7 @@ public class MatchManager : MonoBehaviourPun
         } else
         {
             GameObject myPenguin = PhotonNetwork.Instantiate(this.penguinRacePrefab.name, startPositions[playerId].position, Quaternion.identity, 0);
+            FindObjectOfType<RankingTable>().myPenguin = myPenguin.GetComponent<InputRunnerModeMultiplayer>();
         }    
     }
 

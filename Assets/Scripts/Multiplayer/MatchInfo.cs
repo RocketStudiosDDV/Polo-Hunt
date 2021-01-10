@@ -671,9 +671,15 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 if (allReady)
                 {
                     Invoke("InstantiatePlayersWrapper", 3f);
+                    Invoke("AssignRankingTableValues", 6f);
                 }
             }
         }
+    }
+
+    public void AssignRankingTableValues()
+    {
+        FindObjectOfType<RankingTable>().penguins = FindObjectsOfType<InputRunnerModeMultiplayer>();
     }
     #endregion
 

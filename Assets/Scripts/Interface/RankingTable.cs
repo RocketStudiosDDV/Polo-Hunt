@@ -8,8 +8,8 @@ public class RankingTable : MonoBehaviour
 {
     private Transform position;
     //private Transform text;
-    private InputRunnerModeMultiplayer [] penguins;
-    private InputRunnerModeMultiplayer myPenguin;
+    public InputRunnerModeMultiplayer [] penguins;
+    public InputRunnerModeMultiplayer myPenguin;
 
     private void Awake()
     {
@@ -38,6 +38,7 @@ public class RankingTable : MonoBehaviour
 
     private void Update()
     {
+        /*
         penguins = FindObjectsOfType<InputRunnerModeMultiplayer>();
         myPenguin = FindObjectOfType<InputRunnerModeMultiplayer>();
 
@@ -81,12 +82,24 @@ public class RankingTable : MonoBehaviour
                 pos = (i + 1).ToString();
             }
         }
-
+        */
         /*if (penguins.Length > 0)
         {
             Debug.Log("Mi pos" + myPenguin.transform.position);
             Debug.Log("Tu pos " + penguins[0].transform.position);
         }*/
+
+        int myPosition = 1;
+        if (penguins != null)
+        {
+            foreach (InputRunnerModeMultiplayer penguin in penguins)
+            {
+                if (penguin.gameObject.transform.position.z > myPenguin.gameObject.transform.position.z)
+                {
+                    myPosition++;
+                }
+            }
+        }
 
         position.GetComponent<Text>().text = pos;
             
