@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   penguinsAlive: 0
-  textpenguinsalive: {fileID: 0}
   bearsConnected: 0
   penguinsConnected: 0
   clasification: []

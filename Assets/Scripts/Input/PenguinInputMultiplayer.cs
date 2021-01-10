@@ -404,14 +404,14 @@ public class PenguinInputMultiplayer : MonoBehaviour
             if (isRunning == true) //Si esta corriendo deja de correr
             {
                 isRunning = false;
-                speed = 3;
+                speed = 5;
             }
         }
 
         if (collision.gameObject.tag == "Floor") //Si choca con un pescao
         {
 
-            speed = 3;
+            speed = 35;
             InIceDashPlat = false;
         }
 
@@ -623,7 +623,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
             if (deltaTime > _timeFish)
             {
-                speed = 3;
+                speed = 5;
                 fishEaten = false;
             }
 
@@ -646,7 +646,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             if (deltaTime > _timeFall + 1)
             {
-                speed = 3;
+                speed = 5;
                 _controls.Player.Run.Enable();
                 enableControlsAfterFallen = true;
             }
