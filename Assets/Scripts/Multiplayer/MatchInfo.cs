@@ -602,7 +602,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// Si un jugador entra en mitad de partida, ponerlo en modo espectador
     /// </summary>
     /// <param name="newPlayer"></param>
-    public void OnPlayerEnteredRoom(Player newPlayer)
+    public override void OnPlayerEnteredRoom(Player newPlayer)
     {
     }
 
@@ -611,7 +611,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// Si estaba vivo, actualiza el nº de pingüinos vivo
     /// </summary>
     /// <param name="otherPlayer"></param>
-    public void OnPlayerLeftRoom(Player otherPlayer)
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         ShowAlertHUD(5, otherPlayer.NickName + " se fue de la sala.");
         if (PhotonNetwork.IsMasterClient)
@@ -632,7 +632,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
     }
 
-    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         //throw new System.NotImplementedException();
     }
@@ -643,7 +643,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// </summary>
     /// <param name="targetPlayer"></param>
     /// <param name="changedProps"></param>
-    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         object property = true;
         changedProps.TryGetValue("alive", out property);
