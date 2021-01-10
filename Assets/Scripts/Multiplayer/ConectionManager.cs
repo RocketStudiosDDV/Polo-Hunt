@@ -30,6 +30,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public Transform ListRoomContainer;
     public List<Transform> ListRoomPrefabList;
 
+    public string RoomName;
+
     public string name1;
     public string psw1;
 
@@ -83,6 +85,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         PhotonNetwork.NickName = nickName;
         name1 = nickName;
     }
+
+    
 
     /// <summary>
     /// Settea la password del cliente
@@ -157,6 +161,22 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayers, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties, BroadcastPropsChangeToAll = true });
     }
 
+    public void CreateRoom2(byte maxPlayers = 10)
+    {
+        logWriter.Write("Creando sala...");
+        
+        if (RoomName == null || RoomName == "")
+        {
+            RoomName = PhotonNetwork.NickName + "Room";
+        }
+
+        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable();   // Valor por defecto de sala (modo caza)
+        customRoomProperties["gameMode"] = GameMode.Hunt;
+        customRoomProperties["hasStarted"] = false;
+
+        PhotonNetwork.CreateRoom(RoomName, new RoomOptions { MaxPlayers = maxPlayers, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties, BroadcastPropsChangeToAll = true });
+    }
+
     /// <summary>
     /// Crea una sala privada con el nombre y el nº máximo de jugadores pasados como parámetro.
     /// Para unirse a la sala sólo hace falta el nombre.
@@ -165,20 +185,20 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     /// </summary>
     /// <param name="roomName"></param>
     /// <param name="maxPlayers"></param>
-    public void CreatePrivateRoom(string roomName)
+    public void CreatePrivateRoom()
     {
         logWriter.Write("Creando sala privada...");
 
-        if (roomName == null || roomName == "")
+        if (RoomName == null || RoomName == "")
         {
-            roomName = PhotonNetwork.NickName + "Room";
+            RoomName = PhotonNetwork.NickName + "Room";
         }
 
         ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable();   // Valor por defecto de sala (modo caza)
         customRoomProperties["gameMode"] = GameMode.Hunt;
         customRoomProperties["hasStarted"] = false;
 
-        PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 10, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties, IsVisible = false });
+        PhotonNetwork.CreateRoom(RoomName, new RoomOptions { MaxPlayers = 10, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties, IsVisible = false });
     }
 
     /// <summary>
@@ -204,6 +224,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         logWriter.Write("Intentando unirse a la sala " + roomName + "...");
         PhotonNetwork.JoinRoom(roomName);
+    }
+
+    public void JoinRoom2()
+    {
+        logWriter.Write("Intentando unirse a la sala " + RoomName + "...");
+        PhotonNetwork.JoinRoom(RoomName);
     }
 
     /// <summary>
@@ -674,6 +700,11 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             Connect();
             JoinLobby();
         }
+    }
+
+    public void SetRoomName(string name)
+    {
+        RoomName = name;
     }
 
     public void MultiplayerButton()
