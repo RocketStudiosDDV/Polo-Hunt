@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 8086887655431267938}
   m_Layer: 0
   m_Name: penguin_pelvis
-  m_TagString: Untagged
+  m_TagString: RunnerCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 7315187216819493066}
   m_Layer: 0
   m_Name: penguin
-  m_TagString: Untagged
+  m_TagString: RunnerCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -537,7 +537,7 @@ GameObject:
   - component: {fileID: 7954010011780254983}
   m_Layer: 0
   m_Name: PenguinRace
-  m_TagString: Penguin
+  m_TagString: RunnerCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -551,7 +551,7 @@ Transform:
   m_GameObject: {fileID: 2243592415725833194}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2542.5818, y: 2475.16, z: -5892.4}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 304105319652557819}
   - {fileID: 8086887655431267938}
@@ -681,10 +681,10 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 0
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 3
     InterpolateMoveTowardsSpeed: 4
     InterpolateLerpSpeed: 1
-    ExtrapolateOption: 2
+    ExtrapolateOption: 1
     ExtrapolateSpeed: 12
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
