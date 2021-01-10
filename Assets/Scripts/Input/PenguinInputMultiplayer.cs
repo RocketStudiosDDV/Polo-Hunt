@@ -411,7 +411,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Floor") //Si choca con un pescao
         {
 
-            speed = 35;
+            speed = 5;
             InIceDashPlat = false;
         }
 
