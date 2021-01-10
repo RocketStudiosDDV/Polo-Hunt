@@ -24,7 +24,6 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private GameMode gameMode;  // Modo de juego
     public int penguinsAlive; //pinguinos restantes
 
-    public Text textpenguinsalive;
     public int bearsConnected; //osos conectados
     public int penguinsConnected; //pinguinos conectados
     private double matchTime;   // momento actual de la partida
@@ -50,6 +49,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     // Referencias a HUD
     private GameObject hudTime;
     private Text hudTimeTxt;
+    private GameObject hudPenguins;
+    private Text hudPenguinsTxt;
 
     // Referencias
     private MatchManager matchManager;
@@ -77,7 +78,10 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         foreach (Text text in Resources.FindObjectsOfTypeAll<Text>())
         {
             if (text.CompareTag("hudPenguinsAlive"))
-                textpenguinsalive = text;
+            {
+                hudPenguinsTxt = text;
+                hudPenguins = hudPenguinsTxt.transform.parent.gameObject;
+            }
             if (text.CompareTag("hudTimeTxt"))
             {
                 hudTimeTxt = text;
@@ -279,8 +283,8 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         lock (infoLock)
         {
             penguinsAlive--;
-            if (textpenguinsalive != null)
-                textpenguinsalive.text = "" + penguinsAlive;
+            if (hudPenguinsTxt != null)
+                hudPenguinsTxt.text = "" + penguinsAlive;
             Debug.Log("penguins alive = " + penguinsAlive);
             if (penguinsAlive == 0)
                 ShowResults();
@@ -341,9 +345,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public void InstantiatePlayers()
     {
         matchStarted = true;
-        hudTime.SetActive(true);
-        if (textpenguinsalive != null)
-            textpenguinsalive.text = "" + penguinsAlive;
+        ShowInGameHUD(true);
+        if (hudPenguinsTxt != null)
+            hudPenguinsTxt.text = "" + penguinsAlive;
         matchManager.InstantiatePlayers();
     }
     #endregion
@@ -373,13 +377,23 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     }
 
 
+    /// <summary>
+    /// Muestra/oculta el HUD in game
+    /// </summary>
+    /// <param name="show"></param>
+    public void ShowInGameHUD(bool show)
+    {
+        hudTime.SetActive(show);
+        hudPenguins.SetActive(show);
+    }
+
     //método que se llamará cuando el juego decida que se acabara la partida y se muestra a quien siga dntro de la partida
     //debe bloquear el input a todos los jugadores y enseñarles la pantalla de resultados, inferida de penguinsAlive y bearsConnected
     public void ShowResults()
     {
         if (matchFinished == false)
         {
-            hudTime.SetActive(false);
+            ShowInGameHUD(false);
             matchFinished = true;
 
             if (logWriter != null)
