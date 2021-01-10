@@ -1,29 +1,87 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
 
 public class RankingTable : MonoBehaviour
 {
-    private Transform entryContainer;
-    private Transform entryTemplate;
+    private Transform position;
+    //private Transform text;
+    private InputRunnerModeMultiplayer [] penguins;
+    private InputRunnerModeMultiplayer myPenguin;
 
     private void Awake()
     {
-        entryContainer = transform.Find("highscoreEntryContainer");
-        entryTemplate = entryContainer.Find("highscoreEntryTemplate");
+        position = transform.Find("Pos");
+        //text = position.Find("Pos");
+
         
-        entryTemplate.gameObject.SetActive(false);
+        //entryTemplate.gameObject.SetActive(false);
+        //position.GetComponent<Text>().text = "warra";
+        //float templateHeight = 30f;
 
-        float templateHeight = 30f;
-
-        for (int i = 0; i < 10; i++)
+        /*for (int i = 0; i < 10; i++)
         {
             Transform entryTransform = Instantiate(entryTemplate, entryContainer);
             RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
 
             entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * i);
             entryRectTransform.gameObject.SetActive(true);
+        }*/
+    }
+
+    private void Start()
+    {
+        
+    }
+
+    private void Update()
+    {
+        penguins = FindObjectsOfType<InputRunnerModeMultiplayer>();
+        myPenguin = FindObjectOfType<InputRunnerModeMultiplayer>();
+
+
+        Debug.Log("num de pigus" + penguins.Length);
+        string pos = "-1";
+        double[] positions = new double [penguins.Length];
+
+        if (penguins.Length > 1)
+        {
+            for (int i = 0; i < penguins.Length-1; i++)
+            {
+                for (int j = 0; j < penguins.Length-1-i; j++)
+                {
+                    //positions[i] = penguins[i].gameObject.transform.position.z;
+                    if (penguins[j].gameObject.transform.position.z < penguins[j + 1].gameObject.transform.position.z)
+                    {
+                        InputRunnerModeMultiplayer penguin = penguins[j];
+                        penguins[j] = penguins[j + 1];
+                        penguins[j + 1] = penguin;
+                    }
+                }
+            }
         }
+        
+
+        //gameObject.GetComponent<InputRunnerModeMultiplayer>().
+        for (int i = 0; i < penguins.Length; i++)
+        {
+            
+            if (myPenguin.transform.position == penguins[i].gameObject.transform.position)
+            {
+                Debug.Log("SOY YO!!!!!");
+                pos = (i + 1).ToString();
+            }
+        }
+        if (penguins.Length > 0)
+        {
+            Debug.Log("Mi pos" + myPenguin.transform.position);
+            Debug.Log("Tu pos " + penguins[0].transform.position);
+        }
+
+        position.GetComponent<Text>().text = pos;
+            
     }
 
 }

@@ -22,7 +22,7 @@ public class HighscoreTable : MonoBehaviour
         namePlayers.Add("webos");
         namePlayers.Add("xixis");
 
-        Debug.Log("size namePLayers " + namePlayers.Count);
+        //Debug.Log("size namePLayers " + namePlayers.Count);
         entryContainer = transform.Find("highscoreEntryContainer");
         entryTemplate = entryContainer.Find("highscoreEntryTemplate");
 
