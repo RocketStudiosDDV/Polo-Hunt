@@ -26,10 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TutorialScene.unity
     guid: ac80b1ce299dbb24292d874614b8322c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Gamemodes/RaceMap.unity
     guid: 80eba340918d7d340b16760f7a148dec
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Gamemodes/HuntMap.unity
     guid: caa3cf966d4814e4c80c2ed9542c6128
   - enabled: 1
