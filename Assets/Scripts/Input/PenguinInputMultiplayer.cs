@@ -442,9 +442,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
     private void OnEnable()
     {
         //Añade el evento moverse
+        _controls.Player.Run.performed += Run; //Evento correr
+        _controls.Player.ESC.performed += ESC;
         _controls.Player.Movement.performed += Move;
         _controls.Player.Attack.performed += Attack; //Evento atacar
-        _controls.Player.Run.performed += Run; //Evento correr
         _controls.Player.PowerUp.performed += PowerUp; //Evento power up
         _controls.Player.CameraControl.performed += GetCameraMove;//Movimiento de camara
 
@@ -460,9 +461,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
     private void OnDisable()
     {
         //Elimina el evento
+        _controls.Player.Run.canceled -= Run;
+        _controls.Player.ESC.performed += ESC;
         _controls.Player.Movement.canceled -= Move;
         _controls.Player.Attack.canceled -= Attack;
-        _controls.Player.Run.canceled -= Run;
         _controls.Player.PowerUp.canceled -= PowerUp;
         _controls.Player.CameraControl.canceled -= GetCameraMove;
         _controls.Player.Disable();
@@ -472,6 +474,13 @@ public class PenguinInputMultiplayer : MonoBehaviour
     #endregion
 
     #region PLAYER ACTIONS
+
+    public void ESC (InputAction.CallbackContext context)
+    {
+        Pause();
+    }
+
+
     public void Move(InputAction.CallbackContext context)
     {
         _horizontaldirection = context.ReadValue<Vector2>();
@@ -551,6 +560,11 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
 
     #region ACTIONS TIME
+
+    public void Pause()
+    {
+        
+    }
 
     //Controla el tiempo que esta activo el deslizamiento
     public void ToRun(double deltaTime)

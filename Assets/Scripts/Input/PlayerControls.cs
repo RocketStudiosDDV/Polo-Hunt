@@ -57,6 +57,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ESC"",
+                    ""type"": ""Button"",
+                    ""id"": ""c660ca39-ed48-48f6-a579-85976fa7e65f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -279,6 +287,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""CameraControl"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba396207-8cd4-41f3-aa75-88ad8b214edb"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ESC"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59fafdc0-f09b-441c-9f94-8a8e870faea0"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ESC"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -315,6 +345,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_PowerUp = m_Player.FindAction("PowerUp", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_CameraControl = m_Player.FindAction("CameraControl", throwIfNotFound: true);
+        m_Player_ESC = m_Player.FindAction("ESC", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -369,6 +400,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_PowerUp;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_CameraControl;
+    private readonly InputAction m_Player_ESC;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -378,6 +410,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @PowerUp => m_Wrapper.m_Player_PowerUp;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @CameraControl => m_Wrapper.m_Player_CameraControl;
+        public InputAction @ESC => m_Wrapper.m_Player_ESC;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -402,6 +435,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CameraControl.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraControl;
                 @CameraControl.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraControl;
                 @CameraControl.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraControl;
+                @ESC.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnESC;
+                @ESC.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnESC;
+                @ESC.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnESC;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -421,6 +457,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CameraControl.started += instance.OnCameraControl;
                 @CameraControl.performed += instance.OnCameraControl;
                 @CameraControl.canceled += instance.OnCameraControl;
+                @ESC.started += instance.OnESC;
+                @ESC.performed += instance.OnESC;
+                @ESC.canceled += instance.OnESC;
             }
         }
     }
@@ -450,5 +489,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnPowerUp(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnCameraControl(InputAction.CallbackContext context);
+        void OnESC(InputAction.CallbackContext context);
     }
 }
