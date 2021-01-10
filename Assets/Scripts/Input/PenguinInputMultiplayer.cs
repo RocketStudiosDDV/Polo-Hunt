@@ -155,7 +155,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
         if (penguin_animator != null)
         {
-            if ((isRunning == true) || (InIceDashPlat== true))
+            if (isRunning == true) 
             {
                 Debug.Log("running true true true");
                 penguin_animator.SetBool("sliding", true);
