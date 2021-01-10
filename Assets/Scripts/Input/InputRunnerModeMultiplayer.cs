@@ -394,7 +394,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Cave")
         {
             Debug.Log("vaya montaña loko");
-            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 3, _playerRB.position.z - 10));
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 6, _playerRB.position.z - 10));
             obstacle = true;
             _timeSlow = Time.fixedTime + 2;
         }
