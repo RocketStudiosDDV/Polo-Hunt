@@ -234,26 +234,26 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
                 if (playerDirection.z > 0)
                 {
-                    _playerRB.AddForce(lookingAt * 1.2f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * /*1.2f */ speed, ForceMode.Impulse);
                     lastPressed = 0;
                     _timeTillPressed = Time.deltaTime + 2;
 
                 }
                 else if (playerDirection.z < 0)
                 {
-                    _playerRB.AddForce(lookingAt * 1.2f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt /* 1.2f */* speed, ForceMode.Impulse);
                     lastPressed = 1;
                     _timeTillPressed = Time.deltaTime + 2;
                 }
                 else if(playerDirection.x > 0)
                 {
-                    _playerRB.AddForce(lookingAt * 1.2f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * /*1.2f */ speed, ForceMode.Impulse);
                     lastPressed = 2;
                     _timeTillPressed = Time.deltaTime + 2;
                 }
                 else if (playerDirection.x < 0)
                 {
-                    _playerRB.AddForce(lookingAt * 1.2f * speed, ForceMode.Impulse);
+                    _playerRB.AddForce(lookingAt * /*1.2f */ speed, ForceMode.Impulse);
                     lastPressed = 3;
                     _timeTillPressed = Time.deltaTime + 2;
                 }
@@ -261,64 +261,83 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 {
                     if(lastPressed == 0)
                     {                       
-                        if ((_timeTillPressed < Time.fixedTime) )//&& (_timeTillPressed > Time.fixedTime + 1))
+                        /*if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
                         {
                             _playerRB.AddForce(lookingAt * -0.2f * speed, ForceMode.Impulse);
                         }
-                        /*else if (_timeTillPressed < Time.fixedTime + 1)
+                        else if ((_timeTillPressed < Time.fixedTime + 1) && (_timeTillPressed > Time.fixedTime))
                         {
-                            _playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
-                        }*/
+                            //_playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
+                        }
                         else
                         {
                             _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
+                        }*/
+
+                        if ((_timeTillPressed > Time.fixedTime))
+                        {
+                            _playerRB.AddForce(lookingAt * -0.4f * speed, ForceMode.Impulse);
                         }
                     }
                     else if (lastPressed == 1)
-                    {                       
-                        if ((_timeTillPressed < Time.fixedTime) )//&& (_timeTillPressed > Time.fixedTime + 1))
+                    {
+                        /*if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
                         {
                             _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
-                        }/*
-                        else if (_timeTillPressed < Time.fixedTime + 1)
+                        }
+                        else if ((_timeTillPressed < Time.fixedTime + 1) && (_timeTillPressed > Time.fixedTime))
                         {
-                            _playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
-                        }*/
+                           // _playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
+                        }
                         else
                         {
                             _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
+                        }*/
+                        if ((_timeTillPressed > Time.fixedTime))
+                        {
+                            _playerRB.AddForce(lookingAt * 0.4f * speed, ForceMode.Impulse);
                         }
                     }
                     else if (lastPressed == 2)
                     {
-                        if ((_timeTillPressed < Time.fixedTime) )//&& (_timeTillPressed > Time.fixedTime + 1))
+                        /*if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
                         {
                             _playerRB.AddForce(lookingAt * -0.2f * speed, ForceMode.Impulse);
-                        }/*
-                        else if (_timeTillPressed < Time.fixedTime + 1)
+                        }
+                        else if ((_timeTillPressed < Time.fixedTime + 1) && (_timeTillPressed > Time.fixedTime))
                         {
-                            _playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
-                        }*/
+                            //_playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
+                        }
                         else
                         {
                             _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
 
-                        }                        
+                        } */
+
+                        if ((_timeTillPressed > Time.fixedTime))
+                        {
+                            _playerRB.AddForce(lookingAt * -0.4f * speed, ForceMode.Impulse);
+                        }
                     }
                     else if (lastPressed == 3)
                     {
-                        if ((_timeTillPressed < Time.fixedTime))// && (_timeTillPressed > Time.fixedTime + 1))
+                        /*if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
                         {
                             _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
-                        }/*
-                        else if (_timeTillPressed < Time.fixedTime + 1)
+                        }
+                        else if ((_timeTillPressed < Time.fixedTime + 1) && (_timeTillPressed > Time.fixedTime))
                         {
-                            _playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
-                        }*/
+                            //_playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
+                        }
                         else
                         {
                             _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
-                        }                        
+                        }          */
+
+                        if ((_timeTillPressed > Time.fixedTime))
+                        {
+                            _playerRB.AddForce(lookingAt * 0.4f * speed, ForceMode.Impulse);
+                        }
                     }
                 }
 
@@ -479,6 +498,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         _horizontaldirection = context.ReadValue<Vector2>();
+        //_timeTillPressed = Time.deltaTime + 2;
 
         if (context.control.IsPressed() == true)
         {
@@ -500,7 +520,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     {
         forceDirection = _playerRB.transform.forward; //direccion en la que se va a deslizar
         isRunning = true;
-        speed = 30;
+        speed = 20;
         _timeRunning = Time.fixedTime + 3;
         _controls.Player.Run.Disable();
         _controls.Player.Movement.Disable();
@@ -560,12 +580,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     {
         if (isRunning == true)
         {
-            /*if ((deltaTime > _timeRunning - 3) && (deltaTime < _timeRunning - 2))
-            {
-                _playerRB.AddForce(forceDirection * 7, ForceMode.Acceleration);
-                //Debug.Log("3 segs");
-            }
-            else */if ((deltaTime > _timeRunning - 2) && (deltaTime < _timeRunning - 1))
+            if ((deltaTime > _timeRunning - 2) && (deltaTime < _timeRunning - 1))
             {
                 _playerRB.AddForce(forceDirection * 5, ForceMode.Acceleration);
             }
@@ -575,19 +590,19 @@ public class PenguinInputMultiplayer : MonoBehaviour
             }
             else
             {
-                _playerRB.AddForce(forceDirection * 10, ForceMode.Acceleration);
+                _playerRB.AddForce(forceDirection * speed, ForceMode.Acceleration);
             }
 
             //FORMAS DE PARARSE
             if (_playerRB.velocity.magnitude < 1)
             {
-                speed = 3;
+                speed = 5;
                 _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
                 isRunning = false;
             } 
             else if (deltaTime > _timeRunning)
             {
-                speed = 3;
+                speed = 5;
                 _controls.Player.Movement.Disable();
                 _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
                 isRunning = false;
