@@ -101,7 +101,7 @@ public class RankingTable : MonoBehaviour
             }
         }
 
-        position.GetComponent<Text>().text = pos;
+        position.GetComponent<Text>().text = myPosition.ToString();
             
     }
 
