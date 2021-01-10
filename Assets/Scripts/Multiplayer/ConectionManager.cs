@@ -516,7 +516,6 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         base.OnConnectedToMaster();
         if (logWriter != null)
             logWriter.Write("Conectado al servidor" + PhotonNetwork.ServerAddress);
-
         ConnectButton();
     }
 
@@ -554,13 +553,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         base.OnJoinedLobby();
         if (logWriter != null)
             logWriter.Write("Se ha unido al lobby");
-
-        ConnectButton();
     }
 
     public override void OnLeftLobby()
     {        
         base.OnLeftLobby();
+        RoomListZero();
         if (logWriter != null)
             logWriter.Write("Se ha marchado del lobby");
     }
@@ -718,7 +716,6 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         {
             Debug.Log("Nombre de usuario correcto");
             Connect();
-            JoinLobby();
         }
     }
 
@@ -735,18 +732,21 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     public void ConnectButton()
     {     
-        ConnectPanel.SetActive(false); 
+        ConnectPanel.SetActive(false);
         ChooseTypePanel.SetActive(true);
+        RoomListZero();
     }
 
     public void JoinRoomButton()
     {   
+        JoinLobby();
         ChooseTypePanel.SetActive(false);
-        LobbyPanel.SetActive(true);
+        LobbyPanel.SetActive(true);     
     }
     public void CreateRoomButton()
     {     
-        ChooseTypePanel.SetActive(false); 
+        ChooseTypePanel.SetActive(false);
+        LeaveLobby();
         CreateRoomPanel.SetActive(true);
     }
 
@@ -777,6 +777,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public void BackJoinRoom()
     {     
         ChooseTypePanel.SetActive(true);
+        LeaveLobby();
         RoomListZero();
         LobbyPanel.SetActive(false);
     }
@@ -825,5 +826,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         CreateRoomPanel.SetActive(false);
         RoomValuesPanel.SetActive(false);
         LobbyPanel.SetActive(false);
+        RoomListZero();
+        LeaveLobby();
     }
 }
