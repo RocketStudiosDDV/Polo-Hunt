@@ -21,7 +21,6 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public GameObject RoomValuesPanel;
     public GameObject FinalRoomPanel;
     public GameObject FinalRoomPanel2;
-
     public Transform RoomPrefab;
     public Transform RoomPrefabContainer;
     public List<Transform> RoomPrefabList;
@@ -157,7 +156,6 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable();   // Valor por defecto de sala (modo caza)
         customRoomProperties["gameMode"] = GameMode.Hunt;
         customRoomProperties["hasStarted"] = false;
-
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayers, CustomRoomPropertiesForLobby = GetCustomRoomPropertiesForLobby(), CustomRoomProperties = customRoomProperties, BroadcastPropsChangeToAll = true });
     }
 
@@ -251,6 +249,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         {
             PhotonNetwork.LeaveRoom();
         }
+        PlayerListZero();
     }
 
     /// <summary>
@@ -472,6 +471,21 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
         RoomPrefab.gameObject.SetActive(false);
         ListRoomPrefab.gameObject.SetActive(false);
+
+        if (PhotonNetwork.InRoom)
+        {
+            LobbyPanel.SetActive(false);
+            ConnectPanel.SetActive(false);
+            RoomPanel.SetActive(false);
+            ChooseTypePanel.SetActive(false);
+            OnlineOfflinePanel.SetActive(false);
+            CreateRoomPanel.SetActive(false);
+            RoomValuesPanel.SetActive(false);
+            if (PhotonNetwork.IsMasterClient)
+                FinalRoom(0);
+            else
+                FinalRoom(1);
+        }
     }
     #endregion
 
@@ -635,12 +649,14 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
+        PlayerListZero();
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         base.OnMasterClientSwitched(newMasterClient);
         LeaveRoom();
+        PlayerListZero();
     }
     #endregion
 
