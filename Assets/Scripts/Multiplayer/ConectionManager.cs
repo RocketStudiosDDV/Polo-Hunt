@@ -284,6 +284,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             {
                 SetNumberOfBears(0);
             }
+            else
+            {
+                SetNumberOfBears(1);
+            }
         }       
     }
 
