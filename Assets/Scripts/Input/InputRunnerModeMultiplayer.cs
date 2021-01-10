@@ -140,7 +140,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         if (walking_animation == true)
         {
             //Debug.Log("A andar");
-            _playerRB.AddForce(Vector3.forward * 2.25f * Time.deltaTime, ForceMode.Acceleration);
+            _playerRB.AddForce(Vector3.forward * 2.25f * Time.deltaTime * 500, ForceMode.Acceleration);
         }
 
         penguin_animator.SetBool("walking", walking_animation);
