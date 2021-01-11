@@ -51,11 +51,13 @@ public class OptionsScript : MonoBehaviour
 
     public void SetVolume(float volume)
     {
+        PlayerPrefs.SetFloat("volume", volume);
         audioMixer.SetFloat("volume", volume);
     }
 
     public void SetBright(float bright)
     {
+        PlayerPrefs.SetFloat("bright", bright);
         Debug.Log(bright);
     }
 
