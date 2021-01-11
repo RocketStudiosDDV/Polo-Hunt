@@ -1812,7 +1812,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 22f1e73f88af85f4cb2d01b4fbc8d3e0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8531922981982924401, guid: 22f1e73f88af85f4cb2d01b4fbc8d3e0,
         type: 3}
@@ -1850,6 +1850,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf0f25da3c8f7d4ab6e8306417fe55f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  penguins: []
+  myPenguin: {fileID: 0}
 --- !u!1 &1216390489
 GameObject:
   m_ObjectHideFlags: 0
@@ -2808,6 +2810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389d9ad2c92c6f44d82db56afbefef27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformId: 0
 --- !u!1 &1629222383 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5540978111074247273, guid: 43cbd92fe2842cc46abba6e6b50c1e71,
@@ -3032,7 +3035,7 @@ PrefabInstance:
     - target: {fileID: 1864980964605544405, guid: 43cbd92fe2842cc46abba6e6b50c1e71,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3300685841305632976, guid: 43cbd92fe2842cc46abba6e6b50c1e71,
         type: 3}
