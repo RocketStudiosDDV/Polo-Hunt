@@ -55,6 +55,11 @@ public class OptionsScript : MonoBehaviour
         audioMixer.SetFloat("volume", volume);
     }
 
+    public void SetEffects(float effects)
+    {
+        PlayerPrefs.SetFloat("effects", effects);
+    }
+
     public void SetBright(float bright)
     {
         PlayerPrefs.SetFloat("bright", bright);
