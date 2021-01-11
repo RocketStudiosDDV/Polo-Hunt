@@ -612,6 +612,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         base.OnJoinRoomFailed(returnCode, message);
         if (logWriter != null)
             logWriter.Write("Fallo al unirse a sala: " + message);
+        ChooseTypePanel.SetActive(true);
+        LobbyPanel.SetActive(false);
+        RoomPanel.SetActive(false);
+        ConnectPanel.SetActive(false);
+        FinalRoomPanel.SetActive(false);
+        FinalRoomPanel2.SetActive(false);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -624,6 +630,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
+        FinalRoomPanel.SetActive(false);
+        FinalRoomPanel2.SetActive(false);
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
@@ -647,6 +655,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
+        FinalRoomPanel.SetActive(false);
+        FinalRoomPanel2.SetActive(false);
         PlayerListZero();
     }
 
