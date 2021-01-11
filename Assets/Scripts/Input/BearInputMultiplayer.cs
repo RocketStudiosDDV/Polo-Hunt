@@ -66,7 +66,9 @@ public class BearInputMultiplayer : MonoBehaviour
 
     //Gestiona el power up
     private bool powerUpOn = false;
+    private bool powerUpAviable = true;
     private double _timePowerUp;
+    private double cooldowmPowerUp;
 
     private bool outOfMap = false;
     public bool keyboardRunning = false;
@@ -92,9 +94,14 @@ public class BearInputMultiplayer : MonoBehaviour
     private bool damage_animation = false;
 
     private bool afk_animation = false;
+
     // ONLINE
     public int ownerActorNumber;
-    
+
+    //VISION ACTIVACION HUD
+    private GameObject visionHud;
+    public Canvas canvasHUD;
+    private bool isBear = false;
 
     #endregion
 
@@ -115,12 +122,31 @@ public class BearInputMultiplayer : MonoBehaviour
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>(); //identifica el rigidbdy del oso
+        canvasHUD = FindObjectOfType<Canvas>();
 
         if (BearHUD != null)
+        {
             BearHUD.SetActive(true);
+        }
+           
 
         if (PenguinHUD != null)
             PenguinHUD.SetActive(false);
+
+        object property = false;
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out property);
+
+        if (!((bool)property))
+        {
+            visionHud = canvasHUD.transform.Find("Berserker").gameObject as GameObject;
+            visionHud.gameObject.SetActive(true); //cepo visible
+            isBear = true;
+        }
+
+        //stockHud = canvasHUD.transform.Find("Stock").gameObject as GameObject;
+        //stockHud.gameObject.SetActive(false); //cepo no visible
+
+
     }
 
     void Update()
@@ -129,6 +155,8 @@ public class BearInputMultiplayer : MonoBehaviour
         {
             return;
         }
+
+
         //ANIMACIÓN ANDAR
         // && (isRunning == false)
         if ((keysPressed > 0))
@@ -490,21 +518,34 @@ public class BearInputMultiplayer : MonoBehaviour
     }
     public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
     {
-        //ACTIVAR VISIÓN
-        GameObject[] penguins = GameObject.FindGameObjectsWithTag("Penguin");
-        Material[] visionMaterials = new Material[3];
-        visionMaterials[0] = visionMaterial1;
-        visionMaterials[1] = visionMaterial2;
-        visionMaterials[2] = visionMaterial3;
+        //Si el power up esta aviable
 
-        for (int i = 0; i < penguins.Length; i++)
+        if (powerUpAviable == true)
         {
-            Renderer rend = penguins[i].GetComponentInChildren<Renderer>();
-            rend.materials = visionMaterials;
-        }
+            if (isBear == true)
+            {
+                visionHud.gameObject.SetActive(false); //cepo visible
+            }
 
-        powerUpOn = true;
-        _timePowerUp = Time.fixedTime + 2;
+            //ACTIVAR VISIÓN
+            GameObject[] penguins = GameObject.FindGameObjectsWithTag("Penguin");
+            Material[] visionMaterials = new Material[3];
+            visionMaterials[0] = visionMaterial1;
+            visionMaterials[1] = visionMaterial2;
+            visionMaterials[2] = visionMaterial3;
+
+            for (int i = 0; i < penguins.Length; i++)
+            {
+                Renderer rend = penguins[i].GetComponentInChildren<Renderer>();
+                rend.materials = visionMaterials;
+            }
+
+            powerUpOn = true;
+            powerUpAviable = false;
+            _timePowerUp = Time.fixedTime + 5;
+            cooldowmPowerUp = Time.fixedTime + 10;
+        }
+        
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -638,6 +679,19 @@ public class BearInputMultiplayer : MonoBehaviour
                 }
 
                 powerUpOn = false;
+            }
+        }
+
+        if (powerUpAviable == false)
+        {
+            if (deltaTime > cooldowmPowerUp)
+            {
+                powerUpAviable = true;
+
+                if (isBear == true)
+                {
+                    visionHud.gameObject.SetActive(true); //cepo visible
+                }
             }
         }
     }

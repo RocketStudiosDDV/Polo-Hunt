@@ -116,6 +116,7 @@ MonoBehaviour:
   ownerActorNumber: 0
   keysPressed: 0
   _timeTillPressed: 0
+  canvasHUD: {fileID: 0}
 --- !u!114 &7199837195669275907
 MonoBehaviour:
   m_ObjectHideFlags: 0

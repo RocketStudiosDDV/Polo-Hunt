@@ -168,6 +168,7 @@ MonoBehaviour:
   normalMaterial2: {fileID: 2100000, guid: aa6906464e25bca4086ff30892b90700, type: 2}
   normalMaterial3: {fileID: 2100000, guid: 3b55148877bf7114e8518a3b674f0c63, type: 2}
   ownerActorNumber: 0
+  canvasHUD: {fileID: 0}
 --- !u!114 &1163549210934612369
 MonoBehaviour:
   m_ObjectHideFlags: 0

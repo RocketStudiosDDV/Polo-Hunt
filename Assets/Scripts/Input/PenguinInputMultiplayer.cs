@@ -84,6 +84,12 @@ public class PenguinInputMultiplayer : MonoBehaviour
     public int keysPressed = 0; //control del movimiento por teclado para que no se acaben las animacione spor soltar una tecla al estar pulsando dos
 
     public double _timeTillPressed;
+
+    //CEPO ACTIVACION HUD
+    private GameObject stockHud;
+    public Canvas canvasHUD;
+    private bool isPenguin = false;
+
     #endregion
 
     #region UNITY CALLBACKS
@@ -97,7 +103,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
             mainCamera = Object.FindObjectOfType<Camera>();
             pivot = Instantiate(pivotPrefab).transform;
             target = pivot.GetChild(0).transform;
+            
         }
+
+        
     }
 
     // Start is called before the first frame update
@@ -107,8 +116,29 @@ public class PenguinInputMultiplayer : MonoBehaviour
         //PenguinHUD.SetActive(true);
         _playerRB = GetComponent<Rigidbody>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
-
         penguin_animator = GetComponent<Animator>();
+        canvasHUD = FindObjectOfType<Canvas>();
+
+        //if (GetComponent<PhotonView>().IsMine)
+        //{​​​​  
+        object property = false;
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out property);
+
+        if ((bool)property)
+        {
+            // Es pinga
+            stockHud = canvasHUD.transform.Find("Stock").gameObject as GameObject;
+            stockHud.gameObject.SetActive(true); //cepo visible
+            isPenguin = true;
+        }
+
+        /*else
+        {​​
+        // No es pinga
+        }​​
+        
+        //}​​​​ */
+       
     }
 
     // Update is called once per frame
@@ -226,7 +256,6 @@ public class PenguinInputMultiplayer : MonoBehaviour
         if (isRunning == false)
         {
             int lastPressed = 1;
-            //float indexBig = 0.3f;
 
             if (InIceDashPlat == true) //Movimientoi en el dash de la plat
             {
@@ -236,26 +265,21 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 {
                     _playerRB.AddForce(lookingAt * 0.7f * speed, ForceMode.Impulse);
                     lastPressed = 0;
-                    //_timeTillPressed = Time.deltaTime + 2;
-
                 }
                 else if (playerDirection.z < 0)
                 {
                     _playerRB.AddForce(lookingAt * 0.7f * speed, ForceMode.Impulse);
                     lastPressed = 1;
-                    //_timeTillPressed = Time.deltaTime + 2;
                 }
                 else if(playerDirection.x > 0)
                 {
                     _playerRB.AddForce(lookingAt * 0.7f * speed, ForceMode.Impulse);
                     lastPressed = 2;
-                    //_timeTillPressed = Time.deltaTime + 2;
                 }
                 else if (playerDirection.x < 0)
                 {
                     _playerRB.AddForce(lookingAt * 0.7f * speed, ForceMode.Impulse);
                     lastPressed = 3;
-                    //_timeTillPressed = Time.deltaTime + 2;
                 }
                 else
                 {
@@ -265,54 +289,15 @@ public class PenguinInputMultiplayer : MonoBehaviour
                      }
                     else if (lastPressed == 1)
                     {
-                        /*if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
-                        {
-                            _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
-                        }
-                        else if ((_timeTillPressed < Time.fixedTime + 1) && (_timeTillPressed > Time.fixedTime))
-                        {
-                           // _playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
-                        }
-                        else
-                        {
-                            _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
-                        }*/
                         _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
                     }
                     else if (lastPressed == 2)
                     {
-                        /*if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
-                        {
-                            _playerRB.AddForce(lookingAt * -0.2f * speed, ForceMode.Impulse);
-                        }
-                        else if ((_timeTillPressed < Time.fixedTime + 1) && (_timeTillPressed > Time.fixedTime))
-                        {
-                            //_playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
-                        }
-                        else
-                        {
-                            _playerRB.AddForce(lookingAt * -0.5f * speed, ForceMode.Impulse);
-
-                        } */
-
                         _playerRB.AddForce(lookingAt * -0.2f * speed, ForceMode.Impulse);
                         
                     }
                     else if (lastPressed == 3)
                     {
-                        /*if ((_timeTillPressed < Time.fixedTime) && (_timeTillPressed > Time.fixedTime + 1))
-                        {
-                            _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
-                        }
-                        else if ((_timeTillPressed < Time.fixedTime + 1) && (_timeTillPressed > Time.fixedTime))
-                        {
-                            //_playerRB.AddForce(lookingAt * 0f * speed, ForceMode.Impulse);
-                        }
-                        else
-                        {
-                            _playerRB.AddForce(lookingAt * 0.5f * speed, ForceMode.Impulse);
-                        }          */
-
                         _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
                         
                     }
@@ -520,6 +505,15 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             cepoActive = true;
 
+            //if (GetComponent<PhotonView>().IsMine)
+            //{​​​​  
+            if (isPenguin == true)
+            {
+                stockHud.gameObject.SetActive(false); //cepo visible
+            }
+                
+            //}​​​​ 
+           
             if ((lookingAt.x > 0) && (lookingAt.z < 0))
             {
                 PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y + 0.04f, _playerRB.transform.position.z + 1), Quaternion.Euler(-90f, 0f, 0f));
@@ -723,6 +717,16 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             if (Time.fixedTime > timeAwait)
             {
+                
+                //if (GetComponent<PhotonView>().IsMine)
+                //{​​​​  
+                if (isPenguin == true)
+                {
+                    stockHud.gameObject.SetActive(true);
+                }
+                    //cepo visible
+                //}​​​​ 
+                //stockHud.gameObject.SetActive(true); //cepo visible
                 cepoActive = false;
             }
         }
