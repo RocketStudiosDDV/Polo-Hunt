@@ -164,8 +164,11 @@ public class PenguinInputMultiplayer : MonoBehaviour
             return;
         }
         //ANIMACIÓN ANDAR
-        if (keysPressed > 0)
+        if ((Input.GetKey(KeyCode.W)) || (Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.D))
+            || (Input.GetKey(KeyCode.LeftArrow)) || (Input.GetKey(KeyCode.RightArrow)) || (Input.GetKey(KeyCode.UpArrow)) || (Input.GetKey(KeyCode.DownArrow)))
         {
+        //     if (keysPressed > 0)
+        // {
             walking_animation = true;
         }
         else
