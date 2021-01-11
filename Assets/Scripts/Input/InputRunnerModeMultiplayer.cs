@@ -13,7 +13,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     [SerializeField] float speed = 25;
     //[SerializeField] Canvas finalRanking;
     //[SerializeField] float force = 50;
-    
+
 
     private PlayerControls _controls;
     private Rigidbody _playerRB; //Rigid body del pingu
@@ -87,6 +87,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     // ONLINE
     public GameObject pivotPrefab;
     public List<string> clasification;
+    private bool goalReachedSent;   // Ha enviado el mensaje de meta alcanzada? (modo RACE)
     #endregion
 
     #region UNITY CALLBACKS
@@ -96,16 +97,19 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         _controls = new PlayerControls();
         clasification = new List<string>();
 
+        // Inicialización de variables
+        goalReachedSent = false;
+
         if (GetComponent<PhotonView>().IsMine || !PhotonNetwork.IsConnected)  // Si es nuestro pingüino, seguirlo con la cámara
         {
             mainCamera = FindObjectOfType<Camera>();
             pivot = Instantiate(pivotPrefab).transform;
             target = pivot.GetChild(0).transform;
-            
+
         }
 
         //canvasHUD = FindObjectOfType<Canvas>();
-        
+
         //finalRanking.gameObject.SetActive(false);
     }
 
@@ -124,7 +128,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         _playerRB = GetComponent<Rigidbody>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
         penguin_animator = GetComponent<Animator>();
-        
+
 
         //correr y moverse deben estar unabled antes del inicio
         _controls.Player.Run.Disable();
@@ -185,9 +189,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
         //movimiento durante        
         if ((walking_animation == false) && (isHitted == false))
-        {            
+        {
             if (toStop == false)
-            {                 
+            {
                 _playerRB.velocity = new Vector3(playerInput.x * speed, _playerRB.velocity.y, playerInput.z * speed);
                 _playerRB.AddForce(Vector3.up * -100, ForceMode.Force); //hace fuerza hacia abajo de forma que no vuele
                 _playerRB.transform.rotation = Quaternion.Euler(20f, _playerRB.velocity.x, 0f);
@@ -298,8 +302,15 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             _timeTillStop = Time.fixedTime + numRand;
             timeRanking = Time.fixedTime + numRand + 2;
             toStop = true;
-            object parameters = PhotonNetwork.LocalPlayer.NickName;
-            matchInfo.GetComponent<PhotonView>().RPC("GoalReached", RpcTarget.MasterClient, parameters);
+            if (GetComponent<PhotonView>().IsMine)  // Si es el dueño del pingüino
+            {
+                if (goalReachedSent == false)   // Y no ha avisado de que ha llegado a la meta
+                {
+                    goalReachedSent = true;
+                    object parameters = PhotonNetwork.LocalPlayer.NickName;
+                    matchInfo.GetComponent<PhotonView>().RPC("GoalReached", RpcTarget.MasterClient, parameters);    // Avisa al master de que ha llegado
+                }
+            }
             Debug.Log("Oleee");
         }
 
@@ -354,7 +365,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "RestZone") //Si llega al descanso
         {
             Debug.Log("DESCANSO");
-                      
+
         }
 
         if (collision.gameObject.tag == "Floor") //Si esta en el mapa
@@ -378,7 +389,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             snowmanCollided = true;
             _timeSnowman = Time.fixedTime + 5;
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 5f, _playerRB.position.y, _playerRB.position.z));
-            
+
             //_playerRB.AddForce(Vector3.forward * -force, ForceMode.Impulse);
             //_playerRB.AddForce(Vector3.right * -force, ForceMode.Impulse);
             //_playerRB.AddForce(Vector3.up * -force/2, ForceMode.Impulse);
@@ -419,7 +430,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             onObstacleMini = true;
             _timeObstacle = Time.fixedTime + 3;
             speed = 15;
-            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 3, _playerRB.position.y, _playerRB.position.z ));
+            _playerRB.MovePosition(new Vector3(_playerRB.position.x - 3, _playerRB.position.y, _playerRB.position.z));
         }
     }
 
@@ -477,7 +488,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             //_playerRB.AddForce(Vector3.up * 0, ForceMode.Force); //hace fuerza hacia abajo de forma que no vuele
             _playerRB.AddForce(Vector3.up * 20f, ForceMode.Impulse);
             inFloor = false;
-        }   
+        }
     }
 
 
@@ -504,7 +515,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             table.SetPlayerNames(matchInfo.clasification);
             table.ActualizeClasification();
         }
-        
+
     }
 
     //Tiempo que dura con la velocidad por el pez
@@ -524,7 +535,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     }
 
     public void WasHitted(bool side) //false = izq, true = dch
-    { 
+    {
 
         if (isHitted == true)
         {
@@ -538,14 +549,14 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
                 //penguinPos = _playerRB.position;
                 //_playerRB.MovePosition(new Vector3(penguinPos.x, penguinPos.y, penguinPos.z - 5));
                 isHitted = false;
-            }     
+            }
             else
             {
                 Debug.Log("TRUE");
                 _playerRB.AddRelativeForce(Vector3.right * 250, ForceMode.Impulse);
                 isHitted = false;
             }
-        }           
+        }
     }
 
 
