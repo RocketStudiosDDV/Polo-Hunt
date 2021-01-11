@@ -156,6 +156,9 @@ Este juego tiene un gran desafío por esta parte. Conseguir la diversión del ju
 -
 
 ## Servidores y multijugador
+Polar Hunt hace uso del framework de desarrollo Photon Unity Networking 2 (PUN2) y del servicio de servidores Photon Cloud. Los servidores permiten hasta 20 personas jugando de manera simultánea, con cross-play entre las plataformas disponibles. Los jugadores pueden crear salas públicas disponibles para el resto de usuarios o salas privadas accesibles mediante un código.
+Los servidores de Photon Cloud tienen una latencia de 90-100 milisegundos de media. A pesar de ser unos valores aceptables para nuestro tipo de juego, Polar Hunt utiliza diferentes métodos para minimizar el impacto de la latencia. El networking de las posiciones de los personajes cuenta con predicción de movimientos e interpolación de los datos reales con los estimados. Cada jugador tiene autoridad sobre su propio personaje, asegurando así que la respuesta al input del sea rápida y que el usuario mantenga siempre el control sobre su personaje. También cuenta con comprobaciones de latencia y sincornización entre los jugadores a la hora de decidir eventos importantes como puede ser cazar a un pingüino. 
+Polar Hunt tiene arquitectura cliente-servidor para facilitar la conexión entre los usuarios y evitar así las dificultades que les puede suponer sortear la NAT para conectarse entre ellos. Esto es esencial sobre todo para juegos de navegador y orientados a todos los públicos, ya que debe primar la accesibilidad.
 
 ##Tutorial
 
