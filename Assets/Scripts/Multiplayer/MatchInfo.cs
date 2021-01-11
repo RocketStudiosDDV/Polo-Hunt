@@ -741,35 +741,37 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         object property = true;
-        changedProps.TryGetValue("alive", out property);
-        if ((bool)property)
+        if (changedProps.TryGetValue("alive", out property))
         {
-            for (int i = 0; i < playersList.Count; i++)
+            if ((bool)property)
             {
-                Player player = playersList[i];
-                if (targetPlayer.ActorNumber == player.ActorNumber)
+                for (int i = 0; i < playersList.Count; i++)
                 {
-                    playersReady[i] = true;
+                    Player player = playersList[i];
+                    if (targetPlayer.ActorNumber == player.ActorNumber)
+                    {
+                        playersReady[i] = true;
+                    }
                 }
-            }
 
-            bool allReady = true;
-            foreach (bool ready in playersReady)
-            {
-                if (ready == false)
+                bool allReady = true;
+                foreach (bool ready in playersReady)
                 {
-                    allReady = false;
+                    if (ready == false)
+                    {
+                        allReady = false;
+                    }
                 }
-            }
-            if (PhotonNetwork.IsMasterClient)
-            {
-                if (allReady)
+                if (PhotonNetwork.IsMasterClient)
                 {
-                    Invoke("InstantiatePlayersWrapper", 3f);
+                    if (allReady)
+                    {
+                        Invoke("InstantiatePlayersWrapper", 3f);
+                    }
                 }
+                Invoke("AssignRankingTableValues", 6f);
             }
-            Invoke("AssignRankingTableValues", 6f);
-        }
+        }                
     }
 
     public void AssignRankingTableValues()
