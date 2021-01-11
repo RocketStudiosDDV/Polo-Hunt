@@ -80,6 +80,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     public Canvas canvasHUD;
     public GameObject tableRanking;
     public GameObject finalText;
+    public GameObject posInGame;
 
     private MatchInfo matchInfo;
 
@@ -118,6 +119,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         canvasHUD = FindObjectOfType<Canvas>();
         tableRanking = canvasHUD.transform.Find("HighscoreTable").gameObject as GameObject;
         finalText = canvasHUD.transform.Find("FinalText").gameObject as GameObject;
+        posInGame = canvasHUD.transform.Find("Position").gameObject as GameObject;
 
         _playerRB = GetComponent<Rigidbody>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
@@ -203,6 +205,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
                     sliding_animation = false;
                     finished = true;
 
+                    posInGame.SetActive(false);
                     finalText.SetActive(true);
                     ShowRanking();
 
@@ -343,7 +346,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Fish") //Si choca con un pescao
         {
             fishEaten = true;
-            speed = 30;
+            speed = 45;
             _timeFish = Time.fixedTime + 3;
             Debug.Log("COLAS");
         }
