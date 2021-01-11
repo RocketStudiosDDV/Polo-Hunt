@@ -49,6 +49,10 @@ TagManager:
   - hudResultsInfoTxt
   - hudReturnTxt
   - hudAlertTxt
+  - VisionHUD
+  - NameHUD
+  - HuntHUD
+  - RunnerHUD
   layers:
   - Default
   - TransparentFX

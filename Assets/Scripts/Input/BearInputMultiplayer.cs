@@ -101,6 +101,7 @@ public class BearInputMultiplayer : MonoBehaviour
     //VISION ACTIVACION HUD
     private GameObject visionHud;
     public Canvas canvasHUD;
+    //public Transform canvasNameHUD;
     private bool isBear = false;
 
     #endregion
@@ -122,7 +123,20 @@ public class BearInputMultiplayer : MonoBehaviour
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>(); //identifica el rigidbdy del oso
-        canvasHUD = FindObjectOfType<Canvas>();
+
+        foreach (Canvas canvas in Resources.FindObjectsOfTypeAll<Canvas>())
+        {
+            if (canvas.CompareTag("HuntHUD"))
+            {
+                canvasHUD = canvas;
+            }
+
+            /*if (canvas.CompareTag("NameHUD"))
+            {
+                canvasNameHUD = canvas.GetComponent<Transform>();
+                canvasNameHUD.Find("Text").GetComponent<Text>().text = GetComponent<PhotonView>().Owner.NickName;
+            }*/
+        }        
 
         if (BearHUD != null)
         {
@@ -490,32 +504,8 @@ public class BearInputMultiplayer : MonoBehaviour
             isRunning = false;
             Debug.Log("Dejo de correr");
         }
-
-        //if (context.ReadValueAsButton() == true)
-        //{
-           /* Debug.Log("A correr");
-            isRunning = true;
-            speed = 10;
-            _timeRunning = Time.fixedTime + 10;
-            finalStamina = Time.fixedTime;
-        //}
-       /* else
-        {
-            isRunning = false;
-            Debug.Log("Dejo de correr");
-        }*/
-        
-      /*  if (context.ReadValueAsButton())
-        {
-            isRunning = false;
-            Debug.Log("Dejo de correr");
-        }*/
-        
-
-        //Stamina = 10/Time.deltaTime/1000;
-        //Stamina += /*10 */ Time.deltaTime; /// 1000;
-        //Debug.Log("Stamina " + Stamina);
     }
+
     public void PowerUp(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         //Si el power up esta aviable
@@ -701,34 +691,13 @@ public class BearInputMultiplayer : MonoBehaviour
     {
         if (isRunning == true)
         {
-            //Debug.Log("a correr");
-            //Debug.Log("delta time " + deltaTime);
-            //Debug.Log("tiempo pasado " + _timeRunning);
-
             stamina--;
-            
-            //Debug.Log("final stamina " + finalStamina);
-            //Debug.Log("stamina " + stamina);
 
             if (finalStamina > stamina)
             {
                 speed = 3;
-                //Debug.Log("delta time " + Time.deltaTime);
-                //Debug.Log("tiempo pasado " + _timeRunning);
                 isRunning = false;
             }
-
-            //Stamina -= Time.deltaTime;
-            //Debug.Log("STAMINA" + Stamina);
-
-            /* if (deltaTime > _timeRunning)
-             {
-                 speed = 3;
-                 Debug.Log("delta time " + Time.deltaTime);
-                 Debug.Log("tiempo pasado " + _timeRunning);
-                 isRunning = false;
-             }*/
-
         }
         else
         {

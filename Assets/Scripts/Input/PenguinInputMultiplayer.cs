@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PenguinInputMultiplayer : MonoBehaviour
 {
@@ -86,6 +87,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     public double _timeTillPressed;
 
     //CEPO ACTIVACION HUD
+    //public Transform canvasNameHUD;
     private GameObject stockHud;
     public Canvas canvasHUD;
     private bool isPenguin = false;
@@ -117,7 +119,20 @@ public class PenguinInputMultiplayer : MonoBehaviour
         _playerRB = GetComponent<Rigidbody>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
         penguin_animator = GetComponent<Animator>();
-        canvasHUD = FindObjectOfType<Canvas>();
+
+        foreach (Canvas canvas in Resources.FindObjectsOfTypeAll<Canvas>())
+        {
+            if (canvas.CompareTag("HuntHUD"))
+            {
+                canvasHUD = canvas;
+            }
+
+            /*if (canvas.CompareTag("NameHUD"))
+            {
+                canvasNameHUD = canvas.GetComponent<Transform>();
+                canvasNameHUD.Find("Text").GetComponent<Text>().text = GetComponent<PhotonView>().Owner.NickName;
+            }*/
+        }
 
         //if (GetComponent<PhotonView>().IsMine)
         //{​​​​  

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class InputRunnerModeMultiplayer : MonoBehaviour
 {
@@ -78,6 +79,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     private bool finished = false;
     private double timeRanking;
     public Canvas canvasHUD;
+    //public Transform canvasNameHUD;
     public GameObject tableRanking;
     public GameObject finalText;
     public GameObject posInGame;
@@ -124,7 +126,21 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         //finalRanking.gameObject.SetActive(false);
         //finalRanking = FindObjectOfType<Canvas>();//.tag("Ranking");
         //finalRanking.enabled = true;
-        canvasHUD = FindObjectOfType<Canvas>();
+        foreach (Canvas canvas in Resources.FindObjectsOfTypeAll<Canvas>())
+        {
+            if (canvas.CompareTag("RunnerHUD"))
+            {
+                canvasHUD = canvas;
+            }
+
+            /*if (canvas.CompareTag("NameHUD"))
+            {
+                canvasNameHUD = canvas.GetComponent<Transform>();
+                canvasNameHUD.Find("Text").GetComponent<Text>().text = GetComponent<PhotonView>().Owner.NickName;
+            }*/
+        }
+
+        //canvasHUD = FindObjectOfType<Canvas>();
         tableRanking = canvasHUD.transform.Find("HighscoreTable").gameObject as GameObject;
         finalText = canvasHUD.transform.Find("FinalText").gameObject as GameObject;
         posInGame = canvasHUD.transform.Find("Position").gameObject as GameObject;
