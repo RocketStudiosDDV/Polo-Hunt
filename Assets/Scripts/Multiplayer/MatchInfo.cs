@@ -313,7 +313,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         penguinsNotFinished--;
         if (penguinsNotFinished <= 0)
         {
-            FindObjectOfType<ConectionManagerInGame>().ReturnToGameSelectionMenu(10);
+            ShowReturnHUD(10);
         }
     }
 
@@ -721,7 +721,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 penguinsNotFinished--;
                 if (penguinsNotFinished <= 0)
                 {
-                    FindObjectOfType<ConectionManagerInGame>().ReturnToGameSelectionMenu(10);
+                    ShowReturnHUD(10);
                 }
             }
         }
