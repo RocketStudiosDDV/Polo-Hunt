@@ -9,7 +9,31 @@ public class OptionsScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (PlayerPrefs.GetInt("language") == 0)
+        {
+            int i = 0;
+            foreach (Text t in Text)
+            {
+                
+                if (t != null)
+                {
+                    t.text = EnglishTest[i];
+                }
+                i++;
+            }
+        }
+        else
+        {
+            int i = 0;
+            foreach (Text t in Text)
+            {
+                if (t != null)
+                {
+                    t.text = SpanishTest[i];
+                }
+                i++;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -20,7 +44,6 @@ public class OptionsScript : MonoBehaviour
 
     public AudioMixer audioMixer;
 
-    public int English = 0;
     public string[] EnglishTest;
     public string[] SpanishTest;
 
@@ -38,8 +61,8 @@ public class OptionsScript : MonoBehaviour
 
     public void SetEnglish()
     {
-        English = 0;
-        for(int i = 0; i < 8; i++)
+        PlayerPrefs.SetInt("language", 0);
+        for(int i = 0; i < 5; i++)
         {
             if (Text[i] != null)
             {
@@ -50,8 +73,8 @@ public class OptionsScript : MonoBehaviour
 
     public void SetSpanish()
     {
-        English = 1;
-        for(int i = 0; i < 8; i++)
+        PlayerPrefs.SetInt("language", 1);
+        for(int i = 0; i < 5; i++)
         {
             if (Text[i] != null)
             {

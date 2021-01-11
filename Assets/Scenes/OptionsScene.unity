@@ -938,34 +938,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 0}
-  English: 0
   EnglishTest:
-  - Language
-  - Sound
-  - Bright
-  - Controls
-  - Left
-  - Right
-  - Up
-  - Down
+  - OPTIONS
+  - MUSIC
+  - EFECTS
+  - BRIGHTNESS
+  - BACK
   SpanishTest:
-  - Idioma
-  - Sonido
-  - Brillo
-  - Controles
-  - Izquierda
-  - Derecha
-  - Arriba
-  - Abajo
+  - OPCIONES
+  - MUSICA
+  - EFECTOS
+  - BRILLO
+  - ATRAS
   Text:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1992224851}
+  - {fileID: 2129350197}
+  - {fileID: 777451611}
+  - {fileID: 1813352901}
+  - {fileID: 107989167}
 --- !u!1 &604541952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1811,7 +1801,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: db1bd4b24301bdd42ada7ebb97298d52, type: 2}
-  English: 1
   EnglishTest: []
   SpanishTest: []
   Text: []

@@ -947,6 +947,131 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75643352}
   m_CullTransparentMesh: 0
+--- !u!1 &76998198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 76998200}
+  - component: {fileID: 76998199}
+  m_Layer: 0
+  m_Name: OptionsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &76998199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76998198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6adec1fcdd2bf04abbc0daed3b09eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 0}
+  EnglishTest:
+  - Enter nickname...
+  - Enter password...
+  - LOG IN
+  - BACK
+  - JOIN ROOM
+  - CREATE ROOM
+  - BACK
+  - PRIVATE ROOM
+  - Enter code...
+  - CREATE
+  - PUBLIC ROOM
+  - CREATE
+  - BACK
+  - JOIN RANDOM
+  - JOIN PRIVATE
+  - Enter code...
+  - BACK
+  - GAMEMODE
+  - RUNNER MODE
+  - POLAR HUNT
+  - SET NUMBER OF BEARS
+  - BACK
+  - BACK
+  - PLAY
+  - ROOM OPTIONS
+  - BACK
+  SpanishTest:
+  - Usuario...
+  - "Constrase\xF1a..."
+  - ENTRAR
+  - ATRAS
+  - UNIRTE A SALA
+  - CREAR SALA
+  - ATRAS
+  - SALA PRIVADA
+  - Introduce codigo...
+  - CREAR
+  - SALA PUBLICA
+  - CREAR
+  - ATRAS
+  - UNIRTE ALEATORIA
+  - UNIRTE PRIVADA
+  - Introduce codigo...
+  - ATRAS
+  - MODO DE JUEGO
+  - MODO CARRERA
+  - CAZA POLAR
+  - ELIGE NUMERO DE OSOS
+  - ATRAS
+  - ATRAS
+  - JUGAR
+  - OPCIONES DE SALA
+  - ATRAS
+  Text:
+  - {fileID: 1227653356}
+  - {fileID: 1465170027}
+  - {fileID: 329125678}
+  - {fileID: 271728121}
+  - {fileID: 1191298933}
+  - {fileID: 576160530}
+  - {fileID: 148433400}
+  - {fileID: 2125409581}
+  - {fileID: 681955131}
+  - {fileID: 1127643018}
+  - {fileID: 641387330}
+  - {fileID: 1252655655}
+  - {fileID: 2125010762}
+  - {fileID: 800870260}
+  - {fileID: 1342664692}
+  - {fileID: 71499527}
+  - {fileID: 1859099827}
+  - {fileID: 62227340}
+  - {fileID: 239809431}
+  - {fileID: 1565008534}
+  - {fileID: 6585702}
+  - {fileID: 1992507673}
+  - {fileID: 1940260619}
+  - {fileID: 544279352}
+  - {fileID: 1660306729}
+  - {fileID: 1717553342}
+--- !u!4 &76998200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76998198}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1275.5652, y: 591.6365, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &88281637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,7 +1443,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 199, y: 78}
+  m_AnchoredPosition: {x: 547, y: 0}
   m_SizeDelta: {x: 390, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &137060492
@@ -2166,7 +2291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 199, y: -122}
+  m_AnchoredPosition: {x: 547, y: -122}
   m_SizeDelta: {x: 350, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &197186363
@@ -9796,7 +9921,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1274709602
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9815,7 +9940,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 199, y: -8}
+  m_AnchoredPosition: {x: 547, y: -8}
   m_SizeDelta: {x: 390, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1274709603
@@ -15256,7 +15381,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1853777590
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16100,7 +16225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1923824745
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17262,7 +17387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2050781318
 RectTransform:
   m_ObjectHideFlags: 0
