@@ -598,7 +598,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
                 object isAlive = false;
                 object isPenguin = false;
-                PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isAlive", out isAlive);
+                PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("alive", out isAlive);
                 PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out isPenguin);                
                 if ((bool)isPenguin)
                 {
