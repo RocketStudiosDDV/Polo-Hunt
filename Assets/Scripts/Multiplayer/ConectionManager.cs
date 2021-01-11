@@ -493,7 +493,6 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
-        FinalRoom(0);
         if (propertiesThatChanged.ContainsKey("gameMode"))
         {
             if (logWriter != null)
