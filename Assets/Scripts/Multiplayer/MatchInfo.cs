@@ -18,7 +18,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     #region VARIABLES
     // Configuración de partida
     private int numberOfBears = 0;   // nº de osos de la partida (leído de customPreferences)
-    private double matchLength = 600; //tiempo que dura la partida
+    private double matchLength = 300; //tiempo que dura la partida
 
     // Información de partida
     private GameMode gameMode;  // Modo de juego
@@ -32,6 +32,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private bool matchStarted;  // Se empezó la partida?
 
     public List<string> clasification; // clasificación (modo race)
+
+    // Información de los ajustes
+    private int language;
 
     // Información de sincronización
     public List<bool> playersReady; // lista de jugadores listos
@@ -75,6 +78,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private void Awake()
     {
         // Inicializamos variables necesarias
+        language = PlayerPrefs.GetInt("language", 0);
         playersList = new List<Player>();
         playersReady = new List<bool>();
         clasification = new List<string>();
@@ -464,7 +468,13 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         if (hudReturn == null)
             return;
         hudReturn.SetActive(true);
-        hudReturnTxt.text = "Volviendo a la sala en...";
+        if (language == 0)
+        {
+            hudReturnTxt.text = "Returning to room...";
+        } else
+        {
+            hudReturnTxt.text = "Volviendo a la sala en...";
+        }
         timeToReturn = countdown;
         hudReturnCountdownTxt.text = timeToReturn.ToString();
         Invoke(nameof(ActualizeCountdown), 1f);
@@ -504,8 +514,16 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("alive", out isAlive);
                 if ((bool)isAlive)
                 {
-                    hudResultsTxt.text = "VICTORIA";
-                    hudResultsInfoTxt.text = "Se han desconectado todos los osos";
+                    if (language == 0)
+                    {
+                        hudResultsTxt.text = "VICTORY";
+                        hudResultsInfoTxt.text = "All bears disconnected";
+                    }
+                    else
+                    {
+                        hudResultsTxt.text = "VICTORIA";
+                        hudResultsInfoTxt.text = "Se han desconectado todos los osos";
+                    }
                 }
                 // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
             }
@@ -514,8 +532,16 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 if (logWriter != null)
                     logWriter.Write("se fueron todos los pinguinos");
                 // TODO - decir victoria a los osos y mostrar la pantalla de fin de partida
-                hudResultsTxt.text = "VICTORIA";
-                hudResultsInfoTxt.text = "Se han desconectado todos los pingüinos";
+                if (language == 0)
+                {
+                    hudResultsTxt.text = "VICTORY";
+                    hudResultsInfoTxt.text = "All penguins disconnected";
+                }
+                else
+                {
+                    hudResultsTxt.text = "VICTORIA";
+                    hudResultsInfoTxt.text = "Se han desconectado todos los pingüinos";
+                }
                 // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
             }
             else if (penguinsAlive == 0)
@@ -526,13 +552,32 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 // TODO - decir volviendo en X segundos a la sala de selección de partida y llamar a ConectionManagerInGame.ReturnToGameSelectionMenu()
                 object isPenguin = false;
                 PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out isPenguin);
-                hudResultsInfoTxt.text = "Todos los pingüinos han sido cazados";
-                if ((bool)isPenguin)
+                if (language == 0)
                 {
-                    hudResultsTxt.text = "DERROTA";
+                    hudResultsInfoTxt.text = "All penguins have been hunted";
                 } else
                 {
-                    hudResultsTxt.text = "VICTORIA";
+                    hudResultsInfoTxt.text = "Todos los pingüinos han sido cazados";
+                }
+                if ((bool)isPenguin)
+                {
+                    if (language == 0)
+                    {
+                        hudResultsTxt.text = "DEFEAT";
+                    } else
+                    {
+                        hudResultsTxt.text = "DERROTA";
+                    }
+                } else
+                {
+                    if (language == 0)
+                    {
+                        hudResultsTxt.text = "VICTORY";
+                    }
+                    else
+                    {
+                        hudResultsTxt.text = "VICTORIA";
+                    }
                 }
             }
             else
@@ -549,17 +594,38 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 {
                     if ((bool)isAlive)
                     {
-                        hudResultsTxt.text = "VICTORIA";
-                        hudResultsInfoTxt.text = "Has sobrevivido a la cacería";
+                        if (language == 0)
+                        {
+                            hudResultsTxt.text = "VICTORY";
+                            hudResultsInfoTxt.text = "You survived the hunt";
+                        } else
+                        {
+                            hudResultsTxt.text = "VICTORIA";
+                            hudResultsInfoTxt.text = "Has sobrevivido a la cacería";
+                        }
                     } else
                     {
-                        hudResultsTxt.text = "DERROTA";
-                        hudResultsInfoTxt.text = "Has sido cazado";
+                        if (language == 0)
+                        {
+                            hudResultsTxt.text = "DEFEAT";
+                            hudResultsInfoTxt.text = "You've been hunted";
+                        } else
+                        {
+                            hudResultsTxt.text = "DERROTA";
+                            hudResultsInfoTxt.text = "Has sido cazado";
+                        }
                     }
                 } else
                 {
-                    hudResultsTxt.text = "DERROTA";
-                    hudResultsInfoTxt.text = "No han sido cazados todos los pingüinos";
+                    if (language == 0)
+                    {
+                        hudResultsTxt.text = "DEFEAT";
+                        hudResultsInfoTxt.text = "There are penguins left";
+                    } else
+                    {
+                        hudResultsTxt.text = "DERROTA";
+                        hudResultsInfoTxt.text = "No han sido cazados todos los pingüinos";
+                    }
                 }
             }
         }       
@@ -613,7 +679,13 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// <param name="otherPlayer"></param>
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        ShowAlertHUD(5, otherPlayer.NickName + " se fue de la sala.");
+        if (language == 0)
+        {
+            ShowAlertHUD(5, otherPlayer.NickName + " left the room.");
+        } else
+        {
+            ShowAlertHUD(5, otherPlayer.NickName + " se fue de la sala.");
+        }
         if (PhotonNetwork.IsMasterClient)
         {
             object wasPenguin;
