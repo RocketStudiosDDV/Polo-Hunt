@@ -18,7 +18,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     #region VARIABLES
     // Configuración de partida
     private int numberOfBears = 0;   // nº de osos de la partida (leído de customPreferences)
-    private double matchLength = 300; //tiempo que dura la partida
+    private double matchLength = 60; //tiempo que dura la partida
 
     // Información de partida
     private GameMode gameMode;  // Modo de juego
