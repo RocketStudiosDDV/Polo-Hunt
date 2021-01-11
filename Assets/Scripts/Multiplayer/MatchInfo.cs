@@ -22,8 +22,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     // Información de partida
     private GameMode gameMode;  // Modo de juego
+    
+    // - MODO HUNT
     public int penguinsAlive; //pinguinos restantes
-
     public int bearsConnected; //osos conectados
     public int penguinsConnected; //pinguinos conectados
     private double matchTime;   // momento actual de la partida
@@ -31,7 +32,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private bool matchFinished;     // Se acabo la partida?
     private bool matchStarted;  // Se empezó la partida?
 
+    // - MODO RACE
     public List<string> clasification; // clasificación (modo race)
+    public int penguinsNotFinished; // nº de pingüinos que aún no han terminado
 
     // Información de los ajustes
     private int language;
@@ -87,6 +90,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         matchManager.matchInfo = this;
         matchFinished = false;
         matchStarted = false;
+        penguinsNotFinished = PhotonNetwork.CurrentRoom.PlayerCount;
         logWriter = FindObjectOfType<LogWriter>();
         // Obtenemos las referencias al HUD
         foreach (Text text in Resources.FindObjectsOfTypeAll<Text>())
@@ -289,6 +293,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     /// <summary>
     /// Avisa a todos los jugadores de que actualicen su pantalla de resultados
+    /// Si han llegado todos, pone el contador de volver a la sala de selección de partida
     /// </summary>
     /// <param name="parameters"></param>
     [PunRPC]
@@ -304,6 +309,11 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             table.SetPlayerNames(clasification);
             table.ActualizeClasification();
+        }
+        penguinsNotFinished--;
+        if (penguinsNotFinished <= 0)
+        {
+            FindObjectOfType<ConectionManagerInGame>().ReturnToGameSelectionMenu(10);
         }
     }
 
@@ -700,6 +710,19 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             } else if (gameMode == GameMode.Hunt)
             {
                 GetComponent<PhotonView>().RPC("ActualizeNumBearsConnected", RpcTarget.All);
+            }
+        }
+        if (gameMode == GameMode.Race)  // Si es modo carrera y no había llegado a la meta lo descontamos de la lista
+        {
+            object goalReachedProp = false;
+            otherPlayer.CustomProperties.TryGetValue("goalReached", out goalReachedProp);
+            if (!(bool)goalReachedProp)
+            {
+                penguinsNotFinished--;
+                if (penguinsNotFinished <= 0)
+                {
+                    FindObjectOfType<ConectionManagerInGame>().ReturnToGameSelectionMenu(10);
+                }
             }
         }
     }

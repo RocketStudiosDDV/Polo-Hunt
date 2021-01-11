@@ -106,6 +106,10 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             pivot = Instantiate(pivotPrefab).transform;
             target = pivot.GetChild(0).transform;
 
+            ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
+            hashtable.Add("goalReached", false);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
+
         }
 
         //canvasHUD = FindObjectOfType<Canvas>();
@@ -310,6 +314,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
                     object parameters = PhotonNetwork.LocalPlayer.NickName;
                     matchInfo.GetComponent<PhotonView>().RPC("GoalReached", RpcTarget.MasterClient, parameters);    // Avisa al master de que ha llegado
                 }
+                ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
+                hashtable.Add("goalReached", true);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
             }
             Debug.Log("Oleee");
         }

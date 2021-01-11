@@ -110,15 +110,29 @@ public class ConectionManagerInGame : MonoBehaviourPunCallbacks, IConnectionCall
     /// Vuelven todos los clientes a la sala de espera pre-partida
     /// </summary>
     /// <param name="cause"></param>
-    public void ReturnToGameSelectionMenu()
+    public void ReturnToGameSelectionMenu(int timeToReturn = 0)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
-            newCustomRoomProperties["hasStarted"] = false;
-            PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
-            PhotonNetwork.LoadLevel("MultiplayerTestScene");
+            if (timeToReturn == 0)
+            {
+                ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+                newCustomRoomProperties["hasStarted"] = false;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
+                PhotonNetwork.LoadLevel("MultiplayerTestScene");
+            } else
+            {
+                Invoke(nameof(ReturnToGameSelectionMenuAux), timeToReturn);
+            }
         }
+    }
+
+    private void ReturnToGameSelectionMenuAux()
+    {
+        ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+        newCustomRoomProperties["hasStarted"] = false;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
+        PhotonNetwork.LoadLevel("MultiplayerTestScene");
     }
     #endregion
 

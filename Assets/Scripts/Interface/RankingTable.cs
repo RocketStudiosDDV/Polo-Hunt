@@ -94,9 +94,12 @@ public class RankingTable : MonoBehaviour
         {
             foreach (InputRunnerModeMultiplayer penguin in penguins)
             {
-                if (penguin.gameObject.transform.position.z > myPenguin.gameObject.transform.position.z)
+                if (penguin != null)
                 {
-                    myPosition++;
+                    if (penguin.gameObject.transform.position.z > myPenguin.gameObject.transform.position.z)
+                    {
+                        myPosition++;
+                    }
                 }
             }
         }
