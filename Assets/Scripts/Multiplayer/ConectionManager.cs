@@ -29,6 +29,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public Transform ListRoomContainer;
     public List<Transform> ListRoomPrefabList;
 
+    public GameObject errorJoinTxt;
+
     public string RoomName;
 
     public string name1;
@@ -423,6 +425,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         string[] customRoomPropertiesForLobby = { "gameMode", "hasStarted" };
         return customRoomPropertiesForLobby;
     }
+    private void HideErrorJoin()
+    {
+        errorJoinTxt.SetActive(false);
+    }
     #endregion
 
     #region TEST METHODS
@@ -667,8 +673,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         base.OnJoinRoomFailed(returnCode, message);
         if (logWriter != null)
             logWriter.Write("Fallo al unirse a sala: " + message);
-        ChooseTypePanel.SetActive(true);
-        LobbyPanel.SetActive(false);
+        errorJoinTxt.SetActive(true);
+        Invoke(nameof(HideErrorJoin), 5);
+        //ChooseTypePanel.SetActive(true);
+        //LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
         FinalRoomPanel.SetActive(false);
@@ -810,9 +818,9 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     public void JoinRoomButton()
     {   
-        JoinLobby();
         ChooseTypePanel.SetActive(false);
-        LobbyPanel.SetActive(true);     
+        LobbyPanel.SetActive(true);
+        JoinLobby();
     }
     public void CreateRoomButton()
     {     
