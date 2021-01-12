@@ -802,7 +802,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     public void AssignRankingTableValues()
     {
-        FindObjectOfType<RankingTable>().penguins = FindObjectsOfType<InputRunnerModeMultiplayer>();
+        RankingTable rankingTable = FindObjectOfType<RankingTable>();
+        if (rankingTable != null)
+            rankingTable.penguins = FindObjectsOfType<InputRunnerModeMultiplayer>();
     }
     #endregion
 
