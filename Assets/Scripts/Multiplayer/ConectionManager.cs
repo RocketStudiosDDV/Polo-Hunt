@@ -36,6 +36,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     private int createRoomAttempt;
 
+    private int language;
+
     public class Player1
     {
         public string name;
@@ -468,6 +470,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         PhotonNetwork.AutomaticallySyncScene = true;
 
+        language = PlayerPrefs.GetInt("language", 0);
         createRoomAttempt = 0;
 
         //RoomPrefabContainer = transform.Find("RoomPrefabContainer");
@@ -597,6 +600,20 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
                             entryTransform.Find("ModeText").GetComponent<Text>().text = "RACE";
                         else
                             entryTransform.Find("ModeText").GetComponent<Text>().text = "POLO-HUNT";
+                        if ((bool)roomInfo.CustomProperties["hasStarted"] == true)
+                        {
+                            if (language == 0)                           
+                                entryTransform.Find("AvaliableText").GetComponent<Text>().text = "playing";
+                            else
+                                entryTransform.Find("AvaliableText").GetComponent<Text>().text = "en partida";
+                        }
+                        else
+                        {
+                            if (language == 0)
+                                entryTransform.Find("AvaliableText").GetComponent<Text>().text = "avaliable";
+                            else
+                                entryTransform.Find("AvaliableText").GetComponent<Text>().text = "disponible";
+                        }
                     }
                     catch (System.Exception ex)
                     {
