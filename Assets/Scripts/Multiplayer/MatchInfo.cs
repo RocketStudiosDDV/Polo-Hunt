@@ -496,9 +496,11 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     /// </summary>
     /// <param name="time"></param>
     /// <param name="message"></param>
-    public void ShowAlertHUD(int time, string message)
+    public void ShowAlertHUD(int time, string message, bool priority = false)
     {
         if (hudAlert == null)
+            return;
+        if (priority == false && hudAlert.activeInHierarchy == true)
             return;
         hudAlert.SetActive(true);
         hudAlertTxt.text = message;
@@ -738,10 +740,12 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         if (language == 0)
         {
-            ShowAlertHUD(5, otherPlayer.NickName + " left the room.");
+            if (!otherPlayer.IsMasterClient)
+                ShowAlertHUD(5, otherPlayer.NickName + " left the room.");
         } else
         {
-            ShowAlertHUD(5, otherPlayer.NickName + " se fue de la sala.");
+            if (!otherPlayer.IsMasterClient)
+                ShowAlertHUD(5, otherPlayer.NickName + " se fue de la sala.");
         }
         if (PhotonNetwork.IsMasterClient)
         {
