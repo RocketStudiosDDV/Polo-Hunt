@@ -133,6 +133,15 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 hudAlert = hudAlertTxt.transform.parent.gameObject;
             }
         }
+        // Pintamos esperando por jugadores...
+        hudResults.SetActive(true);
+        if (language == 0)
+        {
+            hudResultsInfoTxt.text = "Waiting for players...";
+        } else
+        {
+            hudResultsInfoTxt.text = "Esperando por los jugadores...";
+        }
 
 
         // Leemos ajustes de partida de las CustomProperties de la Room
@@ -412,6 +421,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public void InstantiatePlayers()
     {
         matchStarted = true;
+        ShowResultsHUD(false);
         ShowInGameHUD(true);
         if (hudPenguinsTxt != null)
             hudPenguinsTxt.text = "" + penguinsAlive;
