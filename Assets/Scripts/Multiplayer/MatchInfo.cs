@@ -247,8 +247,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
         if (spectating)
         {
-            mainCamera.transform.position = killerBear.transform.position - spectatorOffset;
+            mainCamera.transform.position = killerBear.transform.position - new Vector3(0, -3.5f, 0) - killerBear.transform.forward * 15;
             mainCamera.transform.LookAt(killerBear.transform.position);
+            mainCamera.transform.Rotate(-20f, 0f, 0f);
         }
     }
     #endregion
