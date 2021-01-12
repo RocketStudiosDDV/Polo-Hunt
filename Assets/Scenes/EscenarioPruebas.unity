@@ -615,7 +615,7 @@ GameObject:
   m_Component:
   - component: {fileID: 34239613}
   m_Layer: 0
-  m_Name: PenguinPos5
+  m_Name: BearPos5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,7 +632,7 @@ Transform:
   m_LocalPosition: {x: 2625.71, y: -2332.1, z: 6075.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 434357402}
+  m_Father: {fileID: 1796688927}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &34995056
@@ -2072,6 +2072,36 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &185642852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 185642853}
+  m_Layer: 0
+  m_Name: BearPos7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &185642853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185642852}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2615.7, y: -2332.1, z: 6064.226}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1796688927}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &193196852
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,7 +2352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 211556894}
   m_Layer: 0
-  m_Name: PenguinPos2
+  m_Name: BearPos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2339,7 +2369,7 @@ Transform:
   m_LocalPosition: {x: 2625.71, y: -2332.1, z: 6064.226}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 434357402}
+  m_Father: {fileID: 1796688927}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &212293530
@@ -2998,6 +3028,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
         type: 3}
+      propertyPath: bearStartPositions.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinStartPositions.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
       propertyPath: fishPositions.Array.data[0]
       value: 
       objectReference: {fileID: 728563293}
@@ -3182,6 +3222,96 @@ PrefabInstance:
       propertyPath: timeTxt
       value: 
       objectReference: {fileID: 215032843}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: bearStartPositions.Array.data[0]
+      value: 
+      objectReference: {fileID: 1698850178}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: bearStartPositions.Array.data[1]
+      value: 
+      objectReference: {fileID: 211556894}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: bearStartPositions.Array.data[2]
+      value: 
+      objectReference: {fileID: 1508996200}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: bearStartPositions.Array.data[3]
+      value: 
+      objectReference: {fileID: 1732970279}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: bearStartPositions.Array.data[4]
+      value: 
+      objectReference: {fileID: 34239613}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: bearStartPositions.Array.data[5]
+      value: 
+      objectReference: {fileID: 1391690692}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: bearStartPositions.Array.data[6]
+      value: 
+      objectReference: {fileID: 185642853}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: bearStartPositions.Array.data[7]
+      value: 
+      objectReference: {fileID: 2076423936}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: bearStartPositions.Array.data[8]
+      value: 
+      objectReference: {fileID: 273336252}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinStartPositions.Array.data[0]
+      value: 
+      objectReference: {fileID: 542012218}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinStartPositions.Array.data[1]
+      value: 
+      objectReference: {fileID: 1180815787}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinStartPositions.Array.data[2]
+      value: 
+      objectReference: {fileID: 2113905207}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinStartPositions.Array.data[3]
+      value: 
+      objectReference: {fileID: 1152453009}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinStartPositions.Array.data[4]
+      value: 
+      objectReference: {fileID: 1774546540}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinStartPositions.Array.data[5]
+      value: 
+      objectReference: {fileID: 1794046690}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinStartPositions.Array.data[6]
+      value: 
+      objectReference: {fileID: 657983130}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinStartPositions.Array.data[7]
+      value: 
+      objectReference: {fileID: 1008289410}
+    - target: {fileID: 3817070421263776008, guid: b75c4b06d67fe5343bf822e77491f5e3,
+        type: 3}
+      propertyPath: penguinStartPositions.Array.data[8]
+      value: 
+      objectReference: {fileID: 1789923071}
     - target: {fileID: 4502031446558974751, guid: b75c4b06d67fe5343bf822e77491f5e3,
         type: 3}
       propertyPath: m_Name
@@ -3666,6 +3796,36 @@ Transform:
   - {fileID: 1799118585}
   m_Father: {fileID: 496035876}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &273336251
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 273336252}
+  m_Layer: 0
+  m_Name: BearPos9
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &273336252
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273336251}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2621.05, y: -2332.1, z: 6052.53}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1796688927}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &275503210
 GameObject:
@@ -5187,12 +5347,8 @@ Transform:
   m_LocalPosition: {x: -2631.0232, y: 2358.4575, z: -6059.575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1698850178}
-  - {fileID: 211556894}
-  - {fileID: 1508996200}
-  - {fileID: 1732970279}
-  - {fileID: 34239613}
-  - {fileID: 1391690692}
+  - {fileID: 1796688927}
+  - {fileID: 1729270889}
   m_Father: {fileID: 1367447543}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6641,6 +6797,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 539218176}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &542012217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 542012218}
+  m_Layer: 0
+  m_Name: PenguinPos1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &542012218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542012217}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2497.03, y: -2341.63, z: 6064.226}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1729270889}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &546954407
 GameObject:
   m_ObjectHideFlags: 0
@@ -8376,6 +8562,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655280148}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &657983129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 657983130}
+  m_Layer: 0
+  m_Name: PenguinPos7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &657983130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657983129}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2760.01, y: -2338.39, z: 5999.87}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1729270889}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &660146648
 GameObject:
   m_ObjectHideFlags: 0
@@ -12111,6 +12327,36 @@ Transform:
   m_Father: {fileID: 1433409975}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 162, z: 0}
+--- !u!1 &1008289409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1008289410}
+  m_Layer: 0
+  m_Name: PenguinPos8
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1008289410
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008289409}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2628, y: -2343.8, z: 5960.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1729270889}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1014188602
 GameObject:
   m_ObjectHideFlags: 0
@@ -13439,6 +13685,36 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1152453008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1152453009}
+  m_Layer: 0
+  m_Name: PenguinPos4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1152453009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152453008}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2764.59, y: -2341.16, z: 6051.96}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1729270889}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1159049559
 GameObject:
   m_ObjectHideFlags: 0
@@ -13807,6 +14083,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176257038}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1180815786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1180815787}
+  m_Layer: 0
+  m_Name: PenguinPos2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1180815787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180815786}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2643.67, y: -2342.22, z: 6198.79}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1729270889}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1182074305
 GameObject:
   m_ObjectHideFlags: 0
@@ -16423,7 +16729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1391690692}
   m_Layer: 0
-  m_Name: PenguinPos6
+  m_Name: BearPos6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16437,10 +16743,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391690691}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2636.0708, y: -2332.1, z: 6056.41}
+  m_LocalPosition: {x: 2616.78, y: -2332.1, z: 6056.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 434357402}
+  m_Father: {fileID: 1796688927}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1392151533
@@ -18215,7 +18521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1508996200}
   m_Layer: 0
-  m_Name: PenguinPos3
+  m_Name: BearPos3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18232,7 +18538,7 @@ Transform:
   m_LocalPosition: {x: 2636.0708, y: -2332.1, z: 6074.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 434357402}
+  m_Father: {fileID: 1796688927}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1514772433
@@ -20302,7 +20608,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1698850178}
   m_Layer: 0
-  m_Name: PenguinPos1
+  m_Name: BearPos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20319,7 +20625,7 @@ Transform:
   m_LocalPosition: {x: 2636.0708, y: -2332.1, z: 6064.226}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 434357402}
+  m_Father: {fileID: 1796688927}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1700441163
@@ -20544,6 +20850,45 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6206187328463476989, guid: 35d16cd66330b3d478844c42dfc1912a, type: 3}
+--- !u!1 &1729270888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1729270889}
+  m_Layer: 0
+  m_Name: PenguinStartPositions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1729270889
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729270888}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 542012218}
+  - {fileID: 1180815787}
+  - {fileID: 2113905207}
+  - {fileID: 1152453009}
+  - {fileID: 1774546540}
+  - {fileID: 1794046690}
+  - {fileID: 657983130}
+  - {fileID: 1008289410}
+  - {fileID: 1789923071}
+  m_Father: {fileID: 434357402}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1729799814
 GameObject:
   m_ObjectHideFlags: 0
@@ -20667,7 +21012,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1732970279}
   m_Layer: 0
-  m_Name: PenguinPos4
+  m_Name: BearPos4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20684,7 +21029,7 @@ Transform:
   m_LocalPosition: {x: 2630.01, y: -2332.1, z: 6055.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 434357402}
+  m_Father: {fileID: 1796688927}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1737247703
@@ -20764,6 +21109,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6206187328463476989, guid: afd14ebbc609dc8408a0f534cbf10383, type: 3}
+--- !u!1 &1774546539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1774546540}
+  m_Layer: 0
+  m_Name: PenguinPos5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1774546540
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774546539}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2718.92, y: -2343.59, z: 6195.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1729270889}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1775364384
 GameObject:
   m_ObjectHideFlags: 0
@@ -20906,6 +21281,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1789923070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1789923071}
+  m_Layer: 0
+  m_Name: PenguinPos9
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1789923071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789923070}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2754.98, y: -2338.39, z: 5999.87}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1729270889}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1791276606
 GameObject:
   m_ObjectHideFlags: 0
@@ -20989,6 +21394,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6206187328463476989, guid: afd14ebbc609dc8408a0f534cbf10383, type: 3}
+--- !u!1 &1794046689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1794046690}
+  m_Layer: 0
+  m_Name: PenguinPos6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1794046690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794046689}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2726.32, y: -2343.59, z: 6195.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1729270889}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1795639837
 GameObject:
   m_ObjectHideFlags: 0
@@ -21079,6 +21514,45 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6206187328463476989, guid: 35d16cd66330b3d478844c42dfc1912a, type: 3}
+--- !u!1 &1796688926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1796688927}
+  m_Layer: 0
+  m_Name: BearStartPositions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1796688927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796688926}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1698850178}
+  - {fileID: 211556894}
+  - {fileID: 1508996200}
+  - {fileID: 1732970279}
+  - {fileID: 34239613}
+  - {fileID: 1391690692}
+  - {fileID: 185642853}
+  - {fileID: 2076423936}
+  - {fileID: 273336252}
+  m_Father: {fileID: 434357402}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799118584
 GameObject:
   m_ObjectHideFlags: 0
@@ -24106,6 +24580,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6206187328463476989, guid: afd14ebbc609dc8408a0f534cbf10383, type: 3}
+--- !u!1 &2076423935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2076423936}
+  m_Layer: 0
+  m_Name: BearPos8
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2076423936
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076423935}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2617.8, y: -2332.1, z: 6072.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1796688927}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2077068798
 GameObject:
   m_ObjectHideFlags: 0
@@ -24654,6 +25158,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6206187328463476989, guid: 35d16cd66330b3d478844c42dfc1912a, type: 3}
+--- !u!1 &2113905206
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2113905207}
+  m_Layer: 0
+  m_Name: PenguinPos3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2113905207
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113905206}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2503.12, y: -2342.04, z: 6135.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1729270889}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2114553374
 GameObject:
   m_ObjectHideFlags: 0

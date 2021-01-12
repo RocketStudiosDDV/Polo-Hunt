@@ -11,8 +11,10 @@ public class MatchManager : MonoBehaviourPun
 {
     #region VARIABLES
     // Ajustes para el inspector
-    public List<Transform> startPositions;  // Posiciones de inicio de los jugadores
+    public List<Transform> startPositions;  // Posiciones de inicio de los jugadores modo carrera
     public List<Transform> fishPositions;   // Posiciones para instanciar pescados
+    public List<Transform> bearStartPositions;  // Posiciones de inicio para osos modo caza
+    public List<Transform> penguinStartPositions;   // Posiciones de inicio para pingüinos modo caza
 
     // Datos
     public GameMode gameMode;  // Modo de juego
