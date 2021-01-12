@@ -43,7 +43,6 @@ public class ConectionManagerInGame : MonoBehaviourPunCallbacks, IConnectionCall
     /// </summary>
     public void Disconnect()
     {
-        logWriter.Write("Desconectándose...");
         PhotonNetwork.Disconnect();
     }
 

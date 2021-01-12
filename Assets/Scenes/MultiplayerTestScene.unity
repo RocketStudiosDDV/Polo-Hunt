@@ -1037,7 +1037,7 @@ MonoBehaviour:
   - Introduce codigo...
   - ATRAS
   - MODO DE JUEGO
-  - MODO CARRERA
+  - CARRERA
   - CAZA POLAR
   - ELIGE NUMERO DE OSOS
   - ATRAS
@@ -10211,6 +10211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8034a58b9b65e7b428dd66db61ab596a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeEnd: 0
+  timeStart: 0
 --- !u!4 &1225840911
 Transform:
   m_ObjectHideFlags: 0

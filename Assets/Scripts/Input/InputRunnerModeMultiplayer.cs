@@ -84,6 +84,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     public GameObject finalText;
     public GameObject posInGame;
 
+    public GameObject PauseButton;
+    public bool PauseButtonActivo = false;
+
     private MatchInfo matchInfo;
 
     // ONLINE
@@ -118,6 +121,12 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             hashtable.Add("goalReached", false);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
 
+        }
+
+        foreach(Button b in Resources.FindObjectsOfTypeAll<Button>())
+        {
+            if (b.gameObject.CompareTag("PAUSE"))
+                PauseButton = b.gameObject;
         }
     }
 
@@ -541,7 +550,16 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
     public void Pause()
     {
-
+        if(PauseButtonActivo == false)
+        {
+            PauseButton.SetActive(true);
+            PauseButtonActivo = true;
+        }
+        else
+        {
+            PauseButton.SetActive(false);
+            PauseButtonActivo = false;
+        }
     }
 
 

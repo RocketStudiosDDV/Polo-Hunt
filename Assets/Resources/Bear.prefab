@@ -171,6 +171,8 @@ MonoBehaviour:
   normalMaterial2: {fileID: 2100000, guid: aa6906464e25bca4086ff30892b90700, type: 2}
   normalMaterial3: {fileID: 2100000, guid: 3b55148877bf7114e8518a3b674f0c63, type: 2}
   ownerActorNumber: 0
+  PauseButton: {fileID: 0}
+  PauseButtonActivo: 0
   eatFishEffect: {fileID: 8300000, guid: cc6268e563de5af4cb96d72486cdc790, type: 3}
   iceDashEffect: {fileID: 8300000, guid: 87ad25a9551514c49aec8d637b5983a2, type: 3}
   snowWalkEffect: {fileID: 8300000, guid: f583af5b9f816c94f9a5dc49ff2ae2d5, type: 3}

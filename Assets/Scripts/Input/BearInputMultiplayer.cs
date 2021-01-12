@@ -104,6 +104,8 @@ public class BearInputMultiplayer : MonoBehaviour
     //public Transform canvasNameHUD;
     private bool isBear = false;
 
+    public GameObject PauseButton;
+    public bool PauseButtonActivo = false;
 
     //EFECTOS DE AUDIO
     private AudioSource bearPlayerEffects;
@@ -131,6 +133,12 @@ public class BearInputMultiplayer : MonoBehaviour
             mainCamera = Object.FindObjectOfType<Camera>();
             pivot = Instantiate(pivotPrefab).transform;
             target = pivot.GetChild(0).transform;
+        }
+
+        foreach(Button b in Resources.FindObjectsOfTypeAll<Button>())
+        {
+            if (b.gameObject.CompareTag("PAUSE"))
+                PauseButton = b.gameObject;
         }
     }
 
@@ -706,7 +714,16 @@ public class BearInputMultiplayer : MonoBehaviour
 
     public void Pause()
     {
-
+        if(PauseButtonActivo == false)
+        {
+            PauseButton.SetActive(true);
+            PauseButtonActivo = true;
+        }
+        else
+        {
+            PauseButton.SetActive(false);
+            PauseButtonActivo = false;
+        }
     }
 
 
