@@ -117,6 +117,7 @@ public class ConectionManagerInGame : MonoBehaviourPunCallbacks, IConnectionCall
             {
                 ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
                 newCustomRoomProperties["hasStarted"] = false;
+                PhotonNetwork.CurrentRoom.IsOpen = true;
                 PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
                 PhotonNetwork.LoadLevel("MultiplayerTestScene");
             } else
@@ -130,6 +131,7 @@ public class ConectionManagerInGame : MonoBehaviourPunCallbacks, IConnectionCall
     {
         ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
         newCustomRoomProperties["hasStarted"] = false;
+        PhotonNetwork.CurrentRoom.IsOpen = true;
         PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
         PhotonNetwork.LoadLevel("MultiplayerTestScene");
     }

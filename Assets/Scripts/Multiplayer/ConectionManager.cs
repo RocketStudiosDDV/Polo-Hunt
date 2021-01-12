@@ -77,7 +77,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     /// </summary>
     public void Disconnect()
     {
-        logWriter.Write("Desconectándose...");
+        if(logWriter != null)
+            logWriter.Write("Desconectándose...");
         PhotonNetwork.Disconnect();
     }
 
@@ -346,6 +347,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             {
                 ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
                 newCustomRoomProperties["hasStarted"] = true;
+                PhotonNetwork.CurrentRoom.IsOpen = false;
                 PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
                 object customProperty;
                 int modeSelected = 0;
