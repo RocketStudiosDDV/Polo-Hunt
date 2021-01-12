@@ -134,14 +134,18 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             }
         }
         // Pintamos esperando por jugadores...
-        hudResults.SetActive(true);
-        if (language == 0)
+        if (hudResults != null)
         {
-            hudResultsInfoTxt.text = "Waiting for players...";
-        } else
-        {
-            hudResultsInfoTxt.text = "Esperando por los jugadores...";
-        }
+            hudResults.SetActive(true);
+            if (language == 0)
+            {
+                hudResultsInfoTxt.text = "Waiting for players...";
+            }
+            else
+            {
+                hudResultsInfoTxt.text = "Esperando por los jugadores...";
+            }
+        }            
 
 
         // Leemos ajustes de partida de las CustomProperties de la Room
