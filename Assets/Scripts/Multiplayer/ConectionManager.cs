@@ -582,7 +582,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
                 entryRectTransform.anchoredPosition = new Vector3(0,-high * i, 0);
                 entryTransform.gameObject.SetActive(true);
                 entryTransform.Find("RoomText").GetComponent<Text>().text = roomInfo.Name;
-                entryTransform.Find("PlayersText").GetComponent<Text>().text = ""+roomInfo.PlayerCount;
+                entryTransform.Find("PlayersText").GetComponent<Text>().text = roomInfo.PlayerCount+"/10";
                 if (roomInfo.CustomProperties["gameMode"].ToString().CompareTo("0") == 1)
                     entryTransform.Find("ModeText").GetComponent<Text>().text = "RACE";
                 else
