@@ -519,6 +519,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         base.OnConnectedToMaster();
         if (logWriter != null)
             logWriter.Write("Conectado al servidor" + PhotonNetwork.ServerAddress);
+        if (PhotonNetwork.LocalPlayer.NickName.Equals(""))
+        {
+            PhotonNetwork.LocalPlayer.NickName = "player";
+        }
         ConnectButton();
     }
 
