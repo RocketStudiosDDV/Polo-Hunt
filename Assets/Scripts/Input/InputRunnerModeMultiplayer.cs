@@ -125,13 +125,21 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     void Start()
     {
 
-        penguinPlayer = GetComponent<AudioSource>();
+        //penguinPlayer = GetComponent<AudioSource>();
 
         foreach (Canvas canvas in Resources.FindObjectsOfTypeAll<Canvas>())
         {
             if (canvas.CompareTag("RunnerHUD"))
             {
                 canvasHUD = canvas;
+            }
+        }
+
+        foreach (AudioSource audiosource in Resources.FindObjectsOfTypeAll<AudioSource>())
+        {
+            if (audiosource.CompareTag("AudioEffects"))
+            {
+                penguinPlayer = audiosource;
             }
         }
 

@@ -106,6 +106,7 @@ public class BearInputMultiplayer : MonoBehaviour
 
 
     //EFECTOS DE AUDIO
+    private AudioSource bearPlayerEffects;
     private AudioSource bearPlayer;
     public AudioClip eatFishEffect;
     public AudioClip iceDashEffect;
@@ -115,7 +116,7 @@ public class BearInputMultiplayer : MonoBehaviour
     public AudioClip fallInWater;
     public AudioClip penguinDeathEffect;
 
-    private bool onFloor = true;
+    private bool onFloor = false;
     private bool onIce = false;
     #endregion
 
@@ -140,9 +141,14 @@ public class BearInputMultiplayer : MonoBehaviour
 
         foreach (AudioSource audiosource in Resources.FindObjectsOfTypeAll<AudioSource>())
         {
-            if (audiosource.CompareTag("Bear"))
+            if (audiosource.CompareTag("ConstantEffects"))
             {
                 bearPlayer = audiosource;
+            }
+
+            if (audiosource.CompareTag("AudioEffects"))
+            {
+                bearPlayerEffects = audiosource;
             }
         }
 
@@ -197,7 +203,8 @@ public class BearInputMultiplayer : MonoBehaviour
         }
         else
         {
-            walking_animation = false;
+            //walking_animation = false;
+            //bearPlayer.Stop();
 
         }
         
@@ -253,20 +260,13 @@ public class BearInputMultiplayer : MonoBehaviour
             keyboardRunning = false;
         }
         
-        if (onFloor == true)
-        {
-            bearPlayer.clip = snowWalkEffect;
-            bearPlayer.Play();
+        
+            
             //bearPlayer
-        }
-        else
-        {
-            if (onIce == true)
-            {
-                bearPlayer.clip = iceDashEffect;
-                bearPlayer.Play();
-            }
-        }
+       
+                //bearPlayer.Stop();
+                
+       
         //}
     }
 
@@ -456,8 +456,8 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Fish") //Si choca con un cepo
         {
             stamina += 200;
-            bearPlayer.clip = eatFishEffect;
-            bearPlayer.Play();
+            bearPlayerEffects.clip = eatFishEffect;
+            bearPlayerEffects.Play();
             //Debug.Log("COLAS");
         }
 
@@ -469,8 +469,8 @@ public class BearInputMultiplayer : MonoBehaviour
                 if (!PhotonNetwork.IsConnected) // Si es offline, lo elimina
                 {
                     Destroy(pengu);
-                    bearPlayer.clip = penguinDeathEffect;
-                    bearPlayer.Play();
+                    bearPlayerEffects.clip = penguinDeathEffect;
+                    bearPlayerEffects.Play();
                 } 
                 else  // Si es online, le pide que se muera y le pasa información para comprobar que no hubo lag
                 {
@@ -493,30 +493,34 @@ public class BearInputMultiplayer : MonoBehaviour
             damaged = true;
             onFloor = false; //para que no suenen las pisadas
 
-            bearPlayer.clip = damageStockEffect;
-            bearPlayer.Play();
+            bearPlayerEffects.clip = damageStockEffect;
+            bearPlayerEffects.Play();
         }
 
         if(collision.gameObject.tag == "IceTrap")
         {
             onFloor = false;
             onIce = false;
-            bearPlayer.clip = crashIceEffect;
-            bearPlayer.Play();
+            bearPlayerEffects.clip = crashIceEffect;
+            bearPlayerEffects.Play();
         }
 
         if (collision.gameObject.tag == "IceDashPlat")
         {
             //bearPlayer.clip = iceDashEffect;
             //bearPlayer.Play();
+            //bearPlayer.clip = iceDashEffect;
+            //bearPlayer.Play();
+            onFloor = false;
             onIce = true;
         }
 
         if (collision.gameObject.tag == "Floor")
         {
+
             //bearPlayer.clip = snowWalkEffect;
             //bearPlayer.Play();
-
+            onIce = false;
             onFloor = true;
         }
     }
@@ -635,11 +639,13 @@ public class BearInputMultiplayer : MonoBehaviour
     {
         //Debug.Log(context.control.device.displayName);
         _horizontaldirection = context.ReadValue<Vector2>();
+        //bearPlayer.clip = snowWalkEffect;
+        //bearPlayer.Play();
 
         if (context.control.IsPressed() == true)
         {
             keysPressed++;
-            onFloor = true;
+            //onFloor = true;
         }
         else
         {

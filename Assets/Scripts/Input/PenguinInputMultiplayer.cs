@@ -142,7 +142,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         _playerRB = GetComponent<Rigidbody>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
         penguin_animator = GetComponent<Animator>();
-        penguinPlayer = GetComponent<AudioSource>();
+        //penguinPlayer = GetComponent<AudioSource>();
 
         foreach (Canvas canvas in Resources.FindObjectsOfTypeAll<Canvas>())
         {
@@ -156,6 +156,15 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 canvasNameHUD = canvas.GetComponent<Transform>();
                 canvasNameHUD.Find("Text").GetComponent<Text>().text = GetComponent<PhotonView>().Owner.NickName;
             }*/
+        }
+
+        foreach (AudioSource audiosource in Resources.FindObjectsOfTypeAll<AudioSource>())
+        {
+
+            if (audiosource.CompareTag("AudioEffects"))
+            {
+                penguinPlayer = audiosource;
+            }
         }
 
         object property = false;
@@ -186,8 +195,8 @@ public class PenguinInputMultiplayer : MonoBehaviour
         //     if (keysPressed > 0)
         // {
             walking_animation = true;
-            penguinPlayer.clip = snowWalkEffect;
-            penguinPlayer.Play();
+            //penguinPlayer.clip = snowWalkEffect;
+            //penguinPlayer.Play();
         }
         else
         {
@@ -431,8 +440,8 @@ public class PenguinInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "IceDashPlat") //Si choca con un pescao
         {
             InIceDashPlat = true;
-            penguinPlayer.clip = iceDashEffect;
-            penguinPlayer.Play();
+            //penguinPlayer.clip = iceDashEffect;
+            //penguinPlayer.Play();
 
             if (isRunning == true) //Si esta corriendo deja de correr
             {
