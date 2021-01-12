@@ -568,6 +568,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        RoomListZero();
         base.OnRoomListUpdate(roomList);
         if (logWriter != null)
         {
@@ -583,9 +584,9 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
                 entryTransform.Find("RoomText").GetComponent<Text>().text = roomInfo.Name;
                 entryTransform.Find("PlayersText").GetComponent<Text>().text = ""+roomInfo.PlayerCount;
                 if (roomInfo.CustomProperties["gameMode"].ToString().CompareTo("0") == 1)
-                    entryTransform.Find("ModeText").GetComponent<Text>().text = "POLO-HUNT";
-                else
                     entryTransform.Find("ModeText").GetComponent<Text>().text = "RACE";
+                else
+                    entryTransform.Find("ModeText").GetComponent<Text>().text = "POLO-HUNT";
                 ListRoomPrefabList.Add(entryTransform);
                 i++;
                 if (roomInfo != null)
