@@ -585,6 +585,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
                 RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
                 entryRectTransform.anchoredPosition = new Vector3(0,-high * i, 0);
                 entryTransform.gameObject.SetActive(true);
+                entryTransform.GetComponent<RoomEntry>().SetRoomName(roomInfo.Name);
                 entryTransform.Find("RoomText").GetComponent<Text>().text = roomInfo.Name;
                 entryTransform.Find("PlayersText").GetComponent<Text>().text = roomInfo.PlayerCount+"/10";
                 if (roomInfo.CustomProperties["gameMode"].ToString().CompareTo("0") == 1)
