@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class PenguinInputMultiplayer : MonoBehaviour
 {
     #region VARIABLES
-    //PINGUINO HUD 
+    //PINGUINO HUD
    // public GameObject BearHUD;
     //public GameObject PenguinHUD;
 
@@ -92,10 +92,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
     public Canvas canvasHUD;
     private bool isPenguin = false;
 
-<<<<<<< Updated upstream
+
     public GameObject PauseButton;
     public bool PauseButtonActivo = false;
-=======
+
     //EFECTOS DE AUDIO
     private AudioSource penguinPlayer;
     public AudioClip eatFishEffect;
@@ -103,7 +103,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     public AudioClip snowWalkEffect;
     public AudioClip fallInWater;
     public AudioClip penguinDeathEffect;
->>>>>>> Stashed changes
+
 
     #endregion
 
@@ -117,9 +117,9 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             mainCamera = Object.FindObjectOfType<Camera>();
             pivot = Instantiate(pivotPrefab).transform;
-<<<<<<< Updated upstream
+
             target = pivot.GetChild(0).transform;
-            
+
         }
 
         foreach(Button b in Resources.FindObjectsOfTypeAll<Button>())
@@ -127,11 +127,11 @@ public class PenguinInputMultiplayer : MonoBehaviour
             if (b.gameObject.CompareTag("PAUSE"))
                 PauseButton = b.gameObject;
         }
-        
-=======
-            target = pivot.GetChild(0).transform;            
-        }        
->>>>>>> Stashed changes
+
+
+            //target = pivot.GetChild(0).transform;
+        //}
+
     }
 
     // Start is called before the first frame update
@@ -157,7 +157,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 canvasNameHUD.Find("Text").GetComponent<Text>().text = GetComponent<PhotonView>().Owner.NickName;
             }*/
         }
-  
+
         object property = false;
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out property);
 
@@ -168,7 +168,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
             stockHud = canvasHUD.transform.Find("Stock").gameObject as GameObject;
             stockHud.gameObject.SetActive(true); //cepo visible
             isPenguin = true;
-        }      
+        }
     }
 
     // Update is called once per frame
@@ -198,7 +198,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             penguin_animator.SetBool("walking", walking_animation);
         }
-            
+
         //penguin_animator.SetBool("sliding", sliding_animation);
 
         //ANIMACIÓN ATACAR
@@ -217,11 +217,11 @@ public class PenguinInputMultiplayer : MonoBehaviour
         }
 
         //ANIMACIÓN DESLIZARSE
-        
+
 
         if (penguin_animator != null)
         {
-            if (isRunning == true) 
+            if (isRunning == true)
             {
                 Debug.Log("running true true true");
                 penguin_animator.SetBool("sliding", true);
@@ -250,7 +250,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
             return;
         }
         playerInput = new Vector3(_horizontaldirection.x, 0, _horizontaldirection.y);
-        playerInput = Vector3.ClampMagnitude(playerInput, 1); //para poder normalizar la distancia. 1 es el valor max, va de 0 a 1      
+        playerInput = Vector3.ClampMagnitude(playerInput, 1); //para poder normalizar la distancia. 1 es el valor max, va de 0 a 1
 
         playerDirection = playerInput.x * camRight + playerInput.z * camFordward; //Almacena la direccion hacia la que se esta moviendo el player
 
@@ -309,7 +309,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 else
                 {
                     if(lastPressed == 0)
-                    {                                               
+                    {
                             _playerRB.AddForce(lookingAt * -0.2f * speed, ForceMode.Impulse);
                      }
                     else if (lastPressed == 1)
@@ -319,12 +319,12 @@ public class PenguinInputMultiplayer : MonoBehaviour
                     else if (lastPressed == 2)
                     {
                         _playerRB.AddForce(lookingAt * -0.2f * speed, ForceMode.Impulse);
-                        
+
                     }
                     else if (lastPressed == 3)
                     {
                         _playerRB.AddForce(lookingAt * 0.2f * speed, ForceMode.Impulse);
-                        
+
                     }
                 }
 
@@ -336,7 +336,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 _playerRB.velocity = new Vector3(playerDirection.x * speed, _playerRB.velocity.y, playerDirection.z * speed);
             }
         }
-        
+
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -549,8 +549,8 @@ public class PenguinInputMultiplayer : MonoBehaviour
             {
                 stockHud.gameObject.SetActive(false); //cepo visible
             }
-                
-           
+
+
             if ((lookingAt.x > 0) && (lookingAt.z < 0))
             {
                 PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y + 0.04f, _playerRB.transform.position.z + 1), Quaternion.Euler(-90f, 0f, 0f));
@@ -605,7 +605,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
             PauseButton.SetActive(false);
             PauseButtonActivo = false;
         }
-        
+
     }
 
     //Controla el tiempo que esta activo el deslizamiento
@@ -632,7 +632,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 speed = 5;
                 _playerRB.AddForce(forceDirection * 0, ForceMode.Acceleration);
                 isRunning = false;
-            } 
+            }
             else if (deltaTime > _timeRunning)
             {
                 speed = 5;
@@ -835,10 +835,12 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
         //Rotar pivot
         pivot.rotation = Quaternion.Euler(-moveY, moveX, 0.0f);
-        //target.rotation = Quaternion.Euler(0,0, 0.0f);
+    //target.rotation = Quaternion.Euler(0,0, 0.0f);
 
-    }
+}
 
     #endregion
 
+
 }
+
