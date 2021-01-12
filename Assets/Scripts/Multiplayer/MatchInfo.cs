@@ -349,7 +349,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         penguinsNotFinished--;
         if (penguinsNotFinished <= 0)
         {
-            ShowReturnHUD(10);
+            ShowReturnHUD(20);
         }
     }
 

@@ -34,7 +34,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     public Transform pivot;
     private float moveX;
     private float moveY;
-    private float m_LookSense = 1.0f;
+    private float m_LookSense = 0.5f;
 
     private bool fishEaten = false;
     private double _timeFish;
