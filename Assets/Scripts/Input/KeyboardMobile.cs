@@ -10,6 +10,7 @@ public class KeyboardMobile : MonoBehaviour
     public ConectionManager conectionManager;
 
     private TouchScreenKeyboard keyboard;
+    private bool inputAssigned;
 
     // Start is called before the first frame update
 
@@ -20,7 +21,7 @@ public class KeyboardMobile : MonoBehaviour
 
     void Start()
     {
-       
+        inputAssigned = false;
         if (inp == null){
             inp = GameObject.Find("SignUpNicknameInp").GetComponent<InputField>();
             if (inp == null)Debug.Log("OKE");
@@ -35,10 +36,14 @@ public class KeyboardMobile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!TouchScreenKeyboard.visible && keyboard ==null){
-            if(keyboard.status == TouchScreenKeyboard.Status.Done){
-                inp.text = keyboard.text;
-                keyboard=null;
+        if(!TouchScreenKeyboard.visible && inputAssigned == false){
+            if (keyboard != null)
+            {
+                if (keyboard.status == TouchScreenKeyboard.Status.Done)
+                {
+                    inp.text = keyboard.text;
+                    inputAssigned = true;
+                }
             }
         }
     }
