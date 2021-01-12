@@ -715,10 +715,14 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 hashtable.Add("alive", false);
                 PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
                 GameObject killerBear = null;
+                float distance = float.MaxValue;
                 foreach(BearInputMultiplayer bear in FindObjectsOfType<BearInputMultiplayer>())
                 {
-                    if (bear.ownerActorNumber == bearActorNumber)
+                    if (Vector3.Distance(bear.transform.position, transform.position) < distance)
+                    {
                         killerBear = bear.gameObject;
+                        distance = Vector3.Distance(bear.transform.position, transform.position);
+                    }
                 }
                 matchInfo.GetComponent<PhotonView>().RPC("ActualizeNumPenguins", RpcTarget.All);
                 matchInfo.SpectatorMode(gameObject, killerBear);

@@ -31,6 +31,12 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public List<Player> playersList;    // Lista de jugadores
     private bool matchFinished;     // Se acabo la partida?
     private bool matchStarted;  // Se empezó la partida?
+    // Modo espectador
+    private bool spectating;   
+    private Camera mainCamera;
+    private GameObject clientPenguin;
+    private GameObject killerBear;
+    Vector3 spectatorOffset = new Vector3(0, -5, 10); // X hacia la izquierda, Y hacia abajo, Z hacia
 
     // - MODO RACE
     public List<string> clasification; // clasificación (modo race)
@@ -90,6 +96,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         matchManager.matchInfo = this;
         matchFinished = false;
         matchStarted = false;
+        spectating = false;
         penguinsNotFinished = PhotonNetwork.CurrentRoom.PlayerCount;
         logWriter = FindObjectOfType<LogWriter>();
         // Obtenemos las referencias al HUD
@@ -237,6 +244,11 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         if (!matchFinished && matchStarted && gameMode == GameMode.Hunt)
         {
             endTime(Time.deltaTime);
+        }
+        if (spectating)
+        {
+            mainCamera.transform.position = killerBear.transform.position - spectatorOffset;
+            mainCamera.transform.LookAt(killerBear.transform.position);
         }
     }
     #endregion
@@ -412,6 +424,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
          newCamera = oso.GetComponent<Camera>();
          */
         Debug.Log("MODO ESPECTADOR");
+        mainCamera = FindObjectOfType<Camera>();
+        killerBear = oso;
+        spectating = true;
     }
 
     // Lo mismo que el anterior pero para los que entran en mitad de partida (no tienen pinguino ni oso que les haya matado)
