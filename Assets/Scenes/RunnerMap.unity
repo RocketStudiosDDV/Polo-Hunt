@@ -2383,8 +2383,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 0}
-  audioSound: {fileID: 0}
-  audioMusic: {fileID: 0}
+  audioSound: {fileID: 1268604152}
+  audioMusic: {fileID: 683656034}
   EnglishTest:
   - EXIT
   SpanishTest:

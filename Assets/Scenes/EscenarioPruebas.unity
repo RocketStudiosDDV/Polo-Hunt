@@ -970,6 +970,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 0}
+  audioSound: {fileID: 113171955}
+  audioMusic: {fileID: 10696674}
   EnglishTest:
   - EXIT
   SpanishTest:
