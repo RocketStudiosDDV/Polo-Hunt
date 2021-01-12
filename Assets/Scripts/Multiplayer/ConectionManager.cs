@@ -61,10 +61,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         if (PhotonNetwork.IsConnected)
         {
-            logWriter.Write("Ya está conectado", true);
+            if(logWriter != null)
+                logWriter.Write("Ya está conectado", true);
         } else
         {
-            logWriter.Write("Conectándose...");
+            if (logWriter != null)
+                logWriter.Write("Conectándose...");
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -108,19 +110,23 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         if (!PhotonNetwork.IsConnected)
         {
-            logWriter.Write("Debe estar conectado al servidor primero");
+            if (logWriter != null)
+                logWriter.Write("Debe estar conectado al servidor primero");
         } else if (PhotonNetwork.InRoom)
         {
-            logWriter.Write("Debe estar fuera de una sala primero");
+            if (logWriter != null)
+                logWriter.Write("Debe estar fuera de una sala primero");
         } else
         {
             if (PhotonNetwork.InLobby)
             {
-                logWriter.Write("Ya está en un lobby");
+                if (logWriter != null)
+                    logWriter.Write("Ya está en un lobby");
             }
             else
             {
-                logWriter.Write("Conectándose al lobby...");
+                if (logWriter != null)
+                    logWriter.Write("Conectándose al lobby...");
                 PhotonNetwork.JoinLobby();
             }
         }      
@@ -134,11 +140,13 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         if (PhotonNetwork.InLobby)
         {
-            logWriter.Write("Dejando lobby...");
+            if (logWriter != null)
+                logWriter.Write("Dejando lobby...");
             PhotonNetwork.LeaveLobby();
         } else
         {
-            logWriter.Write("No está en ningún lobby");
+            if (logWriter != null)
+                logWriter.Write("No está en ningún lobby");
         }
     }
 
@@ -150,7 +158,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     /// <param name="roomName"></param>
     public void CreateRoom(string roomName = "", byte maxPlayers = 10)
     {
-        logWriter.Write("Creando sala...");
+        if (logWriter != null)
+            logWriter.Write("Creando sala...");
         
         if (roomName == null || roomName == "")
         {
@@ -165,7 +174,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     public void CreateRoom2(byte maxPlayers = 10)
     {
-        logWriter.Write("Creando sala...");
+        if (logWriter != null)
+            logWriter.Write("Creando sala...");
         
         if (RoomName == null || RoomName == "")
         {
@@ -189,7 +199,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     /// <param name="maxPlayers"></param>
     public void CreatePrivateRoom()
     {
-        logWriter.Write("Creando sala privada...");
+        if (logWriter != null)
+            logWriter.Write("Creando sala privada...");
 
         if (RoomName == null || RoomName == "")
         {
@@ -224,13 +235,15 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     /// <param name="roomName"></param>
     public void JoinRoom(string roomName)
     {
-        logWriter.Write("Intentando unirse a la sala " + roomName + "...");
+        if (logWriter != null)
+            logWriter.Write("Intentando unirse a la sala " + roomName + "...");
         PhotonNetwork.JoinRoom(roomName);
     }
 
     public void JoinRoom2()
     {
-        logWriter.Write("Intentando unirse a la sala " + RoomName + "...");
+        if (logWriter != null)
+            logWriter.Write("Intentando unirse a la sala " + RoomName + "...");
         PhotonNetwork.JoinRoom(RoomName);
     }
 
@@ -263,10 +276,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         if (PhotonNetwork.InLobby)
         {
-            logWriter.Write(PhotonNetwork.CurrentLobby);
+            if (logWriter != null)
+                logWriter.Write(PhotonNetwork.CurrentLobby);
         } else
         {
-            logWriter.Write("No está en ningún lobby");
+            if (logWriter != null)
+                logWriter.Write("No está en ningún lobby");
         }
     }
 
@@ -460,7 +475,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     /// </summary>
     public void JoinRoom()
     {
-        logWriter.Write("Intentando unirse a la sala " + testRoomName + "...");
+        if (logWriter != null)
+            logWriter.Write("Intentando unirse a la sala " + testRoomName + "...");
         PhotonNetwork.JoinRoom(testRoomName);
     }
     #endregion
@@ -577,57 +593,52 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         RoomListZero();
         base.OnRoomListUpdate(roomList);
-        if (logWriter != null)
+        int i=0;
+        int high = 100;
+        foreach (RoomInfo roomInfo in roomList)
         {
-            logWriter.Write("--ROOMS UPDATE START--");
-            int i=0;
-            int high = 100;
-            foreach (RoomInfo roomInfo in roomList)
+            if (roomInfo != null && roomInfo.PlayerCount > 0)
             {
-                if (roomInfo != null && roomInfo.PlayerCount > 0)
+                Transform entryTransform = Instantiate(ListRoomPrefab, ListRoomContainer);
+                RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+                entryRectTransform.anchoredPosition = new Vector3(0, -high * i, 0);
+                entryTransform.gameObject.SetActive(true);
+                entryTransform.GetComponent<RoomEntry>().SetRoomName(roomInfo.Name);
+                Debug.Log(roomInfo.Name);
+                entryTransform.Find("RoomText").GetComponent<Text>().text = roomInfo.Name;
+                entryTransform.Find("PlayersText").GetComponent<Text>().text = roomInfo.PlayerCount + "/10";
+                try
                 {
-                    Transform entryTransform = Instantiate(ListRoomPrefab, ListRoomContainer);
-                    RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                    entryRectTransform.anchoredPosition = new Vector3(0, -high * i, 0);
-                    entryTransform.gameObject.SetActive(true);
-                    entryTransform.GetComponent<RoomEntry>().SetRoomName(roomInfo.Name);
-                    Debug.Log(roomInfo.Name);
-                    entryTransform.Find("RoomText").GetComponent<Text>().text = roomInfo.Name;
-                    entryTransform.Find("PlayersText").GetComponent<Text>().text = roomInfo.PlayerCount + "/10";
-                    try
+                    if (roomInfo.CustomProperties["gameMode"].ToString().CompareTo("0") == 1)
+                        entryTransform.Find("ModeText").GetComponent<Text>().text = "RACE";
+                    else
+                        entryTransform.Find("ModeText").GetComponent<Text>().text = "POLO-HUNT";
+                    if ((bool)roomInfo.CustomProperties["hasStarted"] == true)
                     {
-                        if (roomInfo.CustomProperties["gameMode"].ToString().CompareTo("0") == 1)
-                            entryTransform.Find("ModeText").GetComponent<Text>().text = "RACE";
+                        if (language == 0)                           
+                            entryTransform.Find("AvaliableText").GetComponent<Text>().text = "playing";
                         else
-                            entryTransform.Find("ModeText").GetComponent<Text>().text = "POLO-HUNT";
-                        if ((bool)roomInfo.CustomProperties["hasStarted"] == true)
-                        {
-                            if (language == 0)                           
-                                entryTransform.Find("AvaliableText").GetComponent<Text>().text = "playing";
-                            else
-                                entryTransform.Find("AvaliableText").GetComponent<Text>().text = "en partida";
-                        }
-                        else
-                        {
-                            if (language == 0)
-                                entryTransform.Find("AvaliableText").GetComponent<Text>().text = "avaliable";
-                            else
-                                entryTransform.Find("AvaliableText").GetComponent<Text>().text = "disponible";
-                        }
+                            entryTransform.Find("AvaliableText").GetComponent<Text>().text = "en partida";
                     }
-                    catch (System.Exception ex)
+                    else
                     {
-
+                        if (language == 0)
+                            entryTransform.Find("AvaliableText").GetComponent<Text>().text = "avaliable";
+                        else
+                            entryTransform.Find("AvaliableText").GetComponent<Text>().text = "disponible";
                     }
-                    ListRoomPrefabList.Add(entryTransform);
-                    i++;
-                    /*
-                    if (roomInfo != null)
-                        logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString() + ", Started: " + roomInfo.CustomProperties["hasStarted"].ToString());
-                    */
                 }
+                catch (System.Exception ex)
+                {
+
+                }
+                ListRoomPrefabList.Add(entryTransform);
+                i++;
+                /*
+                if (roomInfo != null)
+                    logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString() + ", Started: " + roomInfo.CustomProperties["hasStarted"].ToString());
+                */
             }
-            logWriter.Write("--ROOMS UPDATE END--");
         }
     }
 

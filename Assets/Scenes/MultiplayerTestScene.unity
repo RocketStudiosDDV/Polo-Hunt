@@ -19823,6 +19823,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LogWriter
       objectReference: {fileID: 0}
+    - target: {fileID: 1258099115621282255, guid: be10cfd3c00cbff4ea9efaa2251c6fa1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be10cfd3c00cbff4ea9efaa2251c6fa1, type: 3}
 --- !u!1001 &7796490314555996722
@@ -19892,11 +19897,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ConnectionManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7796490314818702706, guid: cbfa016e51afd4e4a938dba795ce1166,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7796490314818702707, guid: cbfa016e51afd4e4a938dba795ce1166,
         type: 3}
       propertyPath: logWriter
       value: 
-      objectReference: {fileID: 1668187179}
+      objectReference: {fileID: 0}
     - target: {fileID: 7796490314818702707, guid: cbfa016e51afd4e4a938dba795ce1166,
         type: 3}
       propertyPath: LobbyPanel
