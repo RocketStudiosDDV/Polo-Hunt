@@ -582,7 +582,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
                 entryTransform.gameObject.SetActive(true);
                 entryTransform.Find("RoomText").GetComponent<Text>().text = roomInfo.Name;
                 entryTransform.Find("PlayersText").GetComponent<Text>().text = ""+roomInfo.PlayerCount;
-                entryTransform.Find("ModeText").GetComponent<Text>().text = roomInfo.CustomProperties["gameMode"].ToString();
+                if (roomInfo.CustomProperties["gameMode"].ToString().CompareTo("0") == 1)
+                    entryTransform.Find("ModeText").GetComponent<Text>().text = "POLO-HUNT";
+                else
+                    entryTransform.Find("ModeText").GetComponent<Text>().text = "RACE";
                 ListRoomPrefabList.Add(entryTransform);
                 i++;
                 if (roomInfo != null)
