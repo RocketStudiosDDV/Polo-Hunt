@@ -34,6 +34,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public string name1;
     public string psw1;
 
+    private int createRoomAttempt;
+
     public class Player1
     {
         public string name;
@@ -466,6 +468,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         PhotonNetwork.AutomaticallySyncScene = true;
 
+        createRoomAttempt = 0;
+
         //RoomPrefabContainer = transform.Find("RoomPrefabContainer");
         //RoomPrefab = RoomPrefabContainer.Find("RoomPrefab");
 
@@ -637,11 +641,17 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         base.OnCreateRoomFailed(returnCode, message);
         if (logWriter != null)
             logWriter.Write("Creación de sala fallida por error: " + message);
-
-        ChooseTypePanel.SetActive(true);
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(false);
-        ConnectPanel.SetActive(false);
+        if (returnCode == ErrorCode.GameIdAlreadyExists)
+        {
+            createRoomAttempt++;
+            CreateRoom(PhotonNetwork.LocalPlayer.NickName + "Room" + createRoomAttempt);
+        } else
+        {
+            ChooseTypePanel.SetActive(true);
+            LobbyPanel.SetActive(false);
+            RoomPanel.SetActive(false);
+            ConnectPanel.SetActive(false);
+        }
     }
 
     public override void OnLeftRoom()
