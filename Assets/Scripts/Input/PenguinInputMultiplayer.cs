@@ -91,6 +91,9 @@ public class PenguinInputMultiplayer : MonoBehaviour
     public Canvas canvasHUD;
     private bool isPenguin = false;
 
+    public GameObject PauseButton;
+    public bool PauseButtonActivo = false;
+
     #endregion
 
     #region UNITY CALLBACKS
@@ -107,6 +110,11 @@ public class PenguinInputMultiplayer : MonoBehaviour
             
         }
 
+        foreach(Button b in Resources.FindObjectsOfTypeAll<Button>())
+        {
+            if (b.gameObject.CompareTag("PAUSE"))
+                PauseButton = b.gameObject;
+        }
         
     }
 
@@ -575,6 +583,16 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
     public void Pause()
     {
+        if(PauseButtonActivo == false)
+        {
+            PauseButton.SetActive(true);
+            PauseButtonActivo = true;
+        }
+        else
+        {
+            PauseButton.SetActive(false);
+            PauseButtonActivo = false;
+        }
         
     }
 

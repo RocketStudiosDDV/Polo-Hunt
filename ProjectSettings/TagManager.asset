@@ -53,6 +53,7 @@ TagManager:
   - NameHUD
   - HuntHUD
   - RunnerHUD
+  - PAUSE
   layers:
   - Default
   - TransparentFX
