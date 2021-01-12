@@ -137,8 +137,18 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
         // Leemos ajustes de partida de las CustomProperties de la Room
         object customPropertyBears;
-        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("numberOfBears", out customPropertyBears))   // nº de osos
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("numberOfBears", out customPropertyBears))             // nº de osos
+        {
             numberOfBears = (int)customPropertyBears;
+        }
+        while (numberOfBears >= PhotonNetwork.CurrentRoom.PlayerCount)
+        {
+            numberOfBears--;
+        }
+        if (numberOfBears <= 0)
+        {
+            numberOfBears = 1;
+        }
         object customPropertyGameMode;
         gameMode = matchManager.gameMode;
 
@@ -189,7 +199,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             int bearsToAssign = numberOfBears;
             bearsConnected = numberOfBears;
-            int penguinsToAssign = playersList.Count - numberOfBears;
+            int penguinsToAssign = PhotonNetwork.CurrentRoom.PlayerCount - numberOfBears;
             penguinsConnected = penguinsToAssign;
             penguinsAlive = penguinsConnected;
             int playerId = 0;
