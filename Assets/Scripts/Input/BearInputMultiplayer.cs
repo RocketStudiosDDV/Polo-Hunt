@@ -100,10 +100,23 @@ public class BearInputMultiplayer : MonoBehaviour
 
     //VISION ACTIVACION HUD
     private GameObject visionHud;
-    public Canvas canvasHUD;
+    private Canvas canvasHUD;
     //public Transform canvasNameHUD;
     private bool isBear = false;
 
+
+    //EFECTOS DE AUDIO
+    private AudioSource bearPlayer;
+    public AudioClip eatFishEffect;
+    public AudioClip iceDashEffect;
+    public AudioClip snowWalkEffect;
+    public AudioClip damageStockEffect;
+    public AudioClip crashIceEffect;
+    public AudioClip fallInWater;
+    public AudioClip penguinDeathEffect;
+
+    private bool onFloor = true;
+    private bool onIce = false;
     #endregion
 
     #region UNITY CALLBACKS
@@ -123,6 +136,15 @@ public class BearInputMultiplayer : MonoBehaviour
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>(); //identifica el rigidbdy del oso
+        //bearPlayer = GetComponent<AudioSource>().CompareTag("Bear");
+
+        foreach (AudioSource audiosource in Resources.FindObjectsOfTypeAll<AudioSource>())
+        {
+            if (audiosource.CompareTag("Bear"))
+            {
+                bearPlayer = audiosource;
+            }
+        }
 
         foreach (Canvas canvas in Resources.FindObjectsOfTypeAll<Canvas>())
         {
@@ -130,12 +152,6 @@ public class BearInputMultiplayer : MonoBehaviour
             {
                 canvasHUD = canvas;
             }
-
-            /*if (canvas.CompareTag("NameHUD"))
-            {
-                canvasNameHUD = canvas.GetComponent<Transform>();
-                canvasNameHUD.Find("Text").GetComponent<Text>().text = GetComponent<PhotonView>().Owner.NickName;
-            }*/
         }        
 
         if (BearHUD != null)
@@ -175,6 +191,8 @@ public class BearInputMultiplayer : MonoBehaviour
         // && (isRunning == false)
         if ((keysPressed > 0))
         {
+            
+
             walking_animation = true;
         }
         else
@@ -235,6 +253,20 @@ public class BearInputMultiplayer : MonoBehaviour
             keyboardRunning = false;
         }
         
+        if (onFloor == true)
+        {
+            bearPlayer.clip = snowWalkEffect;
+            bearPlayer.Play();
+            //bearPlayer
+        }
+        else
+        {
+            if (onIce == true)
+            {
+                bearPlayer.clip = iceDashEffect;
+                bearPlayer.Play();
+            }
+        }
         //}
     }
 
@@ -307,6 +339,8 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Corner1")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 20, _playerRB.position.z - 10));
+            bearPlayer.clip = fallInWater;
+            bearPlayer.Play();
 
             if (isRunning == true)
             {
@@ -317,6 +351,8 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Corner2")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 20, _playerRB.position.z - 10));
+            bearPlayer.clip = fallInWater;
+            bearPlayer.Play();
 
             if (isRunning == true)
             {
@@ -327,6 +363,8 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Corner3")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 20, _playerRB.position.z + 10));
+            bearPlayer.clip = fallInWater;
+            bearPlayer.Play();
 
             if (isRunning == true)
             {
@@ -337,6 +375,8 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Corner4")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 20, _playerRB.position.z + 10));
+            bearPlayer.clip = fallInWater;
+            bearPlayer.Play();
 
             if (isRunning == true)
             {
@@ -348,6 +388,8 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Side1")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x, _playerRB.position.y + 25, _playerRB.position.z - 10));
+            bearPlayer.clip = fallInWater;
+            bearPlayer.Play();
 
             if (isRunning == true)
             {
@@ -358,6 +400,8 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Side2")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x, _playerRB.position.y + 25, _playerRB.position.z + 10));
+            bearPlayer.clip = fallInWater;
+            bearPlayer.Play();
 
             if (isRunning == true)
             {
@@ -368,6 +412,8 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Side3")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 25, _playerRB.position.z));
+            bearPlayer.clip = fallInWater;
+            bearPlayer.Play();
 
             if (isRunning == true)
             {
@@ -378,6 +424,8 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Side4")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 25, _playerRB.position.z));
+            bearPlayer.clip = fallInWater;
+            bearPlayer.Play();
 
             if (isRunning == true)
             {
@@ -388,6 +436,13 @@ public class BearInputMultiplayer : MonoBehaviour
         if(collision.gameObject.tag == "IceFall")
         {
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 5, _playerRB.position.y + 8, _playerRB.position.z - 5));
+            bearPlayer.clip = fallInWater;
+            bearPlayer.Play();
+
+            if (isRunning == true)
+            {
+                isRunning = false;
+            }
         }
     }
 
@@ -401,7 +456,9 @@ public class BearInputMultiplayer : MonoBehaviour
         if (collision.gameObject.tag == "Fish") //Si choca con un cepo
         {
             stamina += 200;
-            Debug.Log("COLAS");
+            bearPlayer.clip = eatFishEffect;
+            bearPlayer.Play();
+            //Debug.Log("COLAS");
         }
 
         if (collision.gameObject.tag == "Penguin")  // Si colisiona con pinguino
@@ -412,6 +469,8 @@ public class BearInputMultiplayer : MonoBehaviour
                 if (!PhotonNetwork.IsConnected) // Si es offline, lo elimina
                 {
                     Destroy(pengu);
+                    bearPlayer.clip = penguinDeathEffect;
+                    bearPlayer.Play();
                 } 
                 else  // Si es online, le pide que se muera y le pasa información para comprobar que no hubo lag
                 {
@@ -432,6 +491,33 @@ public class BearInputMultiplayer : MonoBehaviour
             _controls.Player.Movement.Disable();
             _controls.Player.CameraControl.Disable();
             damaged = true;
+            onFloor = false; //para que no suenen las pisadas
+
+            bearPlayer.clip = damageStockEffect;
+            bearPlayer.Play();
+        }
+
+        if(collision.gameObject.tag == "IceTrap")
+        {
+            onFloor = false;
+            onIce = false;
+            bearPlayer.clip = crashIceEffect;
+            bearPlayer.Play();
+        }
+
+        if (collision.gameObject.tag == "IceDashPlat")
+        {
+            //bearPlayer.clip = iceDashEffect;
+            //bearPlayer.Play();
+            onIce = true;
+        }
+
+        if (collision.gameObject.tag == "Floor")
+        {
+            //bearPlayer.clip = snowWalkEffect;
+            //bearPlayer.Play();
+
+            onFloor = true;
         }
     }
 
@@ -442,6 +528,7 @@ public class BearInputMultiplayer : MonoBehaviour
     private void OnEnable()
     {
         //Añade el evento moverse
+        _controls.Player.ESC.performed += ESC;
         _controls.Player.Movement.performed += Move;
         _controls.Player.Attack.performed += Attack; //Evento atacar
         _controls.Player.Run.performed += Run; //Evento correr
@@ -460,6 +547,7 @@ public class BearInputMultiplayer : MonoBehaviour
     private void OnDisable()
     {
         //Elimina el evento
+        _controls.Player.ESC.canceled -= ESC;
         _controls.Player.Movement.canceled -= Move;
         _controls.Player.Attack.canceled -= Attack;
         _controls.Player.Run.canceled -= Run;
@@ -472,6 +560,11 @@ public class BearInputMultiplayer : MonoBehaviour
     #endregion
 
     #region PLAYER ACTIONS
+
+    public void ESC(InputAction.CallbackContext context)
+    {
+        Pause();
+    }
 
     public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
     {
@@ -546,6 +639,7 @@ public class BearInputMultiplayer : MonoBehaviour
         if (context.control.IsPressed() == true)
         {
             keysPressed++;
+            onFloor = true;
         }
         else
         {
@@ -603,6 +697,13 @@ public class BearInputMultiplayer : MonoBehaviour
     #endregion
 
     #region BASIC ACTIONS MANAGEMENT
+
+    public void Pause()
+    {
+
+    }
+
+
     //Hacer daño
     public void Stun()
     {

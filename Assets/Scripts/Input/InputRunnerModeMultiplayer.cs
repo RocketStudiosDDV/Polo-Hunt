@@ -90,6 +90,12 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     public GameObject pivotPrefab;
     public List<string> clasification;
     private bool goalReachedSent;   // Ha enviado el mensaje de meta alcanzada? (modo RACE)
+
+    //EFECTOS DE AUDIO
+    private AudioSource penguinPlayer;
+    public AudioClip eatFishEffect;
+    public AudioClip iceDashEffect;
+
     #endregion
 
     #region UNITY CALLBACKS
@@ -113,34 +119,22 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
 
         }
-
-        //canvasHUD = FindObjectOfType<Canvas>();
-
-        //finalRanking.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
     void Start()
     {
 
-        //finalRanking.gameObject.SetActive(false);
-        //finalRanking = FindObjectOfType<Canvas>();//.tag("Ranking");
-        //finalRanking.enabled = true;
+        penguinPlayer = GetComponent<AudioSource>();
+
         foreach (Canvas canvas in Resources.FindObjectsOfTypeAll<Canvas>())
         {
             if (canvas.CompareTag("RunnerHUD"))
             {
                 canvasHUD = canvas;
             }
-
-            /*if (canvas.CompareTag("NameHUD"))
-            {
-                canvasNameHUD = canvas.GetComponent<Transform>();
-                canvasNameHUD.Find("Text").GetComponent<Text>().text = GetComponent<PhotonView>().Owner.NickName;
-            }*/
         }
 
-        //canvasHUD = FindObjectOfType<Canvas>();
         tableRanking = canvasHUD.transform.Find("HighscoreTable").gameObject as GameObject;
         finalText = canvasHUD.transform.Find("FinalText").gameObject as GameObject;
         posInGame = canvasHUD.transform.Find("Position").gameObject as GameObject;
@@ -382,7 +376,10 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
             fishEaten = true;
             speed = 45;
             _timeFish = Time.fixedTime + 3;
-            Debug.Log("COLAS");
+            //Debug.Log("COLAS");
+            penguinPlayer.clip = eatFishEffect;
+            penguinPlayer.Play();
+
         }
 
         if (collision.gameObject.tag == "RestZone") //Si llega al descanso
@@ -465,6 +462,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     private void OnEnable()
     {
         //Añade el evento moverse
+        _controls.Player.ESC.performed += ESC;
         _controls.Player.Movement.performed += Move;
         _controls.Player.Attack.performed += Attack; //Evento 
         _controls.Player.Run.performed += Jump; //Evento SALTAR
@@ -478,6 +476,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     private void OnDisable()
     {
         //Elimina el evento
+        _controls.Player.ESC.canceled -= ESC;
         _controls.Player.Movement.canceled -= Move;
         _controls.Player.Attack.canceled -= Attack;
         _controls.Player.Run.canceled -= Jump;
@@ -489,6 +488,12 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     #endregion
 
     #region PLAYER ACTIONS
+
+    public void ESC(InputAction.CallbackContext context)
+    {
+        Pause();
+    }
+
     public void Move(InputAction.CallbackContext context)
     {
         _horizontaldirection = context.ReadValue<Vector2>();
@@ -525,6 +530,12 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
 
     #region ACTIONS TIME
+
+    public void Pause()
+    {
+
+    }
+
 
     public void ShowRanking()
     {

@@ -87,12 +87,23 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
     //CEPO ACTIVACION HUD
     //public Transform canvasNameHUD;
+    private GameObject quitButton;
     private GameObject stockHud;
     public Canvas canvasHUD;
     private bool isPenguin = false;
 
+<<<<<<< Updated upstream
     public GameObject PauseButton;
     public bool PauseButtonActivo = false;
+=======
+    //EFECTOS DE AUDIO
+    private AudioSource penguinPlayer;
+    public AudioClip eatFishEffect;
+    public AudioClip iceDashEffect;
+    public AudioClip snowWalkEffect;
+    public AudioClip fallInWater;
+    public AudioClip penguinDeathEffect;
+>>>>>>> Stashed changes
 
     #endregion
 
@@ -106,6 +117,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             mainCamera = Object.FindObjectOfType<Camera>();
             pivot = Instantiate(pivotPrefab).transform;
+<<<<<<< Updated upstream
             target = pivot.GetChild(0).transform;
             
         }
@@ -116,6 +128,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 PauseButton = b.gameObject;
         }
         
+=======
+            target = pivot.GetChild(0).transform;            
+        }        
+>>>>>>> Stashed changes
     }
 
     // Start is called before the first frame update
@@ -126,6 +142,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         _playerRB = GetComponent<Rigidbody>();
         matchInfo = FindObjectOfType<MatchInfo>(); //si muere llamar a matchInfo.SpectatorMode
         penguin_animator = GetComponent<Animator>();
+        penguinPlayer = GetComponent<AudioSource>();
 
         foreach (Canvas canvas in Resources.FindObjectsOfTypeAll<Canvas>())
         {
@@ -140,27 +157,18 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 canvasNameHUD.Find("Text").GetComponent<Text>().text = GetComponent<PhotonView>().Owner.NickName;
             }*/
         }
-
-        //if (GetComponent<PhotonView>().IsMine)
-        //{​​​​  
+  
         object property = false;
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isPenguin", out property);
 
         if ((bool)property)
         {
             // Es pinga
+            quitButton = canvasHUD.transform.Find("QuitButton").gameObject as GameObject;
             stockHud = canvasHUD.transform.Find("Stock").gameObject as GameObject;
             stockHud.gameObject.SetActive(true); //cepo visible
             isPenguin = true;
-        }
-
-        /*else
-        {​​
-        // No es pinga
-        }​​
-        
-        //}​​​​ */
-       
+        }      
     }
 
     // Update is called once per frame
@@ -170,6 +178,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             return;
         }
+
         //ANIMACIÓN ANDAR
         if ((Input.GetKey(KeyCode.W)) || (Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.D))
             || (Input.GetKey(KeyCode.LeftArrow)) || (Input.GetKey(KeyCode.RightArrow)) || (Input.GetKey(KeyCode.UpArrow)) || (Input.GetKey(KeyCode.DownArrow)) ||(Gamepad.current.leftStick.IsPressed()))
@@ -177,6 +186,8 @@ public class PenguinInputMultiplayer : MonoBehaviour
         //     if (keysPressed > 0)
         // {
             walking_animation = true;
+            penguinPlayer.clip = snowWalkEffect;
+            penguinPlayer.Play();
         }
         else
         {
@@ -267,17 +278,6 @@ public class PenguinInputMultiplayer : MonoBehaviour
         ToThrowStocks(Time.fixedTime);
         ToHit(Time.fixedTime); //Se asegura de que el ataque dura solo un instante (1 seg) y no que cuando le des este smp atacando
 
-        /*if (caer == true)
-        {
-            _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-
-            if (Time.fixedTime > _timeFall)
-            {
-                _playerRB.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                caer = false;
-            }
-        }*/
-
         if (isRunning == false)
         {
             int lastPressed = 1;
@@ -348,47 +348,65 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Corner1")
         {
+            penguinPlayer.clip = fallInWater;
+            penguinPlayer.Play();
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 15, _playerRB.position.y + 20, _playerRB.position.z - 15));
         }
 
         if (collision.gameObject.tag == "Corner2")
         {
+            penguinPlayer.clip = fallInWater;
+            penguinPlayer.Play();
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 20, _playerRB.position.z - 10));
         }
 
         if (collision.gameObject.tag == "Corner3")
         {
+            penguinPlayer.clip = fallInWater;
+            penguinPlayer.Play();
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 20, _playerRB.position.z + 10));
         }
 
         if (collision.gameObject.tag == "Corner4")
         {
+            penguinPlayer.clip = fallInWater;
+            penguinPlayer.Play();
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 20, _playerRB.position.z + 10));
         }
 
 
         if (collision.gameObject.tag == "Side1")
         {
+            penguinPlayer.clip = fallInWater;
+            penguinPlayer.Play();
             _playerRB.MovePosition(new Vector3(_playerRB.position.x, _playerRB.position.y + 25, _playerRB.position.z - 10));
         }
 
         if (collision.gameObject.tag == "Side2")
         {
+            penguinPlayer.clip = fallInWater;
+            penguinPlayer.Play();
             _playerRB.MovePosition(new Vector3(_playerRB.position.x, _playerRB.position.y + 25, _playerRB.position.z + 10));
         }
 
         if (collision.gameObject.tag == "Side3")
         {
+            penguinPlayer.clip = fallInWater;
+            penguinPlayer.Play();
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 10, _playerRB.position.y + 25, _playerRB.position.z));
         }
 
         if (collision.gameObject.tag == "Side4")
         {
+            penguinPlayer.clip = fallInWater;
+            penguinPlayer.Play();
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 25, _playerRB.position.z));
         }
 
         if (collision.gameObject.tag == "IceFall")
         {
+            penguinPlayer.clip = fallInWater;
+            penguinPlayer.Play();
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 5, _playerRB.position.y + 8, _playerRB.position.z - 5));
         }
     }
@@ -405,11 +423,16 @@ public class PenguinInputMultiplayer : MonoBehaviour
             fishEaten = true;
             speed = 4;
             _timeFish = Time.fixedTime + 5;
+
+            penguinPlayer.clip = eatFishEffect;
+            penguinPlayer.Play();
         }
 
         if (collision.gameObject.tag == "IceDashPlat") //Si choca con un pescao
         {
             InIceDashPlat = true;
+            penguinPlayer.clip = iceDashEffect;
+            penguinPlayer.Play();
 
             if (isRunning == true) //Si esta corriendo deja de correr
             {
@@ -435,15 +458,6 @@ public class PenguinInputMultiplayer : MonoBehaviour
                 isAttacking = false;
             }
         }
-
-        //PRUEBAS
-      /*  if (collision.gameObject.tag == "caca") //Si choca con un pescao
-        {
-
-            ToDie();
-            //
-            mainCamera = collision.gameObject.GetComponent<Camera>();
-        }*/
     }
     #endregion
 
@@ -473,7 +487,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     {
         //Elimina el evento
         _controls.Player.Run.canceled -= Run;
-        _controls.Player.ESC.performed += ESC;
+        _controls.Player.ESC.canceled -= ESC;
         _controls.Player.Movement.canceled -= Move;
         _controls.Player.Attack.canceled -= Attack;
         _controls.Player.PowerUp.canceled -= PowerUp;
@@ -529,15 +543,13 @@ public class PenguinInputMultiplayer : MonoBehaviour
         if (cepoActive == false)
         {
             cepoActive = true;
+            //quitButton.SetActive(true);
 
-            //if (GetComponent<PhotonView>().IsMine)
-            //{​​​​  
             if (isPenguin == true)
             {
                 stockHud.gameObject.SetActive(false); //cepo visible
             }
                 
-            //}​​​​ 
            
             if ((lookingAt.x > 0) && (lookingAt.z < 0))
             {
@@ -713,6 +725,10 @@ public class PenguinInputMultiplayer : MonoBehaviour
     //morir
     public void ToDie()
     {
+        penguinPlayer.clip = penguinDeathEffect;
+        penguinPlayer.Play();
+        //quitButton.SetActive(true);
+
         _controls.Player.Disable();
         Destroy(gameObject);
     }
@@ -729,6 +745,8 @@ public class PenguinInputMultiplayer : MonoBehaviour
             int bearActorNumber = (int)objectArray[1];
             if (Vector3.Distance(positionCheck, transform.position) < maxDistanceToKill || PhotonNetwork.GetPing() > maxPingToKill)
             {
+                quitButton.SetActive(true);
+
                 ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
                 hashtable.Add("alive", false);
                 PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
@@ -756,16 +774,11 @@ public class PenguinInputMultiplayer : MonoBehaviour
         {
             if (Time.fixedTime > timeAwait)
             {
-                
-                //if (GetComponent<PhotonView>().IsMine)
-                //{​​​​  
                 if (isPenguin == true)
                 {
                     stockHud.gameObject.SetActive(true);
                 }
-                    //cepo visible
-                //}​​​​ 
-                //stockHud.gameObject.SetActive(true); //cepo visible
+                //cepo visible
                 cepoActive = false;
             }
         }

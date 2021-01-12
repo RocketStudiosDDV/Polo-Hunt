@@ -11,8 +11,7 @@ public class PlayerName : MonoBehaviour
 
     private void Awake()
     {
-        nameHUD = FindObjectOfType<Canvas>().GetComponent<Transform>();
-        
+        nameHUD = FindObjectOfType<Canvas>().GetComponent<Transform>();        
     }
     void Start()
     {

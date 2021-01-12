@@ -78,6 +78,10 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     // TESTEO
     private LogWriter logWriter;
+
+    //AUDIO
+    private AudioSource bearPlayer;
+    public AudioClip penguinDeathEffect;
     #endregion
 
     #region UNITY CALLBACKS
@@ -368,6 +372,9 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
             Debug.Log("penguins alive = " + penguinsAlive);
             if (penguinsAlive == 0)
                 ShowResults();
+
+            bearPlayer.clip = penguinDeathEffect;
+            bearPlayer.Play();
         }
     }
 

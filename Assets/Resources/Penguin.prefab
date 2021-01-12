@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6845617389219712972}
   - component: {fileID: -5706299110820098744}
   - component: {fileID: 1333390842896146890}
+  - component: {fileID: 8505950341468977942}
   m_Layer: 0
   m_Name: Penguin
   m_TagString: Penguin
@@ -113,14 +114,22 @@ MonoBehaviour:
   target: {fileID: 0}
   pivot: {fileID: 0}
   lookingAt: {x: 0, y: 0, z: 0}
-  cepo: {fileID: 6193383704093716309, guid: 9a3a2bc4dafc50242af489f3788b3eb0, type: 3}
+  cepo: {fileID: 761267854782697230, guid: 1112dd9cf24a9f24fbe98240b2a19fd7, type: 3}
   _timeAttacking: 0
   ownerActorNumber: 0
   keysPressed: 0
   _timeTillPressed: 0
   canvasHUD: {fileID: 0}
+<<<<<<< Updated upstream
   PauseButton: {fileID: 0}
   PauseButtonActivo: 0
+=======
+  eatFishEffect: {fileID: 8300000, guid: cc6268e563de5af4cb96d72486cdc790, type: 3}
+  iceDashEffect: {fileID: 8300000, guid: 87ad25a9551514c49aec8d637b5983a2, type: 3}
+  snowWalkEffect: {fileID: 8300000, guid: f583af5b9f816c94f9a5dc49ff2ae2d5, type: 3}
+  fallInWater: {fileID: 8300000, guid: a93dab3fb2c330c4086bf1cfa9e5483e, type: 3}
+  penguinDeathEffect: {fileID: 8300000, guid: e7531c105cdda374c9cda4ce5183d9af, type: 3}
+>>>>>>> Stashed changes
 --- !u!114 &7199837195669275907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +218,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a853995ac19b4b846bf09198f2493ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &8505950341468977942
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69048888687589988}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 70
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &96130789225483812
 GameObject:
   m_ObjectHideFlags: 0

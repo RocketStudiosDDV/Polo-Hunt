@@ -53,6 +53,7 @@ MonoBehaviour:
   fishPrefab: {fileID: 5013652233979746569, guid: a3e697a1ab9aa1d4ea39080232f5947e,
     type: 3}
   fishPositions: []
+  penguinDeathEffect: {fileID: 8300000, guid: e7531c105cdda374c9cda4ce5183d9af, type: 3}
 --- !u!114 &2670719676722973066
 MonoBehaviour:
   m_ObjectHideFlags: 0
