@@ -581,21 +581,34 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             int high = 100;
             foreach (RoomInfo roomInfo in roomList)
             {
-                Transform entryTransform = Instantiate(ListRoomPrefab, ListRoomContainer);
-                RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                entryRectTransform.anchoredPosition = new Vector3(0,-high * i, 0);
-                entryTransform.gameObject.SetActive(true);
-                entryTransform.GetComponent<RoomEntry>().SetRoomName(roomInfo.Name);
-                entryTransform.Find("RoomText").GetComponent<Text>().text = roomInfo.Name;
-                entryTransform.Find("PlayersText").GetComponent<Text>().text = roomInfo.PlayerCount+"/10";
-                if (roomInfo.CustomProperties["gameMode"].ToString().CompareTo("0") == 1)
-                    entryTransform.Find("ModeText").GetComponent<Text>().text = "RACE";
-                else
-                    entryTransform.Find("ModeText").GetComponent<Text>().text = "POLO-HUNT";
-                ListRoomPrefabList.Add(entryTransform);
-                i++;
-                if (roomInfo != null)
-                    logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString() + ", Started: " + roomInfo.CustomProperties["hasStarted"].ToString());
+                if (roomInfo != null && roomInfo.PlayerCount > 0)
+                {
+                    Transform entryTransform = Instantiate(ListRoomPrefab, ListRoomContainer);
+                    RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+                    entryRectTransform.anchoredPosition = new Vector3(0, -high * i, 0);
+                    entryTransform.gameObject.SetActive(true);
+                    entryTransform.GetComponent<RoomEntry>().SetRoomName(roomInfo.Name);
+                    Debug.Log(roomInfo.Name);
+                    entryTransform.Find("RoomText").GetComponent<Text>().text = roomInfo.Name;
+                    entryTransform.Find("PlayersText").GetComponent<Text>().text = roomInfo.PlayerCount + "/10";
+                    try
+                    {
+                        if (roomInfo.CustomProperties["gameMode"].ToString().CompareTo("0") == 1)
+                            entryTransform.Find("ModeText").GetComponent<Text>().text = "RACE";
+                        else
+                            entryTransform.Find("ModeText").GetComponent<Text>().text = "POLO-HUNT";
+                    }
+                    catch (System.Exception ex)
+                    {
+
+                    }
+                    ListRoomPrefabList.Add(entryTransform);
+                    i++;
+                    /*
+                    if (roomInfo != null)
+                        logWriter.Write(roomInfo.ToString() + ", GameMode: " + roomInfo.CustomProperties["gameMode"].ToString() + ", Started: " + roomInfo.CustomProperties["hasStarted"].ToString());
+                    */
+                }
             }
             logWriter.Write("--ROOMS UPDATE END--");
         }
