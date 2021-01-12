@@ -3132,6 +3132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 0}
+  audioSound: {fileID: 440026603}
+  audioMusic: {fileID: 0}
   EnglishTest:
   - BACK
   SpanishTest:

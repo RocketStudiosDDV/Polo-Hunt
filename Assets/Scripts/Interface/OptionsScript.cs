@@ -6,9 +6,17 @@ using UnityEngine.UI;
 
 public class OptionsScript : MonoBehaviour
 {
+    public AudioMixer audioMixer;
+    public AudioSource audioSound;
+    public AudioSource audioMusic;
+    void Awake()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
-    {
+    {     
         if (PlayerPrefs.GetInt("language") == 0)
         {
             int i = 0;
@@ -39,10 +47,11 @@ public class OptionsScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        audioSound.volume = PlayerPrefs.GetFloat("effects");
+        audioMusic.volume = PlayerPrefs.GetFloat("volume");
     }
 
-    public AudioMixer audioMixer;
+    
 
     public string[] EnglishTest;
     public string[] SpanishTest;
@@ -52,7 +61,6 @@ public class OptionsScript : MonoBehaviour
     public void SetVolume(float volume)
     {
         PlayerPrefs.SetFloat("volume", volume);
-        audioMixer.SetFloat("volume", volume);
     }
 
     public void SetEffects(float effects)

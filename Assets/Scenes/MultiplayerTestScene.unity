@@ -988,6 +988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 0}
+  audioSound: {fileID: 1148360086}
   EnglishTest:
   - Enter nickname...
   - Enter password...
