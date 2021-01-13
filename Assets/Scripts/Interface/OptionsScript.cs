@@ -47,8 +47,10 @@ public class OptionsScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        audioSound.volume = PlayerPrefs.GetFloat("effects", 1);
-        audioMusic.volume = PlayerPrefs.GetFloat("volume", 1);
+        if (audioSound != null)
+            audioSound.volume = PlayerPrefs.GetFloat("effects", 1);
+        if (audioMusic != null)
+            audioMusic.volume = PlayerPrefs.GetFloat("volume", 1);
     }
 
     
