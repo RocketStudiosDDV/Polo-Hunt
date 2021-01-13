@@ -696,9 +696,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         if (logWriter != null)
             logWriter.Write("Error al unirse a sala aleatoria: " + message);
 
-        ChooseTypePanel.SetActive(true);
-        HideErrorJoin();
-        LobbyPanel.SetActive(false);
+        errorJoinTxt.SetActive(true);
+        Invoke(nameof(HideErrorJoin), 4);
+        //ChooseTypePanel.SetActive(true);
+        //LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
         FinalRoomPanel.SetActive(false);
