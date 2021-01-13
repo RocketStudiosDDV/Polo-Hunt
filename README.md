@@ -100,20 +100,23 @@ El juego en la versión de salida dispone de dos modos principales. Durante los 
 Centrándonos ahora en los dos desarrollados:
 
 ## Modo caza
-Al seleccionar esta opción, el usuario se define el número de osos y pingüinos de la sala. Una vez comienza la partida, los pingüinos aparecen desperdigados por varias zonas del mapa, siendo estás normalmente las exteriores, debido a que la posición inicial de los osos será el centro del escenario, donde hay un terreno lo suficientemente elevado donde divisar gran parte del mapa. Tras esto comienza una cuenta atrás para que los usuarios se puedan situar un poco en su zona y puedan empezar a buscar posibles escondrijos. 
+Al seleccionar esta opción, el usuario define el número de osos y pingüinos de la sala. Una vez comienza la partida, los pingüinos aparecen desperdigados por varias zonas del mapa, siendo estás normalmente las exteriores, debido a que la posición inicial de los osos será el centro del escenario, donde hay un terreno lo suficientemente elevado como para poder divisar gran parte del mapa. Tras esto comienza una cuenta atrás para que los usuarios se puedan situar un poco en su zona y puedan empezar a buscar posibles escondrijos. 
 
 Durante la partida cada animal dispone de una habilidad especial para poder usarla en beneficio propio y conseguir sobrevivir o devorar.
 Las condiciones para que finalice la partida son dos:
 
 La primera es por el tiempo establecido. Este es de 7 minutos, pero los usuarios podrán alterar el valor de este debido a que el número de cazadores y presas condiciona las posibilidades de victoria y derrota de ambos grupos, por eso se le cede al usuario el control de esta variable.
-La segunda es por la victoria de los osos al conseguir atrapar a todos sus objetivos o la de los pingüinos al matar a todos los osos usando los fragmentos de hielo. Estos fragmentos de hielo quebrados solo se caen con el peso de un oso, imitando la realidad que sufren estos en su entorno natural. 
+La segunda es por la victoria de los osos al conseguir atrapar a todos sus objetivos.
  
 ## Modo carrera
 Aquí solo se ofrece la opción de ser pingüino puesto que el oso carece de las condiciones necesarias para poder deslizarse por el hielo debido a su fisionomía. 
 Al comenzar la partida todos los usuarios se encuentras en la cima de la pista y estos avanzarán hasta el punto de inflexión donde se produce la cuesta principal que hace de escenario imitando en cierta manera al clásico half-pipe de las pistas de ski y snow. 
-El objetivo del juego es claro, llegar cuanto antes al final del escenario, para ello los pingüinos deben esquivar todos los obstáculos que se encuentren por el camino. Estos siguen acorde a la temática del juego y del propio escenario. La gran mayoría de elementos a esquivar son acorde a los clásicos aparatos que se pueden encontrar en cualquier pista. Cuando se colisiona con cualquiera de estos, los jugadores sufren una penalización de velocidad e incluso de posición, regresando unos metros atrás en su trayectoria para poder sortear el obstáculo en cuestión.
-A modo de recompensa de velocidad, hay varias cuestas por el mapa que al pasar por ellas otorgan un extra de velocidad por un momento. Por otro lado, están los peces que se encuentran desperdigados por el mapa, colocados en sitios específicos donde pueden causar cierto conflicto entre los jugadores para que vayan.
- El usuario que llega primero se alza con la victoria, aunque al final de la partida aparece un ranking con las posiciones de llegada para fomentar la competitividad entre los usuarios.
+
+El objetivo del juego es claro, llegar cuanto antes al final del escenario, para ello los pingüinos deben esquivar todos los obstáculos que se encuentren por el camino. Estos siguen acorde a la temática del juego y del propio escenario. 
+La gran mayoría de elementos a esquivar son acorde a los clásicos aparatos que se pueden encontrar en cualquier pista. Cuando se colisiona con cualquiera de estos, los jugadores sufren una penalización de velocidad e incluso de posición, regresando unos metros atrás en su trayectoria para poder sortear el obstáculo en cuestión.
+
+A modo de recompensa de velocidad, hay varias cuestas por el mapa que al pasar por ellas otorgan un extra de velocidad por un momento. Por otro lado, están los peces que se encuentran desperdigados por el mapa, colocados en sitios específicos donde pueden causar cierto conflicto.
+El usuario que llega primero se alza con la victoria, aunque al final de la partida aparece un ranking con las posiciones de llegada para fomentar la competitividad entre los usuarios.
 
 
 
@@ -123,7 +126,7 @@ A modo de recompensa de velocidad, hay varias cuestas por el mapa que al pasar p
 # Movimientos y habilidades
 Este apartado se centra mayormente en los movimientos y habilidades del modo caza, puesto que la velocidad en las carreras es la misma para todos los jugadores y que los pingüinos no tienen su habilidad especial en este modo tampoco.
 
-En el modo caza las distintas velocidades de cada animal son el ajuste más importante del juego para poder conseguir una jugabilidad bien definida y agradable para los usuarios. Para compensar el desnivel de velocidades, hemos decidido que se ajuste mediante la jugabilidad de los usuarios cuando utilicen sus sprints y sus correspondientes habilidades.
+En el modo caza, las distintas velocidades de cada animal son el ajuste más importante del juego para poder conseguir una jugabilidad bien definida y agradable para los usuarios. Para compensar el desnivel de velocidades, hemos decidido que se ajuste mediante la jugabilidad de los usuarios cuando utilicen sus sprints y sus correspondientes habilidades.
 
 ## Velocidades
 •	Pingüinos: Los pingüinos pueden aprovechar su velocidad instantánea o los desniveles causados por la nieve para poder tumbarse y aumentar su velocidad de movimiento de manera considerable mientras que este decae por la desaceleración.
@@ -131,6 +134,7 @@ En el modo caza las distintas velocidades de cada animal son el ajuste más impo
 
 ## Habilidades
 •	Pingüinos: estos tienen la habilidad de soltar cepos a sus espaldas, si uno de estos consigue colisionar con el oso, este se petrifica por unos instantes a modo de penalización. Esta habilidad es permanente, pero tiene un tiempo de espera para poder volver a usarla. El correcto uso de esta habilidad es esencial para poder sobrevivir y dejar al oso atrás. Conforme mejor se utilice en el mapa mejor para poder despistar al cazador.
+Los pingüinos pueden dar una torta a sus compañeros para paralirlos y condenarlos a la muerte.
 
 •	Osos: Los osos tiene la habilidad de la visión Berserker. Para compensar el número de pingüinos y el tamaño del escenario, el oso cada cierto tiempo puede ver la posición de todos los pingüinos aun traspasando las montañas y edificios que les protege. Esta habilidad está pensada para que tenga dos o tres usos durante la partida como mucho, ya que de lo contrario destroza por completo el diseño del modo.
 
@@ -149,7 +153,7 @@ El escenario principal del modo hunt está dividido por cuadrantes. En cada cuad
 ![Collage hielos](https://user-images.githubusercontent.com/55508821/104412125-f7ab6a80-556b-11eb-830a-bc78985ab3c9.jpg)
 
  
-•	Zona ciudad: Esta parte está inspirada en la ciudad de Pyramiden, fue un asentamiento minero de carbón construido por los soviéticos. La función de esta área es jugar con las posiciones de los edificios y utilizarlos como escondrijos. 
+•	Zona ciudad: esta parte está inspirada en la ciudad de Pyramiden, fue un asentamiento minero de carbón construido por los soviéticos. La función de esta área es jugar con las posiciones de los edificios y utilizarlos como escondrijos. 
 El ambiente de esta zona es una representación de cómo se encuentra el asentamiento minero en la actualidad, abandonado y con los edificios en declive.
 
 ![Collage Pyramiden](https://user-images.githubusercontent.com/55508821/104412280-393c1580-556c-11eb-8699-50d3f34308ae.jpg)
