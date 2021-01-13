@@ -1,3 +1,7 @@
+
+![WhatsApp Image 2021-01-05 at 22 34 03(2)](https://user-images.githubusercontent.com/55508821/104412478-a0f26080-556c-11eb-84b6-b7549d4eccdc.jpeg)
+
+
 # Ficha de juego
 
 ## Título
@@ -29,25 +33,20 @@ Como referencia para el desarrollo de este juego hemos tenido en cuenta varios e
 ## Fall guys
 De este famoso juego a la orden del día hace de influencia en el diseño de las físicas de nuestro juego. Al tener un movimiento torpe que provoca una condición de aleatoriedad en los jugadores, el juego sigue un ritmo desbocado de poco preciso con un toque desenfado que es justo la sensación que queremos transmitir con nuestro gameplay.
 
- 
-
-
-
-
+![Collage Fall guys](https://user-images.githubusercontent.com/55508821/104412032-d5b1e800-556b-11eb-94ab-35c03d326c53.jpg)
 
 
 ## Mario Party
 De este juego buscamos la simpleza de todos los juegos que tiene. El ritmo de juego que se desarrolla en esta famosa saga es un maravillo ejemplo de la dinámica de juego que va a seguir Polar Hunt. A su vez, la destreza con la que explican todos los juegos en apenas unos segundos es el motivo esencial porque el que hemos optado para desarrollar los tutoriales e incluso el diseño de los modos de juego.
 
+![Collage Party](https://user-images.githubusercontent.com/55508821/104412069-e1051380-556b-11eb-84cd-8acf2fca6c6c.jpg)
  
-
-
-
-
 
 ## Coolboarders
 De esta clásica saga ya vivida, se ha sacado mucho jugo sobre el desarrollo de escenarios, sobre todo en el modo carrera, aunque como se puede comprobar que la estética de estos juegos es un claro ejemplo de como hemos determinado los paisajes y los elementos de este.
- 
+
+![Collage Coolboarders](https://user-images.githubusercontent.com/55508821/104411989-c468db80-556b-11eb-9f92-ef98d39d05f1.jpg)
+
 
 # Personajes
 ## Pingüinos
@@ -56,15 +55,21 @@ Gracias al movimiento de estos animales y observando las graciosas caídas que t
 Para concebir el diseño de estos famosos pensamos en varios modelos de pingüinos tanto reales como animados, teniendo como referencias como:
 •	Happy feet  : 
 
- 
+![imagen](https://user-images.githubusercontent.com/55508821/104412852-78b73180-556d-11eb-8bfb-bdec49a95fc1.png)
+
 
 •	Madagascar:
  
+![imagen](https://user-images.githubusercontent.com/55508821/104412872-853b8a00-556d-11eb-9621-b3b7f8a8dd59.png)
 
 •	Pingüino rey
- 
+
+![imagen](https://user-images.githubusercontent.com/55508821/104412890-8e2c5b80-556d-11eb-94a9-4d1e5281d782.png)
+
 
 •	Pingüino emperador:
+
+![1022110_1](https://user-images.githubusercontent.com/55508821/104413768-38f14980-556f-11eb-9065-39d60cc020c8.jpg)
 
  
 
@@ -74,13 +79,16 @@ Para concebir el diseño de estos famosos pensamos en varios modelos de pingüin
 El resultado final es una ligera mezcla entre el pingüino emperador y rey, siguiendo la fisionomía del emperador, ya que son los más altos y definiendo los colores del rey. siendo estos los más llamativos para el espectador.
 
 Aquí se muestra la hoja del pingüino base que hay en el juego.
- 
+
+![WhatsApp Image 2020-12-03 at 09 29 35](https://user-images.githubusercontent.com/55508821/104412740-2f66e200-556d-11eb-9acc-f923aed90bf3.jpeg)
+
 
 ## Osos
 El oso polar era una de las grandes opciones que barajábamos como posibles enemigos. En el tintero se han quedado las focas y leones marinos ya que finalmente el juego se desarrolla por completo en tierra. Tras tener que limitar el juego a la tierra debido a las limitaciones técnicas y de tiempo. 
 Este ha sido el animal escogido para dar caza debido a que la fisonomía de este era el más plausible a la hora de desarrollar, teniendo como premisa que el rol de cazador lo debía ejecutar también un animal relacionado con el hielo.
 
- 
+![WhatsApp Image 2020-12-04 at 02 36 34](https://user-images.githubusercontent.com/55508821/104412798-50c7ce00-556d-11eb-96c1-d4a8a49f1fe3.jpeg)
+
 
 # Modos de juego
 
@@ -129,46 +137,36 @@ El escenario principal del modo hunt está dividido por cuadrantes. En cada cuad
 
 •	Zona hielo: aquí los jugadores verán como sus movimientos se ven influenciados por las físicas del terreno dando un beneficio a los pingüinos sobre los osos. Teniendo como arma principal algunos bloques de hielo fracturados que se rompen con el peso de un oso al atravesarlo. Si el oso cae en este bloque pierde y se acaba la partida en el caso de que sea el único que quede.
 
-
-
-
-
+![Collage hielos](https://user-images.githubusercontent.com/55508821/104412125-f7ab6a80-556b-11eb-830a-bc78985ab3c9.jpg)
 
  
 •	Zona ciudad: Esta parte está inspirada en la ciudad de Pyramiden, fue un asentamiento minero de carbón construido por los soviéticos. La función de esta área es jugar con las posiciones de los edificios y utilizarlos como escondrijos. 
 El ambiente de esta zona es una representación de cómo se encuentra el asentamiento minero en la actualidad, abandonado y con los edificios en declive.
 
+![Collage Pyramiden](https://user-images.githubusercontent.com/55508821/104412280-393c1580-556c-11eb-8699-50d3f34308ae.jpg)
 
 
 
- 
 Aquí se muestra la representación de este pequeño pueblo en el mapa
 
-
+![Collage ciudad](https://user-images.githubusercontent.com/55508821/104412190-127ddf00-556c-11eb-848a-2a71d64887e0.jpg)
 
 
 
  
 •	Zona laberinto: Esta zona se utiliza para intensificar la sensación de persecución utilizando como factor clave la sensación de agobio provocada por el pequeño espacio entre las laderas de las montañas y sus estrechos pasadizos. Es un sitio ideal para despistar entre varias a los osos debido al número de recorridos que hay.
 
-
-
-
-
-
-
+![Collage Laberinto](https://user-images.githubusercontent.com/55508821/104412221-20336480-556c-11eb-8e45-0691b439a8cb.jpg)
 
  
 •	Zona Bosque: hay dos zonas boscosas repletas de árboles, laderas y rocas donde poder esconderse y dejar atrás a los osos, aprovechando la estrecha distancia entre algunos elementos.
 
+ ![Collage Bosque](https://user-images.githubusercontent.com/55508821/104412253-2de8ea00-556c-11eb-89d8-667e14019f1d.jpg)
 
-
-
- 
+ 
 •	Zona Montículos circulares y picudos: hay dos zonas con cuestas para que los pingüinos puedan aprovechar la bajada para coger impulso y dejar atrás a los cazadores. En estas zonas también hay ciertos lugares con los que se puede despistar al oso utilizando ciertos puntos ciegos que te ofrecen los montículos y el edificio de comunicaciones.
 
-
-
+![Collage monticulos](https://user-images.githubusercontent.com/55508821/104412301-448f4100-556c-11eb-9eb8-1be74766ac98.jpg)
 
 
  
@@ -190,6 +188,7 @@ Por otra parte, hay unas rampas que al atravesarlas otorgan un impulso de veloci
 
 Imágenes del escenario
 
+![Collage Carreras](https://user-images.githubusercontent.com/55508821/104412331-5244c680-556c-11eb-9735-9aa3a6b952b3.jpg)
 
 
 
@@ -229,8 +228,8 @@ Interfaz de modo carrera:
 
  
 # Flujo de juego
-El siguiente enlace conduce al diagrama de flujo del juego
-https://gyazo.com/ada09956042f351348c6d4fef11dc57a
+![Polo Hunt(1)](https://user-images.githubusercontent.com/55508821/104413636-efa0fa00-556e-11eb-99f2-4df2295526fe.png)
+
 
 #Estilo artístico
 El estilo de este juego tiene componentes low poly para optimizar el rendimiento, aunque los personajes del juego si que tienen un mayor número de polígonos en comparación con el resto de los elementos de la escena. Esta decisión de diseño ha sido realizada para realzar a los protagonistas y darles así un toque de distinción.
