@@ -44,6 +44,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     private int createRoomAttempt;
 
     private int language;
+    private bool privateRoom;
 
     public class Player1
     {
@@ -209,6 +210,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         if (logWriter != null)
             logWriter.Write("Creando sala privada...");
+
+        privateRoom = true;
 
         if (RoomName == null || RoomName == "")
         {
@@ -448,6 +451,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         if (errorPlayTxt != null)
             errorPlayTxt.SetActive(false);
     }
+
+    private void HideErrorCreate()
+    {
+        if (errorCreateTxt != null)
+            errorCreateTxt.SetActive(false);
+    }
     #endregion
 
     #region TEST METHODS
@@ -515,6 +524,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
         language = PlayerPrefs.GetInt("language", 0);
         createRoomAttempt = 0;
+        privateRoom = false;
 
         //RoomPrefabContainer = transform.Find("RoomPrefabContainer");
         //RoomPrefab = RoomPrefabContainer.Find("RoomPrefab");
@@ -530,6 +540,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             ChooseTypePanel.SetActive(false);
             OnlineOfflinePanel.SetActive(false);
             CreateRoomPanel.SetActive(false);
+            HideErrorCreate();
+            HideErrorCreate();
             RoomValuesPanel.SetActive(false);
             if (PhotonNetwork.IsMasterClient)
                 FinalRoom(0);
@@ -596,7 +608,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         ConnectPanel.SetActive(true);
         ChooseTypePanel.SetActive(false); 
         LobbyPanel.SetActive(false);
-        CreateRoomPanel.SetActive(false); 
+        CreateRoomPanel.SetActive(false);
+        HideErrorCreate();
         RoomValuesPanel.SetActive(false);
         RoomPanel.SetActive(false);
     }
@@ -726,8 +739,17 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             logWriter.Write("Creación de sala fallida por error: " + message);
         if (returnCode == ErrorCode.GameIdAlreadyExists)
         {
-            createRoomAttempt++;
-            CreateRoom(PhotonNetwork.LocalPlayer.NickName + "Room" + createRoomAttempt);
+            if (privateRoom)
+            {
+                privateRoom = false;
+                errorCreateTxt.SetActive(true);
+                Invoke(nameof(HideErrorCreate), 4f);
+            }
+            else
+            {
+                createRoomAttempt++;
+                CreateRoom(PhotonNetwork.LocalPlayer.NickName + "Room" + createRoomAttempt);
+            }
         } else
         {
             ChooseTypePanel.SetActive(true);
@@ -878,6 +900,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {     
         ChooseTypePanel.SetActive(true); 
         CreateRoomPanel.SetActive(false);
+        HideErrorCreate();
     }
 
     public void BackJoinRoom()
@@ -938,6 +961,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             room2Txt.text = GetRoomName();
         }
         CreateRoomPanel.SetActive(false);
+        HideErrorCreate();
         RoomValuesPanel.SetActive(false);
         HideErrorJoin();
         LobbyPanel.SetActive(false);
