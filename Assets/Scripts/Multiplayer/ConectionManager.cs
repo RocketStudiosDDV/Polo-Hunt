@@ -358,10 +358,10 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
                 switch(modeSelected)
                 {
                     case 0:
-                        PhotonNetwork.LoadLevel("EscenarioPruebas");
+                        PhotonNetwork.LoadLevel("HuntMap");
                         break;
                     case 1:
-                        PhotonNetwork.LoadLevel("RunnerMap");
+                        PhotonNetwork.LoadLevel("RaceMap");
                         break;
                 }
             }
@@ -427,7 +427,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     }
     private void HideErrorJoin()
     {
-        errorJoinTxt.SetActive(false);
+        if (errorJoinTxt != null)
+            errorJoinTxt.SetActive(false);
     }
     #endregion
 
@@ -674,7 +675,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         if (logWriter != null)
             logWriter.Write("Fallo al unirse a sala: " + message);
         errorJoinTxt.SetActive(true);
-        Invoke(nameof(HideErrorJoin), 5);
+        Invoke(nameof(HideErrorJoin), 4);
         //ChooseTypePanel.SetActive(true);
         //LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
@@ -690,6 +691,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             logWriter.Write("Error al unirse a sala aleatoria: " + message);
 
         ChooseTypePanel.SetActive(true);
+        HideErrorJoin();
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
@@ -708,6 +710,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         } else
         {
             ChooseTypePanel.SetActive(true);
+            HideErrorJoin();
             LobbyPanel.SetActive(false);
             RoomPanel.SetActive(false);
             ConnectPanel.SetActive(false);
@@ -721,6 +724,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             logWriter.Write("Sala abandonada");
 
         ChooseTypePanel.SetActive(true);
+        HideErrorJoin();
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
@@ -858,6 +862,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         ChooseTypePanel.SetActive(true);
         LeaveLobby();
         RoomListZero();
+        HideErrorJoin();
         LobbyPanel.SetActive(false);
     }
 
@@ -904,6 +909,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
             FinalRoomPanel2.SetActive(true);
         CreateRoomPanel.SetActive(false);
         RoomValuesPanel.SetActive(false);
+        HideErrorJoin();
         LobbyPanel.SetActive(false);
         RoomListZero();
         LeaveLobby();
