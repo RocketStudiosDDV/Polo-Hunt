@@ -1609,7 +1609,7 @@ MonoBehaviour:
   - JUGAR
   - OPCIONES
   - TUTORIAL
-  - CREDITOS
+  - "CR\xC9DITOS"
   Text:
   - {fileID: 1902785226}
   - {fileID: 307227086}

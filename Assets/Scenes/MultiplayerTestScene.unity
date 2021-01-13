@@ -1026,31 +1026,31 @@ MonoBehaviour:
   - please enter different code
   SpanishTest:
   - Usuario...
-  - "Constrase\xF1a..."
+  - "Contrase\xF1a..."
   - ENTRAR
-  - ATRAS
+  - "ATR\xC1S"
   - UNIRTE A SALA
   - CREAR SALA
-  - ATRAS
+  - "ATR\xC1S"
   - SALA PRIVADA
   - "Introduce c\xF3digo..."
   - CREAR
-  - SALA PUBLICA
+  - "SALA P\xDABLICA"
   - CREAR
-  - ATRAS
+  - "ATR\xC1S"
   - UNIRTE ALEATORIA
   - UNIRTE PRIVADA
   - "Introduce c\xF3digo..."
-  - ATRAS
+  - "ATR\xC1S"
   - MODO DE JUEGO
   - CARRERA
   - CAZA POLAR
-  - ELIGE NUMERO DE OSOS
-  - ATRAS
-  - ATRAS
+  - "ELIGE N\xDAMERO DE OSOS"
+  - "ATR\xC1S"
+  - "ATR\xC1S"
   - JUGAR
   - OPCIONES DE SALA
-  - ATRAS
+  - "ATR\xC1S"
   - SALA
   - MODO
   - JUGADORES
