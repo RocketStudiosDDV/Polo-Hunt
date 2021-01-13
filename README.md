@@ -11,7 +11,7 @@ Es un juego multijugador party en 3D
 ## Audiencia
 Es un juego pensado para todos los públicos, aunque tenga como foco principal un nicho de jugadores jóvenes 
 ## Plataformas
-En ordenador y dispositivos móviles
+Plataforma WebGl
 ## Modos de Juego
 Múltiples
 ## Temática
@@ -34,7 +34,7 @@ La concepción del juego realmente surgió de un brainstorming grupal sobre el d
 Como referencia para el desarrollo de este juego hemos tenido en cuenta varios ejemplos como:
  
 ## Fall guys
-Este famoso juego a la orden del día hace de influencia en el diseño de las físicas de nuestro juego. Al tener un movimiento torpe que provoca una condición de aleatoriedad en los jugadores, el juego sigue un ritmo desbocado poco preciso con un toque desenfado que es justo la sensación que queremos transmitir con nuestro gameplay.
+Este famoso juego a la orden del día hace de influencia en el diseño de las físicas de nuestro juego. Al tener un movimiento torpe que provoca una condición de aleatoriedad en los jugadores, el juego sigue un ritmo desbocado poco preciso con un toque desenfadado que es justo la sensación que queremos transmitir con nuestro gameplay.
 
 ![Collage Fall guys](https://user-images.githubusercontent.com/55508821/104412032-d5b1e800-556b-11eb-94ab-35c03d326c53.jpg)
 
@@ -85,12 +85,22 @@ Aquí se muestra la hoja del pingüino base que hay en el juego.
 
 ![WhatsApp Image 2020-12-03 at 09 29 35](https://user-images.githubusercontent.com/55508821/104412740-2f66e200-556d-11eb-9acc-f923aed90bf3.jpeg)
 
+![Collage Pingas](https://user-images.githubusercontent.com/55508821/104515806-929b5780-55f3-11eb-8cbc-0606a8305b9c.jpg)
+
 
 ## Osos
 El oso polar era una de las grandes opciones que barajábamos como posibles enemigos. En el tintero se han quedado las focas y leones marinos ya que finalmente el juego se desarrolla por completo en tierra. Tras tener que acortar el juego a la tierra debido a las limitaciones técnicas y de tiempo. 
 Este ha sido el animal escogido para dar caza debido a que la fisonomía de este era el más plausible a la hora de desarrollar, teniendo como premisa que el rol de cazador lo debía ejecutar también un animal relacionado con el hielo.
 
+
+El mayor problema que ha surgido con el desarrollo de este depredador es la dificultad de realizar una animación de caza.
+Se ha estudiado mucho el movimiento de este animal para conseguir un realismo preciso. 
+A la hora atacar se ha optado finalmente por un impulso en el cuerpo con su correspondiente dentellada.
+
+
 ![WhatsApp Image 2020-12-04 at 02 36 34](https://user-images.githubusercontent.com/55508821/104412798-50c7ce00-556d-11eb-96c1-d4a8a49f1fe3.jpeg)
+
+![Collage oso](https://user-images.githubusercontent.com/55508821/104515754-831c0e80-55f3-11eb-8c99-b583bc45d11c.jpg)
 
 
 # Modos de juego
@@ -134,7 +144,7 @@ En el modo caza, las distintas velocidades de cada animal son el ajuste más imp
 
 ## Habilidades
 •	Pingüinos: estos tienen la habilidad de soltar cepos a sus espaldas, si uno de estos consigue colisionar con el oso, este se petrifica por unos instantes a modo de penalización. Esta habilidad es permanente, pero tiene un tiempo de espera para poder volver a usarla. El correcto uso de esta habilidad es esencial para poder sobrevivir y dejar al oso atrás. Conforme mejor se utilice en el mapa mejor para poder despistar al cazador.
-Los pingüinos pueden dar una torta a sus compañeros para paralirlos y condenarlos a la muerte.
+Los pingüinos pueden dar una torta a sus compañeros para paralizarlos y condenarlos a la muerte.
 
 •	Osos: Los osos tiene la habilidad de la visión Berserker. Para compensar el número de pingüinos y el tamaño del escenario, el oso cada cierto tiempo puede ver la posición de todos los pingüinos aun traspasando las montañas y edificios que les protege. Esta habilidad está pensada para que tenga dos o tres usos durante la partida como mucho, ya que de lo contrario destroza por completo el diseño del modo.
 
@@ -229,8 +239,12 @@ Pantalla de opciones: el usuario puede cambiar el idioma, la música y los efect
 
 Pantalla de tutorial: 
 
+![tutorial](https://user-images.githubusercontent.com/55508821/104511821-95934980-55ed-11eb-90b4-21275871d1db.JPG)
+
 
 Pantalla de créditos:
+
+![credits](https://user-images.githubusercontent.com/55508821/104511866-a6dc5600-55ed-11eb-8819-a526baa87104.JPG)
 
 
 Pantalla de conexión: Se introduce el nickname del jugador y se conecta
@@ -249,9 +263,18 @@ Pantalla de Host 1: Se decide si la sala va a ser pública o privada y se establ
 
 Pantalla de Host 2: El jugador establece el modo de juego y las condiciones
 
+![room_options](https://user-images.githubusercontent.com/55508821/104511977-cbd0c900-55ed-11eb-83d2-7dc88c8ffdb3.JPG)
+
+
 Pantalla de Cliente 1: El jugador se puede unir a una privada, o una pública de manera aleatoria o voluntaria.
 
+![private_or_public_room](https://user-images.githubusercontent.com/55508821/104512047-e86d0100-55ed-11eb-9196-285db7c3f2cf.JPG)
+
+
 Pantalla de Cliente 2: El jugador se encuentra en la sala de espera con el resto de los jugadores, donde puede ver el nickname de estos.
+
+![room](https://user-images.githubusercontent.com/55508821/104512125-03d80c00-55ee-11eb-9c94-4ea0e5baf036.JPG)
+
 
 Interfaz de modo caza:
 En este modo se indican varios parámetros:
@@ -340,6 +363,12 @@ Cada semana saldrá una skin nueva y cada dos meses saldrá un paquete temático
 # Tutoriales
 Siguiendo con una de las reglas principales de la experiencia de usuario, la explicación de cualquier modo de juego debe ser lo suficientemente sencilla como para llegar a comprenderlo en menos de un minuto. Esta norma condiciona por completo el diseño de todos los modos del juego, por eso los tutoriales de este juego son pantallas únicas en las que se especifican los objetivos, controles y habilidades. 
 
+![runner_tutorial](https://user-images.githubusercontent.com/55508821/104512157-12bebe80-55ee-11eb-8098-c0070c73645e.JPG)
+
+
+![polarhunt_tutorial](https://user-images.githubusercontent.com/55508821/104512179-19e5cc80-55ee-11eb-98a5-47bfaaf9b6d3.JPG)
+
+
 
 Aquí se muestran las dos pantallas de tutorial para el modo caza y el modo carreras.
 
@@ -348,7 +377,10 @@ Los controles del juego varían en función a cada plataforma, ya que en la vers
 
 ## Control ordenador
 
+![PC_controls](https://user-images.githubusercontent.com/55508821/104511600-451bec00-55ed-11eb-9fac-e43dd327ac5c.JPG)
+
+
 ## Control mando
 
-## Control móvil 
+![gamepad_controls](https://user-images.githubusercontent.com/55508821/104511560-33d2df80-55ed-11eb-8a88-24274df60351.JPG)
 
