@@ -567,22 +567,22 @@ public class PenguinInputMultiplayer : MonoBehaviour
 
             if ((lookingAt.x > 0) && (lookingAt.z < 0))
             {
-                PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y + 0.04f, _playerRB.transform.position.z + 1), Quaternion.Euler(-90f, 0f, 0f));
+                PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y + 0.74f, _playerRB.transform.position.z + 1), Quaternion.Euler(0f, 0f, 0f));
 
             }
             else if ((lookingAt.x < 0) && (lookingAt.z < 0))
             {
-                PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x + 1, _playerRB.transform.position.y + 0.04f, _playerRB.transform.position.z), Quaternion.Euler(-90f, 0f, 0f));
+                PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x + 1, _playerRB.transform.position.y + 0.74f, _playerRB.transform.position.z), Quaternion.Euler(0f, 0f, 0f));
 
             }
             else if ((lookingAt.x > 0) && (lookingAt.z > 0))
             {
-                PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x - 1, _playerRB.transform.position.y + 0.04f, _playerRB.transform.position.z), Quaternion.Euler(-90f, 0f, 0f));
+                PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x - 1, _playerRB.transform.position.y + 0.74f, _playerRB.transform.position.z), Quaternion.Euler(0f, 0f, 0f));
 
             }
             else if ((lookingAt.x < 0) && (lookingAt.z > 0))
             {
-                PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y + 0.04f, _playerRB.transform.position.z - 1), Quaternion.Euler(-90f, 0f, 0f));
+                PhotonNetwork.Instantiate(this.cepo.name, new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y + 0.74f, _playerRB.transform.position.z - 1), Quaternion.Euler(0f, 0f, 0f));
             }
 
             timeAwait = Time.fixedTime + 5; //tiempo que tarada en voilver a tener aviable el cpeo

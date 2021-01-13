@@ -118,9 +118,6 @@ public class BearInputMultiplayer : MonoBehaviour
     public AudioClip fallInWater;
     public AudioClip penguinDeathEffect;
 
-    private bool onFloor = false;
-    private bool onIce = false;
-
     //BARRA STAMINA
     private float maxStamina = 600;
     private GameObject staminaBarObject;
@@ -279,12 +276,7 @@ public class BearInputMultiplayer : MonoBehaviour
 
 
         staminaBar.fillAmount = stamina / maxStamina;   
-            //bearPlayer
-       
-                //bearPlayer.Stop();
-                
-       
-        //}
+
     }
 
     private void FixedUpdate()
@@ -330,6 +322,8 @@ public class BearInputMultiplayer : MonoBehaviour
             _playerRB.MovePosition(new Vector3(_playerRB.transform.position.x + 3.0f, 3.0f, _playerRB.transform.position.z));
         }
 
+        if (Stamina != null)
+            Stamina.fillAmount = stamina / 600;
         //Debug.Log(_playerRB.velocity.magnitude);
     }
 
@@ -339,8 +333,7 @@ public class BearInputMultiplayer : MonoBehaviour
         {
             return;
         }
-        if (Stamina != null)
-            Stamina.fillAmount = stamina/600;
+        
         //transform.LookAt(_playerRB.transform.position);
         //pivot.LookAt(target.position);
         //pivot.LookAt(target);
@@ -508,38 +501,18 @@ public class BearInputMultiplayer : MonoBehaviour
             _controls.Player.Movement.Disable();
             _controls.Player.CameraControl.Disable();
             damaged = true;
-            onFloor = false; //para que no suenen las pisadas
+
 
             bearPlayerEffects.clip = damageStockEffect;
             bearPlayerEffects.Play();
         }
 
         if(collision.gameObject.tag == "IceTrap")
-        {
-            onFloor = false;
-            onIce = false;
+        { 
             bearPlayerEffects.clip = crashIceEffect;
             bearPlayerEffects.Play();
         }
 
-        if (collision.gameObject.tag == "IceDashPlat")
-        {
-            //bearPlayer.clip = iceDashEffect;
-            //bearPlayer.Play();
-            //bearPlayer.clip = iceDashEffect;
-            //bearPlayer.Play();
-            onFloor = false;
-            onIce = true;
-        }
-
-        if (collision.gameObject.tag == "Floor")
-        {
-
-            //bearPlayer.clip = snowWalkEffect;
-            //bearPlayer.Play();
-            onIce = false;
-            onFloor = true;
-        }
     }
 
     #endregion
