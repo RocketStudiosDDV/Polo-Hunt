@@ -21,8 +21,11 @@ La temática por el aspecto estético está centrada en los animales, paisajes y
 # Descripción del juego
 Polar Hunt es un juego multijugador diseñado para todos los públicos, que consta de unos diversos modos de juego pensados para divertir a los jugadores haciendo gala de esta singular temática polar.
 Es un juego pensado para explotar la experiencia multijugador que está a la orden del día en el mercado. En él hay diversos modos de juegos para participar, aunque la concepción del juego surgió a raíz de querer realizar un escondite entre animales.
+
 Los personajes principales son pingüinos y osos polares. Los osos serán los encargados de dar caza a todos los pingüinos, estos tendrán que salvarse escondiéndose por el mapa y usando las distintas habilidades que poseen. Para que el juego resulte atractivo su diseño se centra en el diseño de escenarios, el movimiento de los personajes y las habilidades de estos para huir y atrapar.
+
 El desarrollo de una partida normal sigue la dinámica del clásico juego pilla pilla. El oso hace una cuenta atrás y mientras los pingüinos recorren el mapa buscando un buen escondrijo. Una vez el oso termine de contar este va a dar caza a las aves usando su habilidad especial y su ventaja a la hora de correr más rápido. En el modo principal una vez el oso atrapa a un jugador, este desaparece (esto cambia en función al modo), el flujo de la partida está limitado por dos condiciones, el tiempo establecido o la victoria del oso sobre los otros.
+
 El escenario está ideado para poder explotar las habilidades de ambos personajes y esconderse o despistar al oso en muchos sitios.
 
 
@@ -98,8 +101,10 @@ Centrándonos ahora en los dos desarrollados:
 
 ## Modo caza
 Al seleccionar esta opción, el usuario se define el número de osos y pingüinos de la sala. Una vez comienza la partida, los pingüinos aparecen desperdigados por varias zonas del mapa, siendo estás normalmente las exteriores, debido a que la posición inicial de los osos será el centro del escenario, donde hay un terreno lo suficientemente elevado donde divisar gran parte del mapa. Tras esto comienza una cuenta atrás para que los usuarios se puedan situar un poco en su zona y puedan empezar a buscar posibles escondrijos. 
+
 Durante la partida cada animal dispone de una habilidad especial para poder usarla en beneficio propio y conseguir sobrevivir o devorar.
 Las condiciones para que finalice la partida son dos:
+
 La primera es por el tiempo establecido. Este es de 7 minutos, pero los usuarios podrán alterar el valor de este debido a que el número de cazadores y presas condiciona las posibilidades de victoria y derrota de ambos grupos, por eso se le cede al usuario el control de esta variable.
 La segunda es por la victoria de los osos al conseguir atrapar a todos sus objetivos o la de los pingüinos al matar a todos los osos usando los fragmentos de hielo. Estos fragmentos de hielo quebrados solo se caen con el peso de un oso, imitando la realidad que sufren estos en su entorno natural. 
  
@@ -126,12 +131,16 @@ En el modo caza las distintas velocidades de cada animal son el ajuste más impo
 
 ## Habilidades
 •	Pingüinos: estos tienen la habilidad de soltar cepos a sus espaldas, si uno de estos consigue colisionar con el oso, este se petrifica por unos instantes a modo de penalización. Esta habilidad es permanente, pero tiene un tiempo de espera para poder volver a usarla. El correcto uso de esta habilidad es esencial para poder sobrevivir y dejar al oso atrás. Conforme mejor se utilice en el mapa mejor para poder despistar al cazador.
+
 •	Osos: Los osos tiene la habilidad de la visión Berserker. Para compensar el número de pingüinos y el tamaño del escenario, el oso cada cierto tiempo puede ver la posición de todos los pingüinos aun traspasando las montañas y edificios que les protege. Esta habilidad está pensada para que tenga dos o tres usos durante la partida como mucho, ya que de lo contrario destroza por completo el diseño del modo.
 
 Con estas dos habilidades se busca un balanceo justo para las deficiencias de cada animal. Los pingüinos al tener un movimiento más lento, se encuentran en una clara desventaja a la hora de huir en sitios donde el deslizamiento sea casi nulo. Los osos podrán obtener la posición de sus presas con cierta frecuencia para aprovechar también los laberintos que puede encontrar en la ciudad y en las montañas y no hacer de su rol una misión imposible.
+
 #Escenarios
 El juego tiene un escenario por cada modo disponible. Cada escenario ha sido desarrollado pensando en expandir la jugabilidad de su modo correspondiente. El trabajo de level design en este proyecto es muy importante, puesto que el número de jugadores y el tiempo aproximado de partida son decisivos a la hora de crear estos escenarios.
+
 Para este proyecto hemos buscado varios paquetes de assets ya definidos para incorporarlos. El trabajo de búsqueda ha sido muy importante para conseguir encontrar los elementos que más se acerque a la estética que marcan los personajes.
+
 ##Escenario de caza  
 El escenario principal del modo hunt está dividido por cuadrantes. En cada cuadrante hay un área especial para sacar el rendimiento a las físicas y a las propias reglas del juego.
 
@@ -173,6 +182,7 @@ Aquí se muestra la representación de este pequeño pueblo en el mapa
 ## Escenario Carreras
 Este escenario está inspirado en las clásicas pistas de ski y snow en las que se realizan competiciones de carreras y acrobáticas. Es un diseño próximo a lo que es un half-pipe en la realidad. 
 Este escenario se compone de múltiples elementos temáticos que los pingüinos deberán esquivar o atravesar para alcanzar velocidad y llegar los primeros. 
+
 Los obstáculos para esquivar pueden causar 3 posibles tipos de ralentizaciones. Cuando se colisiona con las montañas, el jugador retrocede unos metros atrás para sortearlas en el próximo movimiento. Hay múltiples objetos que provocan la paralización por completo del jugador, este cuando se estampa, tiene que desviar su trayectoria sufriendo así una penalización en la velocidad. Las vallas de ski clásicas son las únicas que se pueden atravesar, aunque estas producen una desaceleración considerable en los usuarios.
 Lista con todos los obstáculos:
 -	Montañas
@@ -200,15 +210,38 @@ Imágenes del escenario
  
 # Interfaz
 El diseño de la interfaz de menú sigue una estructura homogénea y con un diseño lo más sencillo posible para facilitar la travesía por las distintas pantallas a los jugadores.
+
 Al ser un juego en el que se va a pasar una buena cantidad de tiempo en las salas de espera mientras se está con amigos o desconocidos, se ha elegido una música y diseños relajantes que son una buena combinación teniendo presente que se va a incorporar un chat grupal en las salas en las próximas actualizaciones. Amenizando así el tiempo de espera y aprovechando claro está, las distendidas conversaciones que se van a producir mientras se esperan al resto de los integrantes de la sala que van a participar.
+
 A continuación, se van a mostrar todas las pantallas hasta la fecha indicando todas opciones de travesía que van a realizar los usuarios en el juego.
+
 Pantalla menú principal: Se puede acceder a los créditos, tutoriales, opciones y comenzar a jugar
+
+![main_menu](https://user-images.githubusercontent.com/55508821/104414914-50313680-5571-11eb-91f8-73eba0ed6fd2.JPG)
+
+Pantalla de opciones: el usuario puede cambiar el idioma, la música y los efectos de sonido
+
+![options](https://user-images.githubusercontent.com/55508821/104415067-98e8ef80-5571-11eb-97e1-9bbef27c16ea.JPG)
+
+Pantalla de tutorial: 
+
+
+Pantalla de créditos:
+
 
 Pantalla de conexión: Se introduce el nickname del jugador y se conecta
 
+![log_in](https://user-images.githubusercontent.com/55508821/104414961-650dca00-5571-11eb-899b-2fce707ed276.JPG)
+
 Pantalla de Salas 1: El usuario decide si crea una sala o se une a una ya creada
 
+![join_or_create_room](https://user-images.githubusercontent.com/55508821/104414996-71922280-5571-11eb-9af0-b018fa3b9bdd.JPG)
+
+
 Pantalla de Host 1: Se decide si la sala va a ser pública o privada y se establece el código de esta.
+
+![private_or_public_room](https://user-images.githubusercontent.com/55508821/104415018-7eaf1180-5571-11eb-8f5f-c87e72e8b8ce.JPG)
+
 
 Pantalla de Host 2: El jugador establece el modo de juego y las condiciones
 
@@ -233,6 +266,7 @@ Interfaz de modo carrera:
 
 #Estilo artístico
 El estilo de este juego tiene componentes low poly para optimizar el rendimiento, aunque los personajes del juego si que tienen un mayor número de polígonos en comparación con el resto de los elementos de la escena. Esta decisión de diseño ha sido realizada para realzar a los protagonistas y darles así un toque de distinción.
+
 El mapa de caza tiene un estilo desértico ya que en la realidad estos escenarios apenas tienen infraestructuras humanas. Parte de los elementos incorporados son assets descargados de manera gratuita y libre de derechos.
 
 El mapa del modo carrera sigue la estética de cualquier pista de ski de competición. Recreando una pista que ha sufrido desprendimientos por la nieve. Parte de los elementos incorporados son assets descargados de manera gratuita y libre de derechos.
@@ -243,6 +277,7 @@ Actualmente hay 3 canciones implementadas:
 •	Para atravesar las pantallas del menú hasta comenzar la partida se ha elegido una música amena siguiendo con la estética de los paisajes. Es una canción ambiental con el sonido del oleaje de fondo. Se pretende no alterar al usuario ya que el tiempo que va a estar ahí es impreciso, pero repetitivo.
 •	En el modo caza se ha elegido una canción dinámica que transmite la sensación de perfecta para correr por el mapa y buscar escondrijo de los cazadores, pero aportando una experiencia alegre y divertida a los usuarios. 
 •	En el modo carrera una canción de country que tiene semejanza con las bandas sonoras usadas en el cine para relatar unos hechos cómicos y salvajes. El ritmo acelerado de esta canción es la causante de que los usuarios sientan una sensación de velocidad junto al pingüino que pilotan.
+
 Los efectos de sonido implementados son los siguientes:
 •	Clic en las pantallas del menú
 •	Pisadas en el hielo
@@ -271,8 +306,11 @@ Este juego tiene un gran desafío por esta parte. Conseguir la diversión del ju
  
 # Servidores y multijugador
 Polar Hunt hace uso del framework de desarrollo Photon Unity Networking 2 (PUN2) y del servicio de servidores Photon Cloud. Los servidores permiten hasta 20 personas jugando de manera simultánea, con cross-play entre las plataformas disponibles. 
+
 Los jugadores pueden crear salas públicas disponibles para el resto de los usuarios o salas privadas accesibles mediante un código. Los servidores de Photon Cloud tienen una latencia de 90-100 milisegundos de media. A pesar de ser unos valores aceptables para nuestro tipo de juego, Polar Hunt utiliza diferentes métodos para minimizar el impacto de la latencia. El networking de las posiciones de los personajes cuenta con predicción de movimientos e interpolación de los datos reales con los estimados. 
+
 Cada jugador tiene autoridad sobre su propio personaje, asegurando así que la respuesta al input del sea rápida y que el usuario mantenga siempre el control sobre su personaje. También cuenta con comprobaciones de latencia y sincronización entre los jugadores a la hora de decidir eventos importantes como puede ser cazar a un pingüino. 
+
 Polar Hunt tiene arquitectura cliente-servidor para facilitar la conexión entre los usuarios y evitar así las dificultades que les puede suponer sortear la NAT para conectarse entre ellos. Esto es esencial sobre todo para juegos de navegador y orientados a todos los públicos, ya que debe primar la accesibilidad.
  
 # Modelo de negocio
