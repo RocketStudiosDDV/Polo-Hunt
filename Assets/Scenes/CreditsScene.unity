@@ -379,7 +379,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 446, y: 140}
-  m_SizeDelta: {x: 800, y: 80}
+  m_SizeDelta: {x: 1050, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &326122329
 MonoBehaviour:
@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9254902, g: 0.9254902, b: 0.9254902, a: 1}
+  m_Color: {r: 0.75294125, g: 0.7568628, b: 0.7607844, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -413,7 +413,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RODRIGO MARTINEZ SANCHEZ
+  m_Text: "RODRIGO MART\xCDNEZ S\xC1NCHEZ - programmer"
 --- !u!222 &326122330
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -743,7 +743,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 446, y: -20}
-  m_SizeDelta: {x: 800, y: 80}
+  m_SizeDelta: {x: 1050, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &519049892
 MonoBehaviour:
@@ -758,7 +758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9254902, g: 0.9254902, b: 0.9254902, a: 1}
+  m_Color: {r: 0.69411767, g: 0.7058824, b: 0.7137255, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -777,7 +777,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MANUEL PEREZ RAMIL
+  m_Text: "MANUEL P\xC9REZ RAMIL - programmer"
 --- !u!222 &519049893
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -821,7 +821,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 446, y: -100}
-  m_SizeDelta: {x: 800, y: 80}
+  m_SizeDelta: {x: 1050, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &675891487
 MonoBehaviour:
@@ -836,7 +836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9254902, g: 0.9254902, b: 0.9254902, a: 1}
+  m_Color: {r: 0.6745098, g: 0.6862745, b: 0.7019608, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -855,7 +855,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TOMAS PEREZ MARTINEZ
+  m_Text: "TOMAS P\xC9REZ MART\xCDNEZ - programmer"
 --- !u!222 &675891488
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -899,7 +899,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 446, y: 300}
-  m_SizeDelta: {x: 800, y: 80}
+  m_SizeDelta: {x: 1050, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &701151347
 MonoBehaviour:
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
+  m_Color: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -933,7 +933,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: PAULA CALZADA TOLEDO
+  m_Text: PAULA CALZADA TOLEDO - programmer
 --- !u!222 &701151348
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1874,7 +1874,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 446, y: 60}
-  m_SizeDelta: {x: 800, y: 80}
+  m_SizeDelta: {x: 1050, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1338261937
 MonoBehaviour:
@@ -1889,7 +1889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9254902, g: 0.9254902, b: 0.9254902, a: 1}
+  m_Color: {r: 0.7411765, g: 0.7490196, b: 0.75294125, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1908,7 +1908,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DIEGO PEREZ PEREZ
+  m_Text: "DIEGO P\xC9REZ P\xC9REZ - artist"
 --- !u!222 &1338261938
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2636,7 +2636,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 1050, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1783264743
 MonoBehaviour:
@@ -2777,7 +2777,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 446, y: 220}
-  m_SizeDelta: {x: 800, y: 80}
+  m_SizeDelta: {x: 1050, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1824790522
 MonoBehaviour:
@@ -2792,7 +2792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9254902, g: 0.9254902, b: 0.9254902, a: 1}
+  m_Color: {r: 0.7725491, g: 0.77647066, b: 0.7803922, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2811,7 +2811,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: JESUS DE PANDO GALAN
+  m_Text: "JES\xDAS DE PANDO GAL\xC1N - level design"
 --- !u!222 &1824790523
 CanvasRenderer:
   m_ObjectHideFlags: 0
