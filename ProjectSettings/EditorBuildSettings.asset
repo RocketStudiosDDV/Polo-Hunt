@@ -33,10 +33,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Gamemodes/HuntMap.unity
     guid: caa3cf966d4814e4c80c2ed9542c6128
   - enabled: 1
-    path: Assets/Scenes/RunnerMap.unity
+    path: Assets/Scenes/RaceMap.unity
     guid: b103547eea3b88949b274f602f19f153
   - enabled: 1
-    path: Assets/Scenes/EscenarioPruebas.unity
+    path: Assets/Scenes/HuntMap.unity
     guid: 88b8bb937fc16284587361bee11b1695
   - enabled: 1
     path: Assets/Scenes/CreditsScene.unity
