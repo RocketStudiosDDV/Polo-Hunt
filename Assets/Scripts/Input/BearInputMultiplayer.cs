@@ -39,7 +39,7 @@ public class BearInputMultiplayer : MonoBehaviour
     public Vector2 movementCamera;
     private float moveX;
     private float moveY;
-    private float m_LookSense = 1.0f;
+    private float m_LookSense = 0.2f;
 
     //CONTROL MOVIMIENTOS
 

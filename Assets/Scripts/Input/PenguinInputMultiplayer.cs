@@ -38,7 +38,7 @@ public class PenguinInputMultiplayer : MonoBehaviour
     public Transform pivot;
     private float moveX;
     private float moveY;
-    private float m_LookSense = 1.0f;
+    private float m_LookSense = 0.2f;
 
     private double _timeRunning;
     private bool isRunning = false;
