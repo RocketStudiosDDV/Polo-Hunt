@@ -91,6 +91,7 @@ public class MatchInfo : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private void Awake()
     {
         // Inicializamos variables necesarias
+        bearPlayer = FindObjectOfType<AudioSource>();
         language = PlayerPrefs.GetInt("language", 0);
         playersList = new List<Player>();
         playersReady = new List<bool>();
