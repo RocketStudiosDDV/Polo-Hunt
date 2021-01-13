@@ -30,6 +30,8 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public List<Transform> ListRoomPrefabList;
 
     public GameObject errorJoinTxt;
+    public GameObject errorPlayTxt;
+    public GameObject errorCreateTxt;
 
     public Text room1Txt;
     public Text room2Txt;
@@ -369,7 +371,11 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
                             PhotonNetwork.LoadLevel("RaceMap");
                             break;
                     }
-                }                
+                }  else
+                {
+                    errorPlayTxt.SetActive(true);
+                    Invoke(nameof(HideErrorPlay), 4f);
+                }               
             }
         }
     }
@@ -435,6 +441,12 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         if (errorJoinTxt != null)
             errorJoinTxt.SetActive(false);
+    }
+
+    private void HideErrorPlay()
+    {
+        if (errorPlayTxt != null)
+            errorPlayTxt.SetActive(false);
     }
     #endregion
 
@@ -687,6 +699,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
         FinalRoomPanel.SetActive(false);
+        HideErrorPlay();
         FinalRoomPanel2.SetActive(false);
     }
 
@@ -703,6 +716,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
         FinalRoomPanel.SetActive(false);
+        HideErrorPlay();
         FinalRoomPanel2.SetActive(false);
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -736,6 +750,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         RoomPanel.SetActive(false);
         ConnectPanel.SetActive(false);
         FinalRoomPanel.SetActive(false);
+        HideErrorPlay();
         FinalRoomPanel2.SetActive(false);
         PlayerListZero();
     }
@@ -843,6 +858,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     public void ChooseGameModeButton()
     {     
         FinalRoomPanel.SetActive(false);
+        HideErrorPlay();
         RoomValuesPanel.SetActive(true);
     }
 
@@ -883,6 +899,7 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         ChooseTypePanel.SetActive(true); 
         FinalRoomPanel.SetActive(false);
+        HideErrorPlay();
         FinalRoomPanel2.SetActive(false);
         PlayerListZero();
     }
