@@ -628,6 +628,9 @@ MonoBehaviour:
   clasification: []
   eatFishEffect: {fileID: 8300000, guid: cc6268e563de5af4cb96d72486cdc790, type: 3}
   iceDashEffect: {fileID: 8300000, guid: 87ad25a9551514c49aec8d637b5983a2, type: 3}
+  collideObject: {fileID: 8300000, guid: 8280404ccc3ada747b97761843bbe6e2, type: 3}
+  arriveGoal: {fileID: 8300000, guid: b82f40c82b39cf74588f15a9a186aeba, type: 3}
+  dash: {fileID: 8300000, guid: d8615bf459bdb8643964ccb99d71f70b, type: 3}
 --- !u!114 &3631333369185828697
 MonoBehaviour:
   m_ObjectHideFlags: 0

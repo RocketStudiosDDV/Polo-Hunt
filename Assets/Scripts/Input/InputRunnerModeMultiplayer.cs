@@ -98,6 +98,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
     private AudioSource penguinPlayer;
     public AudioClip eatFishEffect;
     public AudioClip iceDashEffect;
+    public AudioClip collideObject;
+    public AudioClip arriveGoal;
+    public AudioClip dash;
 
     #endregion
 
@@ -328,6 +331,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Goal") //LLEGA A LA META
         {
+            penguinPlayer.clip = arriveGoal;
+            penguinPlayer.Play();
+
             int numRand = Random.Range(2, 6);
             Debug.Log(numRand);
             _timeTillStop = Time.fixedTime + numRand;
@@ -374,6 +380,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Fence") //Si choca con el lado dch de un pingu
         {
+            penguinPlayer.clip = collideObject;
+            penguinPlayer.Play();
+
             fenceTriggered = true;
             _timeFence = Time.fixedTime + 3;
         }
@@ -422,21 +431,21 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Snowman") //Si choca con el lado dch de un pingu
         {
+            penguinPlayer.clip = collideObject;
+            penguinPlayer.Play();
+
             speed = 8;
             snowmanCollided = true;
             _timeSnowman = Time.fixedTime + 5;
             _playerRB.MovePosition(new Vector3(_playerRB.position.x + 5f, _playerRB.position.y, _playerRB.position.z));
-
-            //_playerRB.AddForce(Vector3.forward * -force, ForceMode.Impulse);
-            //_playerRB.AddForce(Vector3.right * -force, ForceMode.Impulse);
-            //_playerRB.AddForce(Vector3.up * -force/2, ForceMode.Impulse);
-            //_playerRB.AddForce(Vector3.up * -500, ForceMode.Force);
-            //_playerRB.AddForce(Vector3.right * 10000, ForceMode.Force);
         }
 
         if (collision.gameObject.tag == "BigMountain")
         {
-            Debug.Log("vaya montaña loko");
+            penguinPlayer.clip = collideObject;
+            penguinPlayer.Play();
+
+            //Debug.Log("vaya montaña loko");
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 15, _playerRB.position.y + 10, _playerRB.position.z - 5));
             obstacle = true;
             _timeSlow = Time.fixedTime + 2;
@@ -444,7 +453,9 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Cave")
         {
-            Debug.Log("vaya montaña loko");
+            penguinPlayer.clip = collideObject;
+            penguinPlayer.Play();
+            //Debug.Log("vaya montaña loko");
             _playerRB.MovePosition(new Vector3(_playerRB.position.x - 10, _playerRB.position.y + 6, _playerRB.position.z - 10));
             obstacle = true;
             _timeSlow = Time.fixedTime + 2;
@@ -452,18 +463,27 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Ramp")
         {
+            penguinPlayer.clip = dash;
+            penguinPlayer.Play();
+
             onRamp = true;
             speed = 30;
         }
 
         if (collision.gameObject.tag == "BigRamp")
         {
+            penguinPlayer.clip = dash;
+            penguinPlayer.Play();
+
             onRamp = true;
             speed = 35;
         }
 
         if (collision.gameObject.tag == "Obstacle")
         {
+            penguinPlayer.clip = collideObject;
+            penguinPlayer.Play();
+
             onObstacleMini = true;
             _timeObstacle = Time.fixedTime + 3;
             speed = 15;
@@ -481,7 +501,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         //Añade el evento moverse
         _controls.Player.ESC.performed += ESC;
         _controls.Player.Movement.performed += Move;
-        _controls.Player.Attack.performed += Attack; //Evento 
+        //_controls.Player.Attack.performed += Attack; //Evento 
         _controls.Player.Run.performed += Jump; //Evento SALTAR
         _controls.Player.CameraControl.performed += GetCameraMove;//Movimiento de camara
 
@@ -495,7 +515,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         //Elimina el evento
         _controls.Player.ESC.canceled -= ESC;
         _controls.Player.Movement.canceled -= Move;
-        _controls.Player.Attack.canceled -= Attack;
+        //_controls.Player.Attack.canceled -= Attack;
         _controls.Player.Run.canceled -= Jump;
         _controls.Player.CameraControl.canceled -= GetCameraMove;
         _controls.Player.Disable();
@@ -516,14 +536,14 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         _horizontaldirection = context.ReadValue<Vector2>();
     }
 
-    public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
+    /*public void Attack(InputAction.CallbackContext context) //De momento va a ser saltar
     {
         Debug.Log("BOFETÓN");
         //tiene que impulsar a otro pingu
         //CAMBIAR ANIMACIÓN
         //isAttacking = true;
         //_timeAttacking = Time.fixedTime; //tiempo que estará activo el ataque
-    }
+    }*/
 
     public void Jump(InputAction.CallbackContext context) //De momento va a ser saltar
     {
