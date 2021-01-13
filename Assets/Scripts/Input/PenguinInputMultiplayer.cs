@@ -189,18 +189,23 @@ public class PenguinInputMultiplayer : MonoBehaviour
         }
 
         //ANIMACIÓN ANDAR
-        if ((Input.GetKey(KeyCode.W)) || (Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.D))
-            || (Input.GetKey(KeyCode.LeftArrow)) || (Input.GetKey(KeyCode.RightArrow)) || (Input.GetKey(KeyCode.UpArrow)) || (Input.GetKey(KeyCode.DownArrow)) ||(Gamepad.current.leftStick.IsPressed()))
+        try {
+            if ((Input.GetKey(KeyCode.W)) || (Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.D))
+    || (Input.GetKey(KeyCode.LeftArrow)) || (Input.GetKey(KeyCode.RightArrow)) || (Input.GetKey(KeyCode.UpArrow)) || (Input.GetKey(KeyCode.DownArrow)) || (Gamepad.current.leftStick.IsPressed()))
+            {
+                //     if (keysPressed > 0)
+                // {
+                walking_animation = true;
+                //penguinPlayer.clip = snowWalkEffect;
+                //penguinPlayer.Play();
+            }
+            else
+            {
+                walking_animation = false;
+            }
+        } catch(System.Exception ex)
         {
-        //     if (keysPressed > 0)
-        // {
-            walking_animation = true;
-            //penguinPlayer.clip = snowWalkEffect;
-            //penguinPlayer.Play();
-        }
-        else
-        {
-            walking_animation = false;
+
         }
 
         if (penguin_animator != null)
