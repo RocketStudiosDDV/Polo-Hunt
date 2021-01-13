@@ -15,7 +15,7 @@ En ordenador y dispositivos móviles
 ## Modos de Juego
 Múltiples
 ## Temática
-La temática por el aspecto estético está centrada en los animales, paisajes y climas que se pueden encontrar en el Polo Sur y en el Ártico. Por el diseño de juego está desarrollado con múltiples modos de juego cómicos, sencillos y que incitan a la reincidencia de los jugadores.  
+La temática por el aspecto estético está centrada en los animales, paisajes y climas que se pueden encontrar en el Polo Sur y en el Ártico. El diseño de juego está desarrollado con múltiples modos de juego cómicos, sencillos y que incitan a la reincidencia de los jugadores.  
  
 
 # Descripción del juego
@@ -30,11 +30,11 @@ El escenario está ideado para poder explotar las habilidades de ambos personaje
 
 
 # Influencias
-La concepción del juego realmente surgió de un brainstorming grupal sobre el desarrollo de este proyecto. La concepción de este juego no sigue la estela de ningún juego en concreto, aunque claro está que una vez desarrollada la idea hemos tenido en cuenta ciertos juegos del marcado actual para poder predecir el tipo de alcance que podemos llegar a hacer en el público.  
+La concepción del juego realmente surgió de un brainstorming grupal sobre el desarrollo de este proyecto. La concepción de este juego no sigue la estela de ningún juego en concreto, aunque claro está que una vez desarrollada la idea hemos tenido en cuenta ciertos juegos del mercado actual para poder predecir el tipo de alcance que podemos llegar a hacer en el público.  
 Como referencia para el desarrollo de este juego hemos tenido en cuenta varios ejemplos como:
  
 ## Fall guys
-De este famoso juego a la orden del día hace de influencia en el diseño de las físicas de nuestro juego. Al tener un movimiento torpe que provoca una condición de aleatoriedad en los jugadores, el juego sigue un ritmo desbocado de poco preciso con un toque desenfado que es justo la sensación que queremos transmitir con nuestro gameplay.
+Este famoso juego a la orden del día hace de influencia en el diseño de las físicas de nuestro juego. Al tener un movimiento torpe que provoca una condición de aleatoriedad en los jugadores, el juego sigue un ritmo desbocado poco preciso con un toque desenfado que es justo la sensación que queremos transmitir con nuestro gameplay.
 
 ![Collage Fall guys](https://user-images.githubusercontent.com/55508821/104412032-d5b1e800-556b-11eb-94ab-35c03d326c53.jpg)
 
@@ -46,7 +46,7 @@ De este juego buscamos la simpleza de todos los juegos que tiene. El ritmo de ju
  
 
 ## Coolboarders
-De esta clásica saga ya vivida, se ha sacado mucho jugo sobre el desarrollo de escenarios, sobre todo en el modo carrera, aunque como se puede comprobar que la estética de estos juegos es un claro ejemplo de como hemos determinado los paisajes y los elementos de este.
+De esta clásica saga ya vivida, se ha sacado mucho jugo sobre el desarrollo de escenarios, sobre todo en el modo carrera, aunque como se puede comprobar que la estética de estos juegos es un claro ejemplo de cómo hemos determinado los paisajes y los elementos de este.
 
 ![Collage Coolboarders](https://user-images.githubusercontent.com/55508821/104411989-c468db80-556b-11eb-9f92-ef98d39d05f1.jpg)
 
@@ -55,7 +55,7 @@ De esta clásica saga ya vivida, se ha sacado mucho jugo sobre el desarrollo de 
 ## Pingüinos
 Como personajes protagonistas del juego hemos optado por los pingüinos, ya que estos eran la esencia del tipo de movimiento y físicas que queríamos transmitir a los jugadores. Gracia y torpeza, estos son los dos grandes adjetivos que son capaces de sintetizar la esencia de nuestro juego.
 Gracias al movimiento de estos animales y observando las graciosas caídas que tienen en el hielo, hemos determinado que son el animal ideal para representar el tipo de jugabilidad que queríamos ofrecer.
-Para concebir el diseño de estos famosos pensamos en varios modelos de pingüinos tanto reales como animados, teniendo como referencias como:
+Para concebir el diseño de estas famosas aves, pensamos en varios modelos de pingüinos tanto reales como animados, teniendo como referencias como:
 •	Happy feet  : 
 
 ![imagen](https://user-images.githubusercontent.com/55508821/104412852-78b73180-556d-11eb-8bfb-bdec49a95fc1.png)
@@ -87,7 +87,7 @@ Aquí se muestra la hoja del pingüino base que hay en el juego.
 
 
 ## Osos
-El oso polar era una de las grandes opciones que barajábamos como posibles enemigos. En el tintero se han quedado las focas y leones marinos ya que finalmente el juego se desarrolla por completo en tierra. Tras tener que limitar el juego a la tierra debido a las limitaciones técnicas y de tiempo. 
+El oso polar era una de las grandes opciones que barajábamos como posibles enemigos. En el tintero se han quedado las focas y leones marinos ya que finalmente el juego se desarrolla por completo en tierra. Tras tener que acortar el juego a la tierra debido a las limitaciones técnicas y de tiempo. 
 Este ha sido el animal escogido para dar caza debido a que la fisonomía de este era el más plausible a la hora de desarrollar, teniendo como premisa que el rol de cazador lo debía ejecutar también un animal relacionado con el hielo.
 
 ![WhatsApp Image 2020-12-04 at 02 36 34](https://user-images.githubusercontent.com/55508821/104412798-50c7ce00-556d-11eb-96c1-d4a8a49f1fe3.jpeg)
@@ -274,9 +274,9 @@ El mapa del modo carrera sigue la estética de cualquier pista de ski de competi
 # Música
 La música del juego en esta ocasión no se ha podido hacer expresamente, pero se ha hecho un trabajo de investigación y reflexión para poder encontrar una música libre de derechos que se ajuste a la experiencia que queremos recrear en los jugadores.
 Actualmente hay 3 canciones implementadas:
-•	Para atravesar las pantallas del menú hasta comenzar la partida se ha elegido una música amena siguiendo con la estética de los paisajes. Es una canción ambiental con el sonido del oleaje de fondo. Se pretende no alterar al usuario ya que el tiempo que va a estar ahí es impreciso, pero repetitivo.
+•	Para atravesar las pantallas del menú hasta comenzar la partida se ha elegido una música amena siguiendo la estética de los paisajes. Es una canción ambiental con el sonido del oleaje de fondo. Se pretende no alterar al usuario ya que el tiempo que va a estar ahí es impreciso, pero repetitivo.
 •	En el modo caza se ha elegido una canción dinámica que transmite la sensación de perfecta para correr por el mapa y buscar escondrijo de los cazadores, pero aportando una experiencia alegre y divertida a los usuarios. 
-•	En el modo carrera una canción de country que tiene semejanza con las bandas sonoras usadas en el cine para relatar unos hechos cómicos y salvajes. El ritmo acelerado de esta canción es la causante de que los usuarios sientan una sensación de velocidad junto al pingüino que pilotan.
+•	En el modo carrera una canción de country que tiene semejanza con las bandas sonoras usadas en el cine para relatar unos hechos cómicos y salvajes. El ritmo acelerado de esta canción es la causante de que los usuarios sientan una sensación de velocidad junto al pingüino que pilota.
 
 Los efectos de sonido implementados son los siguientes:
 •	Clic en las pantallas del menú
@@ -300,7 +300,7 @@ Este juego tiene un gran desafío por esta parte. Conseguir la diversión del ju
 
 •	La temática es sin duda una de las claves de este juego. La misión principal de la temática y de sus personajes es conquistar al jugador y dotar al juego de una personalidad amable y graciosa. Por eso los personajes del juego irán siendo modificados hasta encontrar el estilo más entrañable para el público.
 
-•	La duración de cada partida no debe superar los 10/15 minutos de juego. Esta duración provoca una mayor reincidencia de juego por parte de los usuarios, ya que de este modo vamos segmentando su capacidad de concentración con pequeños descansos en las salas de espera mientras está con sus amigos.
+•	La duración de cada partida no debe superar los 10/15 minutos de juego. Esta duración provoca una mayor reincidencia de juego por parte de los usuarios, ya que de este modo vamos segmentando su capacidad de concentración con pequeños descansos en las salas de espera mientras espera con sus amigos.
 
 •	Los juegos deben fomentar una competitividad sana entre los jugadores, dejando atrás una vez acaba la partida el resultado. Este juego está pensado para relajar a los usuarios con juegos simples, la función de este juego no es otra que la de desestresar al usuario con unas partidas ligeras y amenas. 
  
@@ -314,10 +314,10 @@ Cada jugador tiene autoridad sobre su propio personaje, asegurando así que la r
 Polar Hunt tiene arquitectura cliente-servidor para facilitar la conexión entre los usuarios y evitar así las dificultades que les puede suponer sortear la NAT para conectarse entre ellos. Esto es esencial sobre todo para juegos de navegador y orientados a todos los públicos, ya que debe primar la accesibilidad.
  
 # Modelo de negocio
-Nuestro modelo de negocio tiene como clave principal la fidelización de nuestros clientes. Vamos a ir asegurando su permanencia con una estrategia a dos años vista y continuas renovaciones del juego renovando también los modos existentes y puliendo las físicas y jugabilidad de estos de manera continua.
+Nuestro modelo de negocio tiene como clave principal la fidelización de nuestros clientes. Vamos a ir asegurando su permanencia con una estrategia a dos años vista y continuas renovaciones del juego actualizando también los modos existentes y puliendo las físicas y jugabilidad de estos de manera continua.
 
 Las claves del beneficio económico del proyecto son sus dos principales fuentes de ingreso:
-•	El juego tiene un precio de salida permanente de unos 5 euros. El gancho para que los usuarios acepten pagar por el producto son las continuas expansiones que se van a ofrecer con los nuevos modos de juego junto con la continua actualización sobre la jugabilidad de los anteriores para ir puliendo el producto progresivamente e ir así generando una sensación de mejora y avance en el usuario. 
+•	El juego tiene un precio de salida permanente de 5 euros. El gancho para que los usuarios acepten pagar por el producto son las continuas expansiones que se van a ofrecer con los nuevos modos de juego junto con la continua actualización sobre la jugabilidad de los anteriores para ir puliendo el producto progresivamente e ir así generando una sensación de mejora y avance en el usuario. 
 
 •	La segunda fuente de ingreso con la que esperamos ir teniendo un beneficio económico progresivo siguiendo la curva de ingresos de nuevos jugadores, es la tienda de skins que hay en desarrollo. Las skins irán saliendo por paquetes temáticos y también con diseños exclusivos. Estas se pagan con una moneda que será implementada en el juego junto a su correspondiente sistema de cuentas.
 
@@ -334,14 +334,13 @@ Cada semana saldrá una skin nueva y cada dos meses saldrá un paquete temático
 
  
 # Tutoriales
-Siguiendo con una de las reglas principales de la experiencia de usuario, la explicación de cualquier modo de juego deber lo suficientemente sencilla como para llegar a comprenderlo en menos de un minuto. Esta norma condiciona por completo el diseño de todos los modos del juego, por eso los tutoriales de este juego son pantallas únicas en las que se especifican los objetivos, controles y habilidades. 
+Siguiendo con una de las reglas principales de la experiencia de usuario, la explicación de cualquier modo de juego debe ser lo suficientemente sencilla como para llegar a comprenderlo en menos de un minuto. Esta norma condiciona por completo el diseño de todos los modos del juego, por eso los tutoriales de este juego son pantallas únicas en las que se especifican los objetivos, controles y habilidades. 
 
-Las hojas en distintas partes en función del modo en concreto, aunque la premisa principal es que debe tener poco texto e imágenes precisas que describan con precisión las acciones del usuario.
 
 Aquí se muestran las dos pantallas de tutorial para el modo caza y el modo carreras.
 
 # Controles
-Los controles del juego varían en función a cada plataforma, ya que en la versión de ordenador se puede jugar con el teclado y ratón, y también se podrá jugar con mando. Por la parte de dispositivos móviles solo vamos a ofrecer el control del juego a través de la pantalla táctil.
+Los controles del juego varían en función a cada plataforma, ya que en la versión de ordenador se puede jugar con el teclado y ratón, y también se puede jugar con mando. Por la parte de dispositivos móviles solo vamos a ofrecer el control del juego a través de la pantalla táctil.
 
 ## Control ordenador
 
