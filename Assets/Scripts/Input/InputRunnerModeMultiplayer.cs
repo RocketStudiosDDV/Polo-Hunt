@@ -210,7 +210,7 @@ public class InputRunnerModeMultiplayer : MonoBehaviour
         {
             if (Time.fixedTime > _timeStart)
             {
-                _playerRB.GetComponentInChildren<CapsuleCollider>().transform.rotation = Quaternion.Euler(90f, _playerRB.transform.rotation.y, 0f); //Controla que el collider se mueva con el `pingo
+                _playerRB.GetComponentInChildren<CapsuleCollider>().transform.rotation = Quaternion.Euler(80f, _playerRB.transform.rotation.y, 0f); //Controla que el collider se mueva con el `pingo
                 _playerRB.GetComponentInChildren<CapsuleCollider>().transform.position = new Vector3(_playerRB.transform.position.x, _playerRB.transform.position.y + 0.25f, _playerRB.transform.position.z - 0.3f);
                 _controls.Player.Run.Enable();
                 _controls.Player.Movement.Enable();
