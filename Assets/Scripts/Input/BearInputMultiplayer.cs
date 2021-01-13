@@ -120,6 +120,11 @@ public class BearInputMultiplayer : MonoBehaviour
 
     private bool onFloor = false;
     private bool onIce = false;
+
+    //BARRA STAMINA
+    private float maxStamina = 600;
+    private GameObject staminaBarObject;
+    private Image staminaBar;
     #endregion
 
     #region UNITY CALLBACKS
@@ -182,6 +187,10 @@ public class BearInputMultiplayer : MonoBehaviour
 
         if (!((bool)property))
         {
+            staminaBarObject = canvasHUD.transform.Find("Stamina").gameObject as GameObject;
+            staminaBarObject.gameObject.SetActive(true);
+            staminaBar = staminaBarObject.transform.Find("StaminaFill").GetComponent<Image>(); //.transform.Find("StaminaFill").gameObject as Image;
+            
             visionHud = canvasHUD.transform.Find("Berserker").gameObject as GameObject;
             visionHud.gameObject.SetActive(true); //cepo visible
             isBear = true;
@@ -267,9 +276,9 @@ public class BearInputMultiplayer : MonoBehaviour
             isRunning = false;
             keyboardRunning = false;
         }
-        
-        
-            
+
+
+        staminaBar.fillAmount = stamina / maxStamina;   
             //bearPlayer
        
                 //bearPlayer.Stop();
