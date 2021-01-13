@@ -31,6 +31,9 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
 
     public GameObject errorJoinTxt;
 
+    public Text room1Txt;
+    public Text room2Txt;
+
     public string RoomName;
 
     public string name1;
@@ -904,9 +907,15 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
     {
         GetPlayersList();
         if (i == 0)
+        {
             FinalRoomPanel.SetActive(true);
+            room1Txt.text = GetRoomName();
+        }
         else
+        {
             FinalRoomPanel2.SetActive(true);
+            room2Txt.text = GetRoomName();
+        }
         CreateRoomPanel.SetActive(false);
         RoomValuesPanel.SetActive(false);
         HideErrorJoin();
