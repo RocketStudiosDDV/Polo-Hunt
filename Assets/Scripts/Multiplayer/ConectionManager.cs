@@ -350,23 +350,26 @@ public class ConectionManager : MonoBehaviourPunCallbacks, IConnectionCallbacks,
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
-                newCustomRoomProperties["hasStarted"] = true;
-                PhotonNetwork.CurrentRoom.IsOpen = false;
-                PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
-                object customProperty;
-                int modeSelected = 0;
-                if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gameMode", out customProperty))
-                    modeSelected = (int)customProperty;
-                switch(modeSelected)
+                if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
                 {
-                    case 0:
-                        PhotonNetwork.LoadLevel("HuntMap");
-                        break;
-                    case 1:
-                        PhotonNetwork.LoadLevel("RaceMap");
-                        break;
-                }
+                    ExitGames.Client.Photon.Hashtable newCustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+                    newCustomRoomProperties["hasStarted"] = true;
+                    PhotonNetwork.CurrentRoom.IsOpen = false;
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(newCustomRoomProperties);
+                    object customProperty;
+                    int modeSelected = 0;
+                    if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gameMode", out customProperty))
+                        modeSelected = (int)customProperty;
+                    switch (modeSelected)
+                    {
+                        case 0:
+                            PhotonNetwork.LoadLevel("HuntMap");
+                            break;
+                        case 1:
+                            PhotonNetwork.LoadLevel("RaceMap");
+                            break;
+                    }
+                }                
             }
         }
     }

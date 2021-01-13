@@ -78,12 +78,14 @@ public class MatchManager : MonoBehaviourPun
             }
             if ((bool)isPenguin)
             {
-                GameObject myPenguin = PhotonNetwork.Instantiate(this.penguinPrefab.name, startPositions[playerId].position, Quaternion.identity, 0);
+                Transform myStartPosition = penguinStartPositions[playerId];
+                GameObject myPenguin = PhotonNetwork.Instantiate(this.penguinPrefab.name, myStartPosition.position, Quaternion.identity, 0);
                 myPenguin.GetComponent<PenguinInputMultiplayer>().ownerActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
             }
             else
             {
-                GameObject myBear = PhotonNetwork.Instantiate(this.bearPrefab.name, startPositions[playerId].position, Quaternion.identity, 0);
+                Transform myStartPosition = bearStartPositions[playerId];
+                GameObject myBear = PhotonNetwork.Instantiate(this.bearPrefab.name, myStartPosition.position, Quaternion.identity, 0);
                 myBear.GetComponent<BearInputMultiplayer>().ownerActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
             }
         } else
